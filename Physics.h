@@ -4,8 +4,8 @@
 class Physics
 {
 public:
-  void getFallingSpeed(); //retrieve the falling speed
-  void getBounceAngle();  //retrieve the bounceAngle
+  float getFallingSpeed(); //retrieve the falling speed
+  float getBounceAngle();  //retrieve the bounceAngle
 
 private:
   float fallingSpeed;

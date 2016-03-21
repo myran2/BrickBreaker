@@ -7,7 +7,7 @@ public:
   int getBounceAngle();  //retrieve the bounceAngle
 
 private:
-  int fallingSpeed;
+  int bounceAngle;
 
 };
 

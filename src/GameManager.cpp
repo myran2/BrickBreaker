@@ -24,7 +24,7 @@ void GameManager::go()
     int frameCount = 0;
     fpsTimer.start();
 
-    ball->setOnPaddle();
+    //ball->setOnPaddle();
 
     while (!quit)
     {
@@ -85,7 +85,7 @@ void GameManager::go()
             e->update();
         }
 
-        ball->startMovement(initEvent);
+        //ball->startMovement(initEvent);
         ball->update();
 
         window->render();

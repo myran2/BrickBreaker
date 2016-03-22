@@ -16,6 +16,7 @@ class GameManager
     private:
         Window* window;
         SDL_Event event;
+        SDL_Event initEvent;
 
         std::vector<Entity*> entities;
 };

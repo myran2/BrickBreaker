@@ -24,8 +24,10 @@ void GameManager::go()
     int frameCount = 0;
     fpsTimer.start();
 
+    ball->setOnPaddle();
+
     while (!quit)
-    {   
+    {
         capTimer.start();
 
         SDL_PollEvent(&event);
@@ -65,6 +67,7 @@ void GameManager::go()
                 break;
         }
 
+
         // divide the amount of frames displayed by the runtime in seconds to get the average fps
         float avgFps = frameCount / (fpsTimer.getTicks() / 1000.f);
         if (avgFps > 2000000)
@@ -75,12 +78,14 @@ void GameManager::go()
         for (Entity* e : entities)
         {
             // don't think this is that cpu intensive but I guess it could be
+
             if (ball->collidedWith(e))
                 ball->handleCollision(e);
 
             e->update();
         }
-        
+
+        ball->startMovement(initEvent);
         ball->update();
 
         window->render();

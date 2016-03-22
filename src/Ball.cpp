@@ -4,15 +4,16 @@
 Ball::Ball(Window* window, const std::string& textureName, int xPos, int yPos) :
     Entity(window, textureName, xPos, yPos)
 {
-    yVelocity = 5;
-    xVelocity = 5;
+    yVelocity = -5;
+    xVelocity = -5;
 }
+
 
 int lives = 3;
 
 void Ball::update()
 {
-	
+
     xPos += xVelocity;
     yPos += yVelocity;
 
@@ -34,8 +35,9 @@ void Ball::update()
     }
     if (yPos > 400)
     {
-		xPos= window->getWidth() / 2;
-		yPos= window->getHeight() / 2;
+		// xPos= window->getWidth() / 2;
+		// yPos= window->getHeight() / 2;
+    Ball::setOnPaddle();
 		lives--;
 		if(lives >= 0)
 		{
@@ -43,9 +45,9 @@ void Ball::update()
 		}
 		if(lives == 0)
 		{
-			yVelocity = 0;
-			xVelocity = 0;
-		}	
+      xPos= window->getWidth() / 2;
+  		yPos= window->getHeight() / 2;
+		}
 	}
     if (yPos > window->getHeight() - height)
     {
@@ -59,13 +61,35 @@ void Ball::update()
 
 void Ball::handleCollision(Entity* entity)
 {
-		
+
     yVelocity = -yVelocity;
     Log::info("Ball hit something!");
 }
 
 void Ball::setOnPaddle()
 {
-    //TODO: make function for setting the ball on the paddle
-    onPaddle = true;
+  xPos = 320; // initial x-position
+  yPos = 368; // initial y-position
+  xVelocity = 0;  // initial x-velocity
+  yVelocity = 0;  // initial y-velocity
+  onPaddle = true;  // ball is on paddle
+}
+
+void Ball::startMovement(SDL_Event initEvent)
+{
+
+  SDL_PollEvent(&initEvent);
+
+  switch(initEvent.type)
+  {
+    case SDL_KEYDOWN:
+      switch(initEvent.key.keysym.sym)
+      {
+        case SDLK_BACKSPACE:  // player presses backspace
+          yVelocity = -5;
+          xVelocity = -5;
+          break;
+      }
+      break;
+  }
 }

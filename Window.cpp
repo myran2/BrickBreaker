@@ -29,6 +29,8 @@ void Window::gameLoop()
     int xPos = 288;
     int yPos = 450;
     SDL_Texture* paddleTexture = loadTexture("paddle.bmp");
+    bool moveLeft = false;
+    bool moveRight = false;
     
     while (!quit)
     {
@@ -47,14 +49,31 @@ void Window::gameLoop()
                 switch (event.key.keysym.sym)
                 {
                     case SDLK_LEFT:
-                        xPos--;
+                        moveLeft = true;
                         break;
                     case SDLK_RIGHT:
-                        xPos++;
+                        moveRight = true;
                         break;
                 }
                 break;
+
+            case SDL_KEYUP:
+                switch (event.key.keysym.sym)
+                {
+                case SDLK_LEFT:
+                    moveLeft = false;
+                    break;
+                case SDLK_RIGHT:
+                    moveRight = false;
+                    break;
+                }
+                break;
         }
+
+        if (moveLeft)
+            xPos--;
+        if (moveRight)
+            xPos++;
 
         SDL_RenderClear(renderer);
         renderTexture(paddleTexture, xPos, yPos);
@@ -83,6 +102,8 @@ SDL_Texture* Window::loadTexture(const std::string &file)
         return NULL;
     }
 
+    // keep track of each texture we have loaded so we can remove them when we're done
+    textures.push_back(texture);
     return texture;
 }
 
@@ -97,7 +118,4 @@ void Window::renderTexture(SDL_Texture* texture, int xPos, int yPos)
 
     // actually renders the texture to the screen
     SDL_RenderCopy(renderer, texture, NULL, &destination);
-    
-    // keep track of each texture we have rendered so we can remove it when we're done
-    textures.push_back(texture);
 }

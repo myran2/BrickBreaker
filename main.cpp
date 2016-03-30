@@ -1,58 +1,67 @@
-#include <SDl2/SDL.h>
+#include <SDL2/SDL.h>
 #include <iostream>
 
-int main(int argc, char** argv)
+int main(int argc, char ** argv)
 {
-    if (SDL_Init(SDL_INIT_VIDEO) != 0)
-    {
-        std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
-        return 1;
-    }
-    std::cout << "Initialized SDL." << std::endl;
+    // variables
 
-    SDL_Window *win = SDL_CreateWindow("Brick Breaker", 100, 100, 640, 480, SDL_WINDOW_SHOWN);
-    if (!win)
-    {
-        std::cout << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
-        SDL_Quit();
-        return 1;
-    }
-
-    SDL_Renderer *ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    if (!ren)
-    {
-        SDL_DestroyWindow(win);
-        std::cout << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
-        SDL_Quit();
-        return 1;
-    }
-
-    //Our event structure
-    SDL_Event e;
     bool quit = false;
+    SDL_Event event;
+    int x = 288;
+    int y = 640;
+
+    // init SDL
+    SDL_Init(SDL_INIT_VIDEO);
+    SDL_Window * window = SDL_CreateWindow("Brick Breaker", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, 0);
+    SDL_Renderer * renderer = SDL_CreateRenderer(window, -1, 0);
+
+    SDL_Surface * image = SDL_LoadBMP("spaceship.bmp");
+    if (!image)
+    {
+        SDL_DestroyWindow(window);
+        std::cout << "SDL_CreateImage Error: " << SDL_GetError() << std::endl;
+        SDL_Quit();
+        return 1;
+    }
+    
+    SDL_Texture * texture = SDL_CreateTextureFromSurface(renderer, image);
+    if (!texture)
+    {
+        SDL_DestroyWindow(window);
+        std::cout << "SDL_CreateTexture Error: " << SDL_GetError() << std::endl;
+        SDL_Quit();
+        return 1;
+    }
+
+    SDL_FreeSurface(image);
+
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+
+    // handle events
     while (!quit)
     {
-        while (SDL_PollEvent(&e))
+        SDL_WaitEvent(&event);
+
+        switch (event.type)
         {
-            if (e.type == SDL_QUIT)
+            case SDL_QUIT:
                 quit = true;
-            
-            if (e.type == SDL_KEYDOWN)
-                quit = true;
-    
-            if (e.type == SDL_MOUSEBUTTONDOWN)
-                quit = true;
+                break;
         }
 
-        //Render the scene
-        SDL_RenderClear(ren);
-        //renderTexture(image, ren, x, y);
-        SDL_RenderPresent(ren);
+        SDL_Rect dstrect = { x, y, 64, 64 };
+
+        SDL_RenderClear(renderer);
+        SDL_RenderCopy(renderer, texture, NULL, &dstrect);
+        SDL_RenderPresent(renderer);
     }
 
+    // cleanup SDL
+
+    SDL_DestroyTexture(texture);
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
     SDL_Quit();
+
+    return 0;
 }
-
-
-
-

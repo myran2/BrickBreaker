@@ -8,7 +8,7 @@ int main(int argc, char ** argv)
     bool quit = false;
     SDL_Event event;
     int x = 288;
-    int y = 640;
+    int y = 288;
 
     // init SDL
     SDL_Init(SDL_INIT_VIDEO);
@@ -23,7 +23,7 @@ int main(int argc, char ** argv)
         SDL_Quit();
         return 1;
     }
-    
+
     SDL_Texture * texture = SDL_CreateTextureFromSurface(renderer, image);
     if (!texture)
     {
@@ -40,12 +40,22 @@ int main(int argc, char ** argv)
     // handle events
     while (!quit)
     {
-        SDL_WaitEvent(&event);
+        SDL_PollEvent(&event);
 
         switch (event.type)
         {
             case SDL_QUIT:
                 quit = true;
+                break;
+
+            case SDL_KEYDOWN:
+                switch (event.key.keysym.sym)
+                {
+                    case SDLK_LEFT:  x--; break;
+                    case SDLK_RIGHT: x++; break;
+                    case SDLK_UP:    y--; break;
+                    case SDLK_DOWN:  y++; break;
+                }
                 break;
         }
 

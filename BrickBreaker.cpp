@@ -1,4 +1,4 @@
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include <iostream>
 
 int main(int argc, char ** argv)
@@ -40,23 +40,24 @@ int main(int argc, char ** argv)
     // handle events
     while (!quit)
     {
+        SDL_Delay(20);
         SDL_PollEvent(&event);
 
         switch (event.type)
         {
-            case SDL_QUIT:
-                quit = true;
-                break;
+        case SDL_QUIT:
+            quit = true;
+            break;
 
-            case SDL_KEYDOWN:
-                switch (event.key.keysym.sym)
-                {
-                    case SDLK_LEFT:  x--; break;
-                    case SDLK_RIGHT: x++; break;
-                    case SDLK_UP:    y--; break;
-                    case SDLK_DOWN:  y++; break;
-                }
-                break;
+        case SDL_KEYDOWN:
+            switch (event.key.keysym.sym)
+            {
+            case SDLK_LEFT:  x--; break;
+            case SDLK_RIGHT: x++; break;
+            case SDLK_UP:    y--; break;
+            case SDLK_DOWN:  y++; break;
+            }
+            break;
         }
 
         SDL_Rect dstrect = { x, y, 64, 64 };

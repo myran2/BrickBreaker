@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include <vector>
+#include <string>
 
 class Window
 {

@@ -81,7 +81,7 @@ void Window::gameLoop()
     }
 }
 
-SDL_Texture* Window::loadTexture(const std::string &file)
+SDL_Texture* Window::loadTexture(const std::string& file)
 {
     SDL_Texture* texture = NULL;
     SDL_Surface* img = SDL_LoadBMP(file.c_str());

@@ -1,10 +1,45 @@
-default:
-	tar xf ubuntu-14.04_amd64_lib.tar
+EXE = BrickBreaker
 
-	g++ -Wall -g -Iinclude/SDL2 -Iinclude -std=c++11 -c src/BrickBreaker.cpp -o BrickBreaker.o
-	g++ -Wall -g -Iinclude/SDL2 -Iinclude -std=c++11 -c src/Window.cpp -o Window.o
+CFLAGS   = -g `sdl2-config --cflags`
+CXXFLAGS = -Wall -g `sdl2-config --cflags` -std=c++11
+LDFLAGS  = `sdl2-config --libs` \
+           -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lSDL2_gfx -lm
 
-	g++ -Llib -Wl,-rpath,lib BrickBreaker.o Window.o  -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lpthread -Wl,--no-undefined -lm -ldl -lpthread -lrt -o BrickBreaker
+INCLUDE = -I"/usr/include/SDL"
+
+# All C++ source files of the project
+CXXFILES   = $(shell find src -maxdepth 1 -type f -name '*.cpp')
+CXXOBJECTS = $(CXXFILES:.cpp=.o)
+
+SOURCES = $(CXXFILES)
+OBJECTS = $(CXXOBJECTS)
+
+ifdef V
+MUTE =
+VTAG = -v
+else
+MUTE = @
+endif
+
+all: $(EXE)
+	# Build successful!
+
+$(EXE): $(OBJECTS)
+	# Linking...
+	$(MUTE)$(CXX) $(OBJECTS) -o $(EXE) $(LDFLAGS)
+
+src/%.o: src/%.cpp
+	# Compiling $<...
+	$(MUTE)$(CXX) $(CXXFLAGS) $(INCLUDE) $< -c -o $@
+	$(BUILD)
+
+src/%.o: src/%.c
+	# Compiling $<...
+	$(MUTE)$(CC) $(CFLAGS) $(INCLUDE) $< -c -o $@
+
+run: all
+	$(MUTE)./$(EXE)
 
 clean:
-	rm -f *.o *~
+	# Cleaning...
+	-$(MUTE)rm -f $(EXE) $(OBJECTS)

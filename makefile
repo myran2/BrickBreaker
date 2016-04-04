@@ -1,45 +1,19 @@
-EXE = BrickBreaker
+#OBJS specifies which files to compile as part of the project
+OBJS = BrickBreaker.cpp Window.cpp
 
-CFLAGS   = -g `sdl2-config --cflags`
-CXXFLAGS = -Wall -g `sdl2-config --cflags` -std=c++11
-LDFLAGS  = `sdl2-config --libs` \
-           -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lSDL2_gfx -lm
+#CC specifies which compiler we're using
+CC = g++
 
-INCLUDE = -I"/usr/include/SDL"
+#COMPILER_FLAGS specifies the additional compilation options we're using
+# -w suppresses all warnings
+COMPILER_FLAGS = -Wall -std=c++11
 
-# All C++ source files of the project
-CXXFILES   = $(shell find src -maxdepth 1 -type f -name '*.cpp')
-CXXOBJECTS = $(CXXFILES:.cpp=.o)
+#LINKER_FLAGS specifies the libraries we're linking against
+LINKER_FLAGS = -lSDL2
 
-SOURCES = $(CXXFILES)
-OBJECTS = $(CXXOBJECTS)
+#OBJ_NAME specifies the name of our exectuable
+OBJ_NAME = BrickBreaker
 
-ifdef V
-MUTE =
-VTAG = -v
-else
-MUTE = @
-endif
-
-all: $(EXE)
-	# Build successful!
-
-$(EXE): $(OBJECTS)
-	# Linking...
-	$(MUTE)$(CXX) $(OBJECTS) -o $(EXE) $(LDFLAGS)
-
-src/%.o: src/%.cpp
-	# Compiling $<...
-	$(MUTE)$(CXX) $(CXXFLAGS) $(INCLUDE) $< -c -o $@
-	$(BUILD)
-
-src/%.o: src/%.c
-	# Compiling $<...
-	$(MUTE)$(CC) $(CFLAGS) $(INCLUDE) $< -c -o $@
-
-run: all
-	$(MUTE)./$(EXE)
-
-clean:
-	# Cleaning...
-	-$(MUTE)rm -f $(EXE) $(OBJECTS)
+#This is the target that compiles our executable
+all : $(OBJS)
+	$(CC) $(OBJS) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(OBJ_NAME)

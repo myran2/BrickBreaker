@@ -26,8 +26,8 @@ void Window::cleanupAndExit()
 void Window::gameLoop()
 {
     // TODO: move these out of here
-    int xPos = 288;
-    int yPos = 450;
+    int xPos = 0;
+    int yPos = 0;
     SDL_Texture* paddleTexture = loadTexture("paddle.bmp");
     bool moveLeft = false;
     bool moveRight = false;

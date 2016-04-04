@@ -6,10 +6,10 @@ CC = g++
 
 #COMPILER_FLAGS specifies the additional compilation options we're using
 # -w suppresses all warnings
-COMPILER_FLAGS = -Wall -std=c++11
+COMPILER_FLAGS = -Wall -std=c++11 $(shell sdl2-config --cflags)
 
 #LINKER_FLAGS specifies the libraries we're linking against
-LINKER_FLAGS = -lSDL2
+LINKER_FLAGS = $(shell sdl2-config --libs)
 
 #OBJ_NAME specifies the name of our exectuable
 OBJ_NAME = BrickBreaker

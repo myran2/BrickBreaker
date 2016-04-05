@@ -40,6 +40,9 @@ class Entity
         // update the entity's position and draw it to the window
         void update();
 
+        // removes the entity from the screen
+        void remove();
+
     private:
         Window* window;
         SDL_Texture* texture = NULL;

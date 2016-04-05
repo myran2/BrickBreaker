@@ -36,6 +36,9 @@ void GameManager::go()
             case SDLK_RIGHT:
                 paddle->startMoving(MOVE_RIGHT);
                 break;
+            case SDLK_SPACE:
+                paddle->remove();
+                break;
             }
             break;
 

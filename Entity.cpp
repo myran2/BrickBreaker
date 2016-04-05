@@ -52,6 +52,17 @@ void Entity::update()
     window->renderTexture(texture, xPos, yPos);
 }
 
+void Entity::remove()
+{
+    if (!texture)
+    {
+        std::cout << "Tried to delete non-existant texture!" << std::endl;
+        return;
+    }
+
+    SDL_DestroyTexture(texture);
+}
+
 void Entity::startMoving(int direction)
 {
     moveState |= direction;

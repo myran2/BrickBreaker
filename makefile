@@ -1,5 +1,5 @@
 #OBJS specifies which files to compile as part of the project
-OBJS = BrickBreaker.cpp Window.cpp
+OBJS = main.cpp Window.cpp
 
 #CC specifies which compiler we're using
 CC = g++

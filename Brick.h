@@ -7,7 +7,7 @@ class Brick : public Entity
 {
     public:
         Brick(Window* window, const std::string& textureName, int xPos, int yPos, int maxHealth);
-        //Brick(int maxHealth);
+
         int getHealth() { return health; }
         int getMaxHealth() { return maxHealth; }
 

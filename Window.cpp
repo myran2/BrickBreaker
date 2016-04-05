@@ -71,9 +71,9 @@ void Window::gameLoop()
         }
 
         if (moveLeft)
-            xPos--;
+            xPos-=11;
         if (moveRight)
-            xPos++;
+            xPos+=11;
 
         SDL_RenderClear(renderer);
         renderTexture(paddleTexture, xPos, yPos);

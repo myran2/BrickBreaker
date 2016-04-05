@@ -25,6 +25,7 @@ Entity::~Entity()
 
 void Entity::update()
 {
+    std::cout << "Updating entity position" << std::endl;
     if (isMoving(MOVE_UP))
         yPos -= moveRate;
 

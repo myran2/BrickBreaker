@@ -38,12 +38,12 @@ class Entity
         void stopMoving(int direction);
         
         // update the entity's position and draw it to the window
-        void update();
+        virtual void update();
 
         // removes the entity from the screen
         void remove();
 
-    private:
+    protected:
         Window* window;
         SDL_Texture* texture = NULL;
         const std::string textureName;

@@ -4,6 +4,7 @@
 #include <vector>
 #include "Window.h"
 #include "Entity.h"
+#include "Ball.h"
 
 class GameManager
 {

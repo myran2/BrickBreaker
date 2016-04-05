@@ -8,6 +8,8 @@ class Ball : public Entity
 public:
     Ball(Window* window, const std::string& textureName, int xPos, int yPos);
 
+    virtual void update();
+
 private:
     int xVelocity;
     int yVelocity;

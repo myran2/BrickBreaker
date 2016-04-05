@@ -1,4 +1,5 @@
 #include "GameManager.h"
+#include <iostream>
 
 GameManager::GameManager(Window* window):
     window(window)
@@ -14,6 +15,9 @@ void GameManager::go()
     paddle->setMoveRate(6);
     entities.push_back(paddle);
 
+    Ball* ball = new Ball(window, "ball.bmp", window->getWidth() / 2, window->getHeight() / 2);
+    entities.push_back(ball);
+    
     while (!quit)
     {
         // 15ms is an arbitrary value. Increasing the value will make the loop execute less often.
@@ -59,6 +63,7 @@ void GameManager::go()
 
         for (Entity* e : entities)
             e->update();
+        std::cout << std::endl;
 
         window->render();
     }

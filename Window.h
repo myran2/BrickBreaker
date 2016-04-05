@@ -1,23 +1,25 @@
+#ifndef _WINDOW_H
+#define _WINDOW_H
+
 #include <SDL.h>
-#include <vector>
 #include <string>
+
 
 class Window
 {
     public:
-        bool init(int width, int height);
+        Window(const std::string& title, int width, int height);
         void cleanupAndExit();
-        void gameLoop();
         SDL_Texture* loadTexture(const std::string &file);
         void renderTexture(SDL_Texture* texture, int xPos, int yPos);
 
-        SDL_Event event;
+        void clear() { SDL_RenderClear(renderer); }
+        void render() { SDL_RenderPresent(renderer); }
 
     private:
         SDL_Window* window;
         SDL_Renderer* renderer;
 
-        bool quit = false;
-
-        std::vector<SDL_Texture*> textures;
 };
+
+#endif

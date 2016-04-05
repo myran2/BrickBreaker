@@ -1,91 +1,34 @@
-#include "Window.h"
 #include <iostream>
+#include "Window.h"
+
 
 // Initializes the SDL window
-bool Window::init(int width, int height)
+Window::Window(const std::string& title, int width, int height)
 {
     // init SDL
     SDL_Init(SDL_INIT_VIDEO);
-    window = SDL_CreateWindow("Brick Breaker", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, 0);
+    window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, 0);
     renderer = SDL_CreateRenderer(window, -1, 0);
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
-    return true;
 }
 
 void Window::cleanupAndExit()
 {
-    for (auto texture : textures)
-        SDL_DestroyTexture(texture);
+    // this might crash stuff, not sure
+    //for (Entity* e : spawnedEntities)
+        //SDL_DestroyTexture(e->getTexture());
 
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
 }
 
-void Window::gameLoop()
-{
-    // TODO: move these out of here
-    int xPos = 0;
-    int yPos = 0;
-    SDL_Texture* paddleTexture = loadTexture("paddle.bmp");
-    bool moveLeft = false;
-    bool moveRight = false;
-    
-    while (!quit)
-    {
-        // 10ms is an arbitrary value. Increasing the value will make the loop execute less often.
-        SDL_Delay(10);
-        SDL_PollEvent(&event);
-
-        switch (event.type)
-        {
-            // if user clicks the red X
-            case SDL_QUIT:
-                quit = true;
-                break;
-
-            case SDL_KEYDOWN:
-                switch (event.key.keysym.sym)
-                {
-                    case SDLK_LEFT:
-                        moveLeft = true;
-                        break;
-                    case SDLK_RIGHT:
-                        moveRight = true;
-                        break;
-                }
-                break;
-
-            case SDL_KEYUP:
-                switch (event.key.keysym.sym)
-                {
-                case SDLK_LEFT:
-                    moveLeft = false;
-                    break;
-                case SDLK_RIGHT:
-                    moveRight = false;
-                    break;
-                }
-                break;
-        }
-
-        if (moveLeft)
-            xPos-=11;
-        if (moveRight)
-            xPos+=11;
-
-        SDL_RenderClear(renderer);
-        renderTexture(paddleTexture, xPos, yPos);
-        SDL_RenderPresent(renderer);
-    }
-}
-
 SDL_Texture* Window::loadTexture(const std::string& file)
 {
     SDL_Texture* texture = NULL;
     SDL_Surface* img = SDL_LoadBMP(file.c_str());
-    
+
     // if the texture fails to load
     if (!img)
     {
@@ -102,8 +45,6 @@ SDL_Texture* Window::loadTexture(const std::string& file)
         return NULL;
     }
 
-    // keep track of each texture we have loaded so we can remove them when we're done
-    textures.push_back(texture);
     return texture;
 }
 

@@ -8,6 +8,8 @@ Window::Window(const std::string& title, int width, int height)
     // init SDL
     SDL_Init(SDL_INIT_VIDEO);
     window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, 0);
+    this->width = width;
+    this->height = height;
     renderer = SDL_CreateRenderer(window, -1, 0);
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 

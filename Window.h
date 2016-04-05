@@ -16,9 +16,15 @@ class Window
         void clear() { SDL_RenderClear(renderer); }
         void render() { SDL_RenderPresent(renderer); }
 
+        int getWidth() { return width; }
+        int getHeight() { return height; }
+
     private:
         SDL_Window* window;
         SDL_Renderer* renderer;
+
+        int width;
+        int height;
 
 };
 

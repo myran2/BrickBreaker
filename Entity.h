@@ -6,11 +6,12 @@
 
 enum EntityMoveState
 {
-    MOVE_NONE = 0x00,
-    MOVE_UP = 0x01,
-    MOVE_DOWN = 0x02,
-    MOVE_LEFT = 0x04,
-    MOVE_RIGHT = 0x08
+    MOVE_NONE =  0x00,
+    MOVE_UP =    0x01,
+    MOVE_DOWN =  0x02,
+    MOVE_LEFT =  0x04,
+    MOVE_RIGHT = 0x08,
+    MOVE_ALL =   0x10
 };
 
 class Entity
@@ -36,6 +37,7 @@ class Entity
         // see EntityMoveState for options
         void stopMoving(int direction);
         
+        // update the entity's position and draw it to the window
         void update();
 
     private:
@@ -43,8 +45,14 @@ class Entity
         SDL_Texture* texture = NULL;
         const std::string textureName;
 
-        int xPos = 0;
-        int yPos = 0;
+        // the position of the top-left corner of the entity
+        int xPos;
+        int yPos;
+
+        // width and height of the entity's texture
+        int width;
+        int height;
+
         unsigned int moveState = MOVE_NONE;
         int moveRate = 0;
 };

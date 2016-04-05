@@ -10,6 +10,9 @@ Entity::Entity(Window* window, const std::string& textureName, int xPos, int yPo
     
     this->texture = window->loadTexture(textureName);
 
+    // store the texture's width and height
+    SDL_QueryTexture(texture, NULL, NULL, &width, &height);
+
     moveState = MOVE_NONE;
     moveRate = 1;
 }
@@ -33,6 +36,18 @@ void Entity::update()
 
     if (isMoving(MOVE_RIGHT))
         xPos += moveRate;
+
+    if (xPos < 0)
+        xPos = 0;
+
+    if (yPos < 0)
+        yPos = 0;
+
+    if (xPos > window->getWidth() - width)
+        xPos = window->getWidth() - width;
+
+    if (yPos > window->getHeight() - height)
+        yPos = window->getHeight() - height;
     
     window->renderTexture(texture, xPos, yPos);
 }

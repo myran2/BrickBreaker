@@ -10,7 +10,6 @@ Ball::Ball(Window* window, const std::string& textureName, int xPos, int yPos) :
 
 void Ball::update()
 {
-    std::cout << "Updating ball position" << std::endl;
     xPos += xVelocity;
     yPos += yVelocity;
 

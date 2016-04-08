@@ -57,7 +57,8 @@ bool Entity::collidedWith(Entity* entity)
     if (!entity)
         return false;
 
-    //SDL_Texture* colTexture = entity->getTexture();
+    // TODO: make sure 'entity' and 'this' are different before continuing
+
     SDL_Rect rect;
     rect.x = xPos;
     rect.y = yPos;

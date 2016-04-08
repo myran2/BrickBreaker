@@ -10,6 +10,9 @@ public:
 
     virtual void update();
 
+    // called when the ball hits something
+    void handleCollision(Entity* entity);
+
 private:
     int xVelocity;
     int yVelocity;

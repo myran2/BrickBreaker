@@ -24,6 +24,9 @@ class Entity
         int getX() { return xPos; }
         int getY() { return yPos; }
         int getMoveRate() { return moveRate; }
+        int getHeight() { return height; }
+        int getWidth() { return width; }
+
         // true if moving, false otherwise
         bool isMoving(int direction);
 

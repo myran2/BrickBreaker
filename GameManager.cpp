@@ -16,7 +16,7 @@ void GameManager::go()
     entities.push_back(paddle);
 
     Ball* ball = new Ball(window, "ball.bmp", window->getWidth() / 2, window->getHeight() / 2);
-    entities.push_back(ball);
+    //entities.push_back(ball);
     
     while (!quit)
     {
@@ -63,7 +63,15 @@ void GameManager::go()
         window->clear();
 
         for (Entity* e : entities)
+        {
+            // don't this this is that cpu intensive but I guess it could be
+            if (ball->collidedWith(e))
+                ball->handleCollision(e);
+
             e->update();
+        }
+
+        ball->update();
 
         window->render();
     }

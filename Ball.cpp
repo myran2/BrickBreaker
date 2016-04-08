@@ -33,3 +33,10 @@ void Ball::update()
     
     window->renderTexture(texture, xPos, yPos);
 }
+
+
+void Ball::handleCollision(Entity* entity)
+{
+    // TODO: actually do something about the collision
+    std::cout << "Ball hit something!" << std::endl;
+}

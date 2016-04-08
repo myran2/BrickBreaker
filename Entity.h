@@ -43,6 +43,9 @@ class Entity
         // removes the entity from the screen
         void remove();
 
+        // returns true if this entity is touching 'entity'
+        bool collidedWith(Entity* entity);
+
     protected:
         Window* window;
         SDL_Texture* texture = NULL;

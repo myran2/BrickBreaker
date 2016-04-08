@@ -52,6 +52,27 @@ void Entity::update()
     window->renderTexture(texture, xPos, yPos);
 }
 
+bool Entity::collidedWith(Entity* entity)
+{
+    if (!entity)
+        return false;
+
+    //SDL_Texture* colTexture = entity->getTexture();
+    SDL_Rect rect;
+    rect.x = xPos;
+    rect.y = yPos;
+    rect.h = height;
+    rect.w = width;
+
+    SDL_Rect rectCol;
+    rectCol.x = entity->getX();
+    rectCol.y = entity->getY();
+    rectCol.h = entity->getHeight();
+    rectCol.w = entity->getWidth();
+
+    return SDL_HasIntersection(&rect, &rectCol);
+}
+
 void Entity::remove()
 {
     if (!texture)

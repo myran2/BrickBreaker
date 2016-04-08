@@ -22,6 +22,7 @@ void GameManager::go()
     {
         // 15ms is an arbitrary value. Increasing the value will make the loop execute less often.
         //SDL_Delay(15);
+        
         SDL_PollEvent(&event);
 
         switch (event.type)
@@ -63,7 +64,6 @@ void GameManager::go()
 
         for (Entity* e : entities)
             e->update();
-        std::cout << std::endl;
 
         window->render();
     }

@@ -13,6 +13,9 @@ public:
     // called when the ball hits something
     void handleCollision(Entity* entity);
 
+    //called to place the ball on the paddle
+    void setOnPaddle();
+
 private:
     int xVelocity;  //left and right velocity
     int yVelocity;  //up and down velocity

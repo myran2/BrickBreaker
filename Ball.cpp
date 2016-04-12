@@ -30,7 +30,7 @@ void Ball::update()
         yPos = window->getHeight() - height;
         yVelocity = -yVelocity;
     }
-    
+
     window->renderTexture(texture, xPos, yPos);
 }
 
@@ -39,4 +39,9 @@ void Ball::handleCollision(Entity* entity)
 {
     // TODO: actually do something about the collision
     std::cout << "Ball hit something!" << std::endl;
+}
+
+void Ball::setOnPaddle()
+{
+  //TODO: make function for setting the ball on the paddle
 }

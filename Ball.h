@@ -14,8 +14,9 @@ public:
     void handleCollision(Entity* entity);
 
 private:
-    int xVelocity;
-    int yVelocity;
+    int xVelocity;  //left and right velocity
+    int yVelocity;  //up and down velocity
+    bool onPaddle;  //checks if the ball is on the paddle
 };
 
 #endif

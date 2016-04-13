@@ -64,3 +64,5 @@ stdafx.h
 targetver.h
 *.vcxproj
 *.filters
+
+*.log

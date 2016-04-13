@@ -1,5 +1,6 @@
-#include "GameManager.h"
 #include <iostream>
+#include "GameManager.h"
+#include "Log.h"
 
 GameManager::GameManager(Window* window):
     window(window)
@@ -10,6 +11,13 @@ GameManager::GameManager(Window* window):
 void GameManager::go()
 {
     bool quit = false;
+
+    // TODO: remove hardcoded logfile
+    if (!Log::init("Game.log", false))
+    {
+        std::cout << "Couldn't open Game.log!";
+        exit(1);
+    }
 
     Entity* paddle = new Entity(window, "paddle.bmp", 0, 0);
     paddle->setMoveRate(6);

@@ -1,5 +1,5 @@
 #include "Ball.h"
-#include <iostream>
+#include "Log.h"
 
 Ball::Ball(Window* window, const std::string& textureName, int xPos, int yPos) :
     Entity(window, textureName, xPos, yPos)
@@ -38,10 +38,11 @@ void Ball::update()
 void Ball::handleCollision(Entity* entity)
 {
     // TODO: actually do something about the collision
-    std::cout << "Ball hit something!" << std::endl;
+    Log::info("Ball hit something!");
 }
 
 void Ball::setOnPaddle()
 {
-  //TODO: make function for setting the ball on the paddle
+    //TODO: make function for setting the ball on the paddle
+    onPaddle = true;
 }

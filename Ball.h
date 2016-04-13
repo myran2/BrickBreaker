@@ -1,6 +1,7 @@
 #ifndef _BALL_H
 #define _BALL_H
 
+#include <iostream>
 #include "Entity.h"
 
 class Ball : public Entity

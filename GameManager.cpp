@@ -12,13 +12,6 @@ void GameManager::go()
 {
     bool quit = false;
 
-    // TODO: remove hardcoded logfile
-    if (!Log::init("Game.log", false))
-    {
-        std::cout << "Couldn't open Game.log!";
-        exit(1);
-    }
-
     Entity* paddle = new Entity(window, "paddle.bmp", 0, 0);
     paddle->setMoveRate(6);
     entities.push_back(paddle);

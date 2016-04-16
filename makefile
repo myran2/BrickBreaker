@@ -1,12 +1,12 @@
 #OBJS specifies which files to compile as part of the project
-OBJS = main.cpp Window.cpp Entity.cpp GameManager.cpp Brick.cpp Ball.cpp Log.cpp Audio.cpp
+OBJS = $(wildcard src/*.cpp)
+
 
 #CC specifies which compiler we're using
 CC = g++
 
 #COMPILER_FLAGS specifies the additional compilation options we're using
-# -w suppresses all warnings
-COMPILER_FLAGS = -Wall -std=c++11 $(shell sdl2-config --cflags)
+COMPILER_FLAGS = -Wall -std=c++11 $(shell sdl2-config --cflags) -I./src
 
 #LINKER_FLAGS specifies the libraries we're linking against
 LINKER_FLAGS = $(shell sdl2-config --libs)

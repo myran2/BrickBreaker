@@ -5,7 +5,7 @@ Ball::Ball(Window* window, const std::string& textureName, int xPos, int yPos) :
     Entity(window, textureName, xPos, yPos)
 {
     yVelocity = 1;
-    xVelocity = 0;
+    xVelocity = 1;
 }
 
 void Ball::update()
@@ -18,6 +18,11 @@ void Ball::update()
         xPos = 0;
         xVelocity = -xVelocity;
     }
+	if(xPos > 610)
+	{
+		xPos = 610;
+		xVelocity = -xVelocity;
+	}
 
     if (yPos < 0)
     {
@@ -37,6 +42,7 @@ void Ball::update()
 
 void Ball::handleCollision(Entity* entity)
 {
+		
     yVelocity = -yVelocity;
     Log::info("Ball hit something!");
 }

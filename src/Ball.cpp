@@ -8,8 +8,11 @@ Ball::Ball(Window* window, const std::string& textureName, int xPos, int yPos) :
     xVelocity = 5;
 }
 
+int lives = 3;
+
 void Ball::update()
 {
+	
     xPos += xVelocity;
     yPos += yVelocity;
 
@@ -29,7 +32,21 @@ void Ball::update()
         yPos = 0;
         yVelocity = -yVelocity;
     }
-
+    if (yPos > 400)
+    {
+		xPos= window->getWidth() / 2;
+		yPos= window->getHeight() / 2;
+		lives--;
+		if(lives >= 0)
+		{
+			Log::info("lives");
+		}
+		if(lives == 0)
+		{
+			yVelocity = 0;
+			xVelocity = 0;
+		}	
+	}
     if (yPos > window->getHeight() - height)
     {
         yPos = window->getHeight() - height;

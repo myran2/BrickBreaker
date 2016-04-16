@@ -5,6 +5,7 @@
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 520
+#define SCREEN_MAX_FPS 60
 
 int main(int argc, char ** argv)
 {
@@ -15,7 +16,7 @@ int main(int argc, char ** argv)
         exit(1);
     }
 
-    Window window("Brick Breaker", SCREEN_WIDTH, SCREEN_HEIGHT);
+    Window window("Brick Breaker", SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_MAX_FPS);
 
     GameManager manager(&window);
     

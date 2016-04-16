@@ -8,7 +8,7 @@
 class Window
 {
     public:
-        Window(const std::string& title, int width, int height);
+        Window(const std::string& title, int width, int height, int fps);
         void cleanupAndExit();
         SDL_Texture* loadTexture(const std::string &file);
         void renderTexture(SDL_Texture* texture, int xPos, int yPos);
@@ -18,6 +18,7 @@ class Window
 
         int getWidth() { return width; }
         int getHeight() { return height; }
+        int getMaxFps() { return maxFps; }
 
     private:
         SDL_Window* window;
@@ -25,6 +26,7 @@ class Window
 
         int width;
         int height;
+        int maxFps;
 
 };
 

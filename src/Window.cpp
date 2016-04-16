@@ -6,13 +6,14 @@
 
 
 // Initializes the SDL window
-Window::Window(const std::string& title, int width, int height)
+Window::Window(const std::string& title, int width, int height, int fps)
 {
     // init SDL
     SDL_Init(SDL_INIT_VIDEO);
     window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, 0);
     this->width = width;
     this->height = height;
+    this->maxFps = fps;
     renderer = SDL_CreateRenderer(window, -1, 0);
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
@@ -45,7 +46,6 @@ SDL_Texture* Window::loadTexture(const std::string& fileName)
     std::string resPath = "res";
     std::string filePath = "";
     filePath = resPath + PATH_SEP + fileName;
-    Log::info(filePath);
     
     SDL_Texture* texture = NULL;
     SDL_Surface* img = SDL_LoadBMP(filePath.c_str());

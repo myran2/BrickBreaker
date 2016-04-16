@@ -3,12 +3,21 @@
 
 #include <fstream>
 #include <iostream>
+#include <string>
 
+#ifndef _WIN32 
 #define CONSOLE_COLOR_RED     "\e[1;31m"
 #define CONSOLE_COLOR_YELLOW  "\e[1;33m"
 #define CONSOLE_COLOR_GREEN   "\e[0;32m"
 #define CONSOLE_COLOR_CYAN    "\e[1;36m"
 #define CONSOLE_COLOR_NONE    "\e[0m"
+#else
+#define CONSOLE_COLOR_RED     ""
+#define CONSOLE_COLOR_YELLOW  ""
+#define CONSOLE_COLOR_GREEN   ""
+#define CONSOLE_COLOR_CYAN    ""
+#define CONSOLE_COLOR_NONE    ""
+#endif
 
 #define PREFIX_ERROR  "Error: "
 #define PREFIX_WARN   "Warn:  "

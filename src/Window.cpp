@@ -1,4 +1,7 @@
 #include <iostream>
+#include <string>
+#include <sstream>
+#include "Log.h"
 #include "Window.h"
 
 
@@ -17,24 +20,40 @@ Window::Window(const std::string& title, int width, int height)
 
 void Window::cleanupAndExit()
 {
-    // this might crash stuff, not sure
-    //for (Entity* e : spawnedEntities)
-        //SDL_DestroyTexture(e->getTexture());
-
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
 }
 
-SDL_Texture* Window::loadTexture(const std::string& file)
+static std::string buildSDLError(const std::string& err)
 {
+    std::ostringstream stream;
+    stream << err << SDL_GetError();
+    return stream.str();
+}
+
+SDL_Texture* Window::loadTexture(const std::string& fileName)
+{
+// path seperators are different in windows and not-windows
+#ifdef _WIN32
+    const char PATH_SEP = '\\';
+#else
+    const char PATH_SEP = '/';
+#endif
+
+    //std::string filePath = SDL_GetBasePath();
+    std::string resPath = "res";
+    std::string filePath = "";
+    filePath = resPath + PATH_SEP + fileName;
+    Log::info(filePath);
+    
     SDL_Texture* texture = NULL;
-    SDL_Surface* img = SDL_LoadBMP(file.c_str());
+    SDL_Surface* img = SDL_LoadBMP(filePath.c_str());
 
     // if the texture fails to load
     if (!img)
     {
-        std::cout << "Window::loadTexture error: " << SDL_GetError() << std::endl;
+        Log::error(buildSDLError("Window::loadTexture error: "));
         return NULL;
     }
 
@@ -43,7 +62,7 @@ SDL_Texture* Window::loadTexture(const std::string& file)
 
     if (!texture)
     {
-        std::cout << "Window::loadTexture error: " << SDL_GetError() << std::endl;
+        Log::error(buildSDLError("Window::loadTexture error: "));
         return NULL;
     }
 

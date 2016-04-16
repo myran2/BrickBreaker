@@ -1,8 +1,8 @@
-#include "SDL_mixer.h"
+#include <SDL.h>
 #include <iostream>
 
 int audioEffectOne(){
-	Mix_Chunk *effectOne = NULL;
+	Mix_Chunk* effectOne = NULL;
 	effectOne = Mix_LoadWAV("effectOne.wav");
 	Mix_PlayChannel(-1, effectOne, 0);
 	//Error checking
@@ -19,7 +19,7 @@ int audioEffectOne(){
 	}
 }
 int audioEffectTwo(){
-	Mix_Chunk *effectTwo = NULL;
+	Mix_Chunk* effectTwo = NULL;
 	effectTwo = Mix_LoadWAV("effectTwo.wav");
 	Mix_PlayChannel(-1, effectTwo, 0);
 	//Error checking
@@ -35,6 +35,8 @@ int audioEffectTwo(){
 		effectTwo = NULL;
 	}
 }
+
+/*
 int main(){
 	std::cout << "PLAY: " << std::endl;
 	//Initialize mixer
@@ -58,4 +60,4 @@ int main(){
 	music = NULL;
 	Mix_CloseAudio();
 	return 0;
-}
+}*/

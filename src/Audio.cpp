@@ -1,14 +1,10 @@
 #include <SDL.h>
 #include <iostream>
-
+/*
 int audioEffectOne(){
 	Mix_Chunk* effectOne = NULL;
 	effectOne = Mix_LoadWAV("effectOne.wav");
 	Mix_PlayChannel(-1, effectOne, 0);
-	//Error checking
-	/*if(!effectOne) {
-    	printf("Mix_LoadMUS(\"effectTwo.wav\"): %s\n", Mix_GetError());
-	}*/
 	//to keep program running
 	int a = 0;
 	std::cin >> a;
@@ -18,14 +14,13 @@ int audioEffectOne(){
 		effectOne = NULL;
 	}
 }
+*/
+/*
 int audioEffectTwo(){
 	Mix_Chunk* effectTwo = NULL;
 	effectTwo = Mix_LoadWAV("effectTwo.wav");
 	Mix_PlayChannel(-1, effectTwo, 0);
 	//Error checking
-	/*if(!effectTwo) {
-    	printf("Mix_LoadMUS(\"effectTwo.wav\"): %s\n", Mix_GetError());
-	}*/
 	//to keep program running
 	int b = 0;
 	std::cin >> b;
@@ -35,7 +30,7 @@ int audioEffectTwo(){
 		effectTwo = NULL;
 	}
 }
-
+*/
 /*
 int main(){
 	std::cout << "PLAY: " << std::endl;

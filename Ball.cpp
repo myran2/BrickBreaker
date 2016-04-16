@@ -37,7 +37,7 @@ void Ball::update()
 
 void Ball::handleCollision(Entity* entity)
 {
-    // TODO: actually do something about the collision
+    yVelocity = -yVelocity;
     Log::info("Ball hit something!");
 }
 

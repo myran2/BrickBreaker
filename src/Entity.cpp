@@ -1,8 +1,11 @@
 #include <iostream>
+#include <string>
 #include "Entity.h"
+#include "Log.h"
 #include "Window.h"
 
-Entity::Entity(Window* window, const std::string& textureName, int xPos, int yPos)
+Entity::Entity(Window* window, const std::string& textureName, int xPos, int yPos):
+    textureName(textureName)
 {
     this->window = window;
     this->xPos = xPos;
@@ -15,11 +18,14 @@ Entity::Entity(Window* window, const std::string& textureName, int xPos, int yPo
 
     moveState = MOVE_NONE;
     moveRate = 1;
+
+    const std::string msg = "Created new entity with texture " + textureName + " at (" + std::to_string(xPos) + ", " + std::to_string(xPos) + ")";
+    Log::info(msg);
 }
 
 Entity::~Entity()
 {
-    std::cout << "Destroyed entity with texture" << std::endl;
+    Log::info("Destroyed entity with texure " + textureName);
     SDL_DestroyTexture(texture);
 }
 
@@ -78,7 +84,7 @@ void Entity::remove()
 {
     if (!texture)
     {
-        std::cout << "Tried to delete non-existant texture!" << std::endl;
+        Log::error("Tried to delete non-existant texture!");
         return;
     }
 

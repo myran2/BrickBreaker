@@ -21,13 +21,13 @@ void Log::toggleDebug()
 
 void Log::error(const std::string& msg)
 {
-    std::cout << CONSOLE_COLOR_RED << PREFIX_ERROR << msg << CONSOLE_COLOR_NONE << std::endl;
+    std::cerr << CONSOLE_COLOR_RED << PREFIX_ERROR << msg << CONSOLE_COLOR_NONE << std::endl;
     logFile << PREFIX_ERROR << msg << std::endl;
 }
 
 void Log::warn(const std::string& msg)
 {
-    std::cout << CONSOLE_COLOR_YELLOW << PREFIX_WARN << msg << CONSOLE_COLOR_NONE << std::endl;
+    std::cerr << CONSOLE_COLOR_YELLOW << PREFIX_WARN << msg << CONSOLE_COLOR_NONE << std::endl;
     logFile << PREFIX_WARN << msg << std::endl;
 }
 

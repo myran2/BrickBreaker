@@ -4,8 +4,8 @@
 Ball::Ball(Window* window, const std::string& textureName, int xPos, int yPos) :
     Entity(window, textureName, xPos, yPos)
 {
-    yVelocity = 1;
-    xVelocity = 1;
+    yVelocity = 5;
+    xVelocity = 5;
 }
 
 void Ball::update()

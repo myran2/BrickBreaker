@@ -12,8 +12,8 @@ void GameManager::go()
 {
     bool quit = false;
 
-    Entity* paddle = new Entity(window, "paddle.bmp", 0, 0);
-    paddle->setMoveRate(6);
+    Entity* paddle = new Entity(window, "paddle.bmp", 310, 400);
+    paddle->setMoveRate(1);
     entities.push_back(paddle);
 
     Ball* ball = new Ball(window, "ball.bmp", window->getWidth() / 2, window->getHeight() / 2);

@@ -4,7 +4,7 @@
 #include "Window.h"
 
 #define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 480
+#define SCREEN_HEIGHT 520
 
 int main(int argc, char ** argv)
 {

@@ -21,7 +21,7 @@ void GameManager::go()
     Timer fpsTimer;
     Timer capTimer;
 
-    int frameCount = 0;
+    uint32_t frameCount = 0;
     fpsTimer.start();
 
     //ball->setOnPaddle();
@@ -49,7 +49,8 @@ void GameManager::go()
                         paddle->startMoving(MOVE_RIGHT);
                         break;
                     case SDLK_SPACE:
-                        paddle->remove();
+                        ball->remove();
+                        ball = new Ball(window, "ball.bmp", window->getWidth() / 2, window->getHeight() / 2);
                         break;
                 }
                 break;
@@ -68,29 +69,30 @@ void GameManager::go()
         }
 
 
+        // TODO: add FPS counter to screen (only in debug mode?)
         // divide the amount of frames displayed by the runtime in seconds to get the average fps
-        float avgFps = frameCount / (fpsTimer.getTicks() / 1000.f);
+        /*float avgFps = frameCount / (fpsTimer.getTicks() / 1000.f);
         if (avgFps > 2000000)
-            avgFps = 0;
+            avgFps = 0;*/
 
         window->clear();
 
         for (Entity* e : entities)
         {
             // don't think this is that cpu intensive but I guess it could be
-
             if (ball->collidedWith(e))
                 ball->handleCollision(e);
 
             e->update();
         }
 
-        //ball->startMovement(initEvent);
         ball->update();
 
         window->render();
 
         frameCount++;
+
+        // if our fps it too high, wait here until we're back to ~60fps
         if (capTimer.getTicks() < (1000 / window->getMaxFps()))
             SDL_Delay((1000 / window->getMaxFps()) - capTimer.getTicks());
     }

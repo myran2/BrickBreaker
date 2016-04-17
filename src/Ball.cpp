@@ -13,46 +13,46 @@ int lives = 3;
 
 void Ball::update()
 {
-
+    // first move the ball according to its current velocity
     xPos += xVelocity;
     yPos += yVelocity;
+    // then we check to see if the ball is somewhere that it shouldn't be
 
+    // if the ball goes off the left side of the screen
     if (xPos < 0)
     {
         xPos = 0;
         xVelocity = -xVelocity;
     }
-	if(xPos > 610)
+
+    // if the ball goes off the right side of the screen
+	if(xPos > window->getWidth() - getWidth())
 	{
-		xPos = 610;
+		xPos = window->getWidth() - getWidth();
 		xVelocity = -xVelocity;
 	}
 
+    // if the ball goes off the top of the screen
     if (yPos < 0)
     {
         yPos = 0;
         yVelocity = -yVelocity;
     }
-    if (yPos > 400)
-    {
-		// xPos= window->getWidth() / 2;
-		// yPos= window->getHeight() / 2;
-    Ball::setOnPaddle();
-		lives--;
-		if(lives >= 0)
-		{
-			Log::info("lives");
-		}
-		if(lives == 0)
-		{
-      xPos= window->getWidth() / 2;
-  		yPos= window->getHeight() / 2;
-		}
-	}
+
+    // if the ball goes off the bottom of the screen
     if (yPos > window->getHeight() - height)
     {
-        yPos = window->getHeight() - height;
-        yVelocity = -yVelocity;
+        setOnPaddle();
+        lives--;
+
+        if (lives >= 0)
+            Log::info("Lives left: " + lives);
+
+        if (lives == 0)
+        {
+            xPos = window->getWidth() / 2;
+            yPos = window->getHeight() / 2;
+        }
     }
 
     window->renderTexture(texture, xPos, yPos);
@@ -68,28 +68,9 @@ void Ball::handleCollision(Entity* entity)
 
 void Ball::setOnPaddle()
 {
-  xPos = 320; // initial x-position
-  yPos = 368; // initial y-position
-  xVelocity = 0;  // initial x-velocity
-  yVelocity = 0;  // initial y-velocity
-  onPaddle = true;  // ball is on paddle
-}
-
-void Ball::startMovement(SDL_Event initEvent)
-{
-
-  SDL_PollEvent(&initEvent);
-
-  switch(initEvent.type)
-  {
-    case SDL_KEYDOWN:
-      switch(initEvent.key.keysym.sym)
-      {
-        case SDLK_BACKSPACE:  // player presses backspace
-          yVelocity = -5;
-          xVelocity = -5;
-          break;
-      }
-      break;
-  }
+    xPos = 320; // initial x-position
+    yPos = 368; // initial y-position
+    xVelocity = 0;  // initial x-velocity
+    yVelocity = 0;  // initial y-velocity
+    onPaddle = true;  // ball is on paddle
 }

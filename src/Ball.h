@@ -17,13 +17,9 @@ public:
     //called to place the ball on the paddle
     void setOnPaddle();
 
-    // called to initialize the movement of the ball
-    void startMovement(SDL_Event initEvent);
-
 private:
     int xVelocity;  //left and right velocity
     int yVelocity;  //up and down velocity
     bool onPaddle;  //checks if the ball is on the paddle
 };
-
 #endif

@@ -27,16 +27,16 @@ class Entity
         int getHeight() { return height; }
         int getWidth() { return width; }
 
-        // true if moving, false otherwise
+        // true if moving in the given direction, false otherwise
         bool isMoving(int direction);
 
         void setMoveRate(int rate) { moveRate = rate; }
 
         // moves the entity in 'direction'
-        // see EntityMoveState for options
+        // see EntityMoveState enum for options
         void startMoving(int direction);
 
-        //stops entity's movement in 'direction'
+        // stops entity's movement in 'direction'
         // see EntityMoveState for options
         void stopMoving(int direction);
         
@@ -48,6 +48,10 @@ class Entity
 
         // returns true if this entity is touching 'entity'
         bool collidedWith(Entity* entity);
+
+        // == operator overload so we can see if 2 entities equal each other
+        friend bool operator==(const Entity& left, const Entity& right);
+        friend bool operator!=(const Entity& left, const Entity& right) { return !(left == right); }
 
     protected:
         Window* window;

@@ -9,6 +9,8 @@ class Ball : public Entity
 public:
     Ball(Window* window, const std::string& textureName, int xPos, int yPos, Entity* linkedPaddle);
 
+    // called every frame
+    // updates the ball's current position
     virtual void update();
 
     // called when the ball hits something

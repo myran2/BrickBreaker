@@ -21,7 +21,7 @@ int main(int argc, char ** argv)
     GameManager manager(&window);
     
     // Actual game loop
-    manager.go();
+    manager.runGame();
 
     window.cleanupAndExit();
     return 0;

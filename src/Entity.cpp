@@ -60,10 +60,13 @@ void Entity::update()
 
 bool Entity::collidedWith(Entity* entity)
 {
+    // if the given entity doesn't exist, we aren't colliding with it
     if (!entity)
         return false;
 
-    // TODO: make sure 'entity' and 'this' are different before continuing
+    // can't collide with self
+    if (this == entity)
+        return false;
 
     SDL_Rect rect;
     rect.x = xPos;
@@ -77,7 +80,7 @@ bool Entity::collidedWith(Entity* entity)
     rectCol.h = entity->getHeight();
     rectCol.w = entity->getWidth();
 
-    return SDL_HasIntersection(&rect, &rectCol);
+    return SDL_HasIntersection(&rect, &rectCol) /* Prevent warning C4800 */!= 0;
 }
 
 void Entity::remove()
@@ -104,4 +107,11 @@ void Entity::stopMoving(int direction)
 bool Entity::isMoving(int direction)
 {
     return (moveState & direction) != 0;
+}
+
+bool operator==(const Entity& left, const Entity& right)
+{
+    return (left.xPos == right.xPos)
+        && (left.yPos == right.yPos)
+        && (left.textureName == right.textureName);
 }

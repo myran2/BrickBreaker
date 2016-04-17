@@ -17,14 +17,14 @@ void GameManager::go()
     paddle->setMoveRate(5);
     entities.push_back(paddle);
 
-    Ball* ball = new Ball(window, "ball.bmp", window->getWidth() / 2, window->getHeight() / 2);
+    Ball* ball = new Ball(window, "ball.bmp", window->getWidth() / 2, window->getHeight() / 2, paddle);
+    ball->setOnPaddle(true);
+
     Timer fpsTimer;
     Timer capTimer;
 
     uint32_t frameCount = 0;
     fpsTimer.start();
-
-    //ball->setOnPaddle();
 
     while (!quit)
     {
@@ -49,8 +49,7 @@ void GameManager::go()
                         paddle->startMoving(MOVE_RIGHT);
                         break;
                     case SDLK_SPACE:
-                        ball->remove();
-                        ball = new Ball(window, "ball.bmp", window->getWidth() / 2, window->getHeight() / 2);
+                        ball->detach();
                         break;
                 }
                 break;

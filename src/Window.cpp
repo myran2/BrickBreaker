@@ -16,7 +16,6 @@ Window::Window(const std::string& title, int width, int height, int fps)
     this->maxFps = fps;
     renderer = SDL_CreateRenderer(window, -1, 0);
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-
 }
 
 void Window::cleanupAndExit()

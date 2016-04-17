@@ -27,6 +27,7 @@ class GameManager
 
         Ball* ball;
         Mods* powerup;
+        Mods* powerdown;
 
         // runs ~60 times per second
         // this is where most of the game happens

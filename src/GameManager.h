@@ -5,6 +5,7 @@
 #include "Window.h"
 #include "Entity.h"
 #include "Ball.h"
+#include "Mods.h"
 
 enum GameState
 {
@@ -25,6 +26,7 @@ class GameManager
         SDL_Event event;
 
         Ball* ball;
+        Mods* powerup;
 
         // runs ~60 times per second
         // this is where most of the game happens

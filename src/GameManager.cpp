@@ -10,6 +10,7 @@ GameManager::GameManager(Window* window):
     _quit = false;
 }
 
+
 void GameManager::runGame()
 {
     Entity* paddle = new Entity(window, "paddle.bmp", 305, 400);
@@ -19,6 +20,10 @@ void GameManager::runGame()
     ball = new Ball(window, "ball.bmp", window->getWidth() / 2, window->getHeight() / 2, paddle);
     ball->setOnPaddle(true);
 
+    powerup = new Mods(window, "PowerUP.bmp", 305, 0 );	// makes a new power up object
+
+
+    
     Timer fpsTimer;
     Timer capTimer;
 
@@ -27,8 +32,9 @@ void GameManager::runGame()
 
     while (!_quit)
     {
+		
         capTimer.start();
-
+		
         switch (currentState)
         {
         case STATE_MENU:
@@ -43,7 +49,7 @@ void GameManager::runGame()
         window->render();
 
         frameCount++;
-
+		
         // if our fps it too high, wait here until we're back to ~60fps
         if (capTimer.getTicks() < (1000 / window->getMaxFps()))
             SDL_Delay((1000 / window->getMaxFps()) - capTimer.getTicks());
@@ -52,6 +58,9 @@ void GameManager::runGame()
 
 void GameManager::gameTick()
 {
+	
+	
+	
     SDL_PollEvent(&event);
 
     // paddle is always added to the entities vector first, so this is fine
@@ -102,6 +111,8 @@ void GameManager::gameTick()
 
         e->update();
     }
-
     ball->update();
+    powerup->update();
+
+   
 }

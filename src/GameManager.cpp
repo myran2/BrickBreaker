@@ -26,7 +26,7 @@ void GameManager::runGame()
     srand(time(NULL));
     randNum = rand() % 2;
     if(randNum == 0)
-      powerup = new Mods(window, "PowerUp.bmp", 305, 0 );	// makes a new power up object
+      powerup = new Mods(window, "PowerUP.bmp", 305, 0 );	// makes a new power up object
     else if(randNum == 1)
   	  powerdown = new Mods(window, "PowerDown.bmp", 305, 0 );//makes a new power down object
 

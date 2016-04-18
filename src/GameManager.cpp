@@ -23,6 +23,9 @@ void GameManager::runGame()
     ball = new Ball(window, "ball.bmp", window->getWidth() / 2, window->getHeight() / 2, paddle);
     ball->setOnPaddle(true);
 
+    ball2 = new Ball(window, "ball.bmp", window->getWidth() / 2, window->getHeight() / 2, paddle);
+    ball2->setOnPaddle(true);
+
     //used for random powerup spwaning
     srand(time(NULL));
     randNum = rand() % 2;
@@ -30,6 +33,9 @@ void GameManager::runGame()
       powerup = new Mods(window, "PowerUP.bmp", 305, 0 );	// makes a new power up object
     else if(randNum == 1)
   	  powerdown = new Mods(window, "PowerDown.bmp", 305, 0 );//makes a new power down object
+
+    upNum = rand() % 2;
+	downNum = rand() % 2;
 
     Timer fpsTimer;
     Timer capTimer;
@@ -130,34 +136,53 @@ void GameManager::gameTick()
         break;
     }
 
+/************** Code segment used for powerup implementation ***************/
     if(randNum == 0)
     {
         powerup->update();
-        if(powerup->collidedWith(paddle))
+        if(upNum == 1)
         {
-            powerup->doubleBalls();
-            powerup->remove();
+            if(powerup->collidedWith(paddle))
+            {
+              powerup->doubleBalls();
+              ball2->detach();
+              powerup->remove();
+            }
+            ball2->update();
+            ball2->outOfBounds();
+        }
+
+        else if(upNum == 0)
+        {
+            if(powerup->collidedWith(paddle))
+            {
+                powerup->largePaddle();
+                powerup->remove();
+            }
         }
     }
 
     if(randNum == 1)
     {
         powerdown->update();
-        if(powerdown->collidedWith(paddle))
+        if(downNum == 0)
         {
-            powerdown->slowerPaddle();
-            powerdown->remove();
+            if(powerdown->collidedWith(paddle))
+            {
+                powerdown->slowerPaddle();
+                powerdown->remove();
+            }
+        }
+        else if(downNum == 1)
+        {
+            if(powerdown->collidedWith(paddle))
+            {
+                powerdown->smallPaddle();
+                powerdown->remove();
+            }
         }
     }
-
-    for (Entity* e : entities)
-    {
-        // don't think this is that cpu intensive but I guess it could be
-        if (ball->collidedWith(e))
-            ball->handleCollision(e);
-
-        e->update();
-    }
+/***************************************************************************/
 
     ball->update();
 

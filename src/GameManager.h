@@ -30,9 +30,12 @@ class GameManager
         SDL_Event event;
 
         Ball* ball;
+        Ball* ball2;
         Mods* powerup;
         Mods* powerdown;
         int randNum;
+        int downNum;
+        int upNum;
 
         // runs ~60 times per second
         // this is where most of the game happens

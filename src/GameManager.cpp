@@ -22,6 +22,7 @@ void GameManager::runGame()
     ball = new Ball(window, "ball.bmp", window->getWidth() / 2, window->getHeight() / 2, paddle);
     ball->setOnPaddle(true);
 
+    //used for random powerup spwaning
     srand(time(NULL));
     randNum = rand() % 2;
     if(randNum == 0)
@@ -164,14 +165,22 @@ void GameManager::gameTick()
         if (ball->collidedWith(e))
             ball->handleCollision(e);
 
+        if(randNum == 0)
+        {
+          powerup->update();
+          if(powerup->collidedWith(e))
+          {
+            powerup->doubleBalls();
+            powerup->remove();
+          }
+        }
+
         e->update();
     }
 
     ball->update();
 
-    if(randNum == 0)
-      powerup->update();
-    else if(randNum == 1)
+    if(randNum == 1)
       powerdown->update();
 
 }

@@ -23,8 +23,19 @@ void Menu::tick()
             switch (currEvent.key.keysym.sym)
             {
             case SDLK_SPACE:
-            case SDLK_KP_ENTER:
-                // Play, go to settings, or close the game
+            case SDLK_RETURN:
+                switch (activeIndex)
+                {
+                case 0:
+                    manager->setState(STATE_PLAYING);
+                    break;
+                case 1: // TODO: NYI
+                    //manager->setState(STATE_SETTINGS);
+                    break;
+                case 2:
+                    manager->quit();
+                    break;
+                }
                 break;
             case SDLK_UP:
                 activeIndex--;

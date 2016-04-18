@@ -10,7 +10,7 @@
 GameManager::GameManager(Window* window):
     window(window)
 {
-    currentState = STATE_PLAYING;
+    currentState = STATE_MENU;
     _quit = false;
 }
 

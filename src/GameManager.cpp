@@ -3,13 +3,14 @@
 #include <array>
 #include "GameManager.h"
 #include "Log.h"
+#include "Menu.h"
 #include "Timer.h"
 
 
 GameManager::GameManager(Window* window):
     window(window)
 {
-    currentState = STATE_PLAYING;
+    currentState = STATE_MENU;
     _quit = false;
 }
 
@@ -36,6 +37,14 @@ void GameManager::runGame()
     uint32_t frameCount = 0;
     fpsTimer.start();
 
+    Menu mainMenu(this);
+    mainMenu.addEntry("Play");
+    mainMenu.addEntry("Settings");
+    mainMenu.addEntry("Exit");
+
+    Menu settingsMenu(this);
+    settingsMenu.addEntry("Back");
+
     while (!_quit)
     {
         SDL_PollEvent(&event);
@@ -47,7 +56,7 @@ void GameManager::runGame()
         switch (currentState)
         {
         case STATE_MENU:
-            menuTick();
+            mainMenu.tick(event);
             break;
         case STATE_SETTINGS:
             break;
@@ -55,7 +64,7 @@ void GameManager::runGame()
             gameTick();
             break;
         default:
-            Log::error("Recieved unhandled gamestate: " + std::to_string(currentState));
+            Log::warn("Recieved unhandled gamestate: " + std::to_string(currentState));
             break;
         }
 
@@ -64,7 +73,7 @@ void GameManager::runGame()
         if (avgFps > 2000000)
             avgFps = 0;
 
-        window->renderText(std::to_string((int)avgFps), 0, 0, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED);
+        window->renderText(std::to_string((int)avgFps), window->getWidth()-30, 0, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
 
         window->render();
 
@@ -77,45 +86,6 @@ void GameManager::runGame()
             //Log::info("Waiting " + std::to_string(waitTime) + " MS");
             SDL_Delay(waitTime);
         }
-    }
-}
-
-void GameManager::menuTick()
-{
-    switch (event.type)
-    {
-    // if user clicks the red X
-    case SDL_QUIT:
-        _quit = true;
-        return;
-    case SDL_KEYDOWN:
-        switch (event.key.keysym.sym)
-        {
-        case SDLK_SPACE:
-        case SDLK_KP_ENTER:
-            // Play, go to settings, or close the game
-            break;
-        case SDLK_UP:
-            // switch to the above menu option
-            break;
-        case SDLK_DOWN:
-            // switch to the below menu option
-            break;
-        }
-        break;
-    case SDL_MOUSEMOTION:
-        //int mouseX = event.motion.x;
-        //int mouseY = event.motion.y;
-        break;
-    }
-
-    std::array<std::string, 3> menuOptions = {{ "Play", "Settings", "Exit" }};
-    int xPos = 200;
-    int yPos = 100;
-    for (std::string option : menuOptions)
-    {
-        window->renderText(option, xPos, yPos, { 0, 0, 0 }, 50, FONT_RENDER_BLENDED);
-        yPos += 100;
     }
 }
 
@@ -160,31 +130,31 @@ void GameManager::gameTick()
         break;
     }
 
+    if(randNum == 0)
+    {
+        powerup->update();
+        if(powerup->collidedWith(paddle))
+        {
+            powerup->doubleBalls();
+            powerup->remove();
+        }
+    }
+
+    if(randNum == 1)
+    {
+        powerdown->update();
+        if(powerdown->collidedWith(paddle))
+        {
+            powerdown->slowerPaddle();
+            powerdown->remove();
+        }
+    }
+
     for (Entity* e : entities)
     {
         // don't think this is that cpu intensive but I guess it could be
         if (ball->collidedWith(e))
             ball->handleCollision(e);
-
-        if(randNum == 0)
-        {
-          powerup->update();
-          if(powerup->collidedWith(e))
-          {
-            powerup->doubleBalls();
-            powerup->remove();
-          }
-        }
-
-        if(randNum == 1)
-        {
-          powerdown->update();
-          if(powerdown->collidedWith(e))
-          {
-            powerdown->slowerPaddle();
-            powerdown->remove();
-          }
-        }
 
         e->update();
     }

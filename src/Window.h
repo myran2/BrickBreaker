@@ -13,12 +13,13 @@ const char PATH_SEP = '/';
 #endif
 
 #define FONT_NAME "UbuntuMono.ttf"
+#define FONT_STROKE_SIZE 2 
 
 enum FontRenderTypes
 {
     FONT_RENDER_SOLID = 0,
-    FONT_RENDER_BLENDED,
-    FONT_RENDER_SHADED
+    FONT_RENDER_BLENDED = 1,
+    FONT_RENDER_SHADED = 2
 };
 
 class Window
@@ -28,7 +29,7 @@ class Window
         void cleanupAndExit();
         SDL_Texture* loadTexture(const std::string &file);
         void renderTexture(SDL_Texture* texture, int xPos, int yPos);
-        void renderText(const std::string& msg, int xPos, int yPos, SDL_Color color, int size, int renderType);
+        void renderText(const std::string& msg, int xPos, int yPos, SDL_Color color, int size, int renderType, SDL_Color stroke);
 
         void clear() { SDL_RenderClear(renderer); }
         void render() { SDL_RenderPresent(renderer); }

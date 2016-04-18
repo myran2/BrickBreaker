@@ -20,6 +20,10 @@ class GameManager
         GameManager(Window* window);
 
         void runGame();
+        void quit() { _quit = true; }
+        void setState(int state) { currentState = state; }
+
+        Window* getWindow() { return window; }
 
     private:
         Window* window;
@@ -33,7 +37,6 @@ class GameManager
         // runs ~60 times per second
         // this is where most of the game happens
         void gameTick();
-        void menuTick();
 
         bool _quit;
 

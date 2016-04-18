@@ -77,7 +77,7 @@ void Window::renderTexture(SDL_Texture* texture, int xPos, int yPos)
     SDL_RenderCopy(renderer, texture, NULL, &destination);
 }
 
-void Window::renderText(const std::string& msg, int xPos, int yPos, SDL_Color color, int size, int renderType)
+void Window::renderText(const std::string& msg, int xPos, int yPos, SDL_Color color, int size, int renderType, SDL_Color bgColor = {0, 0, 0})
 {   
     std::string resPath = "res";
     std::string filePath = "";
@@ -100,9 +100,9 @@ void Window::renderText(const std::string& msg, int xPos, int yPos, SDL_Color co
     case FONT_RENDER_BLENDED:
         msgSurface = TTF_RenderText_Blended(font, msg.c_str(), color);
         break;
-    /*case FONT_RENDER_SHADED:
-        msgSurface = TTF_RenderText_Shaded(font, msg.c_str(), color);
-        break;*/
+    case FONT_RENDER_SHADED:
+        msgSurface = TTF_RenderText_Shaded(font, msg.c_str(), color, bgColor);
+        break;
     default:
         Log::warn("Got unknown render type (" + std::to_string(renderType) + "), using RENDER_SOLID.");
         msgSurface = TTF_RenderText_Solid(font, msg.c_str(), color);
@@ -112,12 +112,11 @@ void Window::renderText(const std::string& msg, int xPos, int yPos, SDL_Color co
     SDL_Texture* msgTexture = SDL_CreateTextureFromSurface(renderer, msgSurface);
     SDL_FreeSurface(msgSurface);
 
-    SDL_Rect destination;
-    destination.x = xPos;
-    destination.y = yPos;
-    SDL_QueryTexture(msgTexture, NULL, NULL, &destination.w, &destination.h);
+    SDL_Rect rect;
+    rect.x = xPos;
+    rect.y = yPos;
+    SDL_QueryTexture(msgTexture, NULL, NULL, &rect.w, &rect.h);
 
-    SDL_RenderCopy(renderer, msgTexture, NULL, &destination);
-
+    SDL_RenderCopy(renderer, msgTexture, NULL, &rect);
     TTF_CloseFont(font);
 }

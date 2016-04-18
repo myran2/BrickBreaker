@@ -26,6 +26,7 @@ class GameManager
         SDL_Event event;
 
         Ball* ball;
+        Ball* ball2;
         Mods* powerup;
         Mods* powerdown;
         int randNum;

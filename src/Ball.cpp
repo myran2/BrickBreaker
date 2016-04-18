@@ -24,7 +24,7 @@ void Ball::update()
         window->renderTexture(texture, xPos, yPos);
         return;
     }
-    
+
     // first move the ball according to its current velocity
     xPos += xVelocity;
     yPos += yVelocity;
@@ -90,6 +90,15 @@ void Ball::setOnPaddle(bool apply)
         Log::info("Freed ball from paddle.");
 
     onPaddle = apply;
+}
+
+void Ball::outOfBounds()
+{
+  if (yPos > window->getHeight() - height)
+  {
+    Log::info("Ball2 removed.");
+    remove();
+  }
 }
 
 void Ball::setLives(int count)

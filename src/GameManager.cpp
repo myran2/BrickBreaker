@@ -116,12 +116,12 @@ void GameManager::gameTick()
     }
     ball->update();
 
-    srand(time(NULL));
-    int x = rand()%2;
-    if(x==1)
-      powerup->update();
-    else if(x==0)
-      powerdown->update();
+    // srand(time(NULL));
+    // int x = rand()%2;
+    // if(x==1)
+    //   powerup->update();
+    // else if(x==0)
+    //   powerdown->update();
 
 
 }

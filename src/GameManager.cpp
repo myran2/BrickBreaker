@@ -178,25 +178,20 @@ void GameManager::gameTick()
         e->update();
     }
 
-    if(randNum == 0)
-    {
-		powerup->update();
-		if(powerup->collidedWith(paddle))
-		{
-			 if(upNum == 1)
-			{
+ 
+if(randNum == 0)
+        {
+          powerup->update();
+          if(powerup->collidedWith(paddle))
+          {
+			 if(upNum == 1)			
 				powerup->doubleBalls();
-				ball2->detach();
-				powerup->remove();
-			}
-		ball2->update();
-		ball2->outOfBounds();
-		}
+     
 			else if(upNum == 0)
 				powerup->largePaddle();
-			powerup->remove();
-    }
-
+            powerup->remove();
+          }
+        }
 
         if(randNum == 1)
         {

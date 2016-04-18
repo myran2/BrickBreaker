@@ -18,5 +18,9 @@ void Mods::update()
 void Mods::doubleBalls()
 {
   Log::info("Spawn another ball!");
+}
 
+void Mods::slowerPaddle()
+{
+  Log::info("Make the paddle slower!");
 }

@@ -175,12 +175,20 @@ void GameManager::gameTick()
           }
         }
 
+        if(randNum == 1)
+        {
+          powerdown->update();
+          if(powerdown->collidedWith(e))
+          {
+            powerdown->slowerPaddle();
+            powerdown->remove();
+          }
+        }
+
         e->update();
     }
 
     ball->update();
 
-    if(randNum == 1)
-      powerdown->update();
 
 }

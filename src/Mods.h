@@ -12,6 +12,7 @@ class Mods : public Entity
 
         virtual void update();
         void doubleBalls();
+        void slowerPaddle();
 
     private:
         int xVelocity;  //left and right velocity

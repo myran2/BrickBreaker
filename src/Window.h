@@ -32,6 +32,8 @@ class Window
         SDL_Window* window;
         SDL_Renderer* renderer;
 
+        TTF_Font* font;
+
         int width;
         int height;
         int maxFps;

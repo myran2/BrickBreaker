@@ -33,6 +33,7 @@ class GameManager
         // runs ~60 times per second
         // this is where most of the game happens
         void gameTick();
+        void menuTick();
 
         bool _quit;
 

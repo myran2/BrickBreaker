@@ -1,7 +1,7 @@
-#ifndef PHYSICS_H
-#define PHYSICS_H
+#ifndef _PHYSICS_H
+#define _PHYSICS_H
 
-class Physics
+class Physics     //do we even need the Physics class??
 {
 public:
   int getBounceAngle();  //retrieve the bounceAngle

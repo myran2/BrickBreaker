@@ -180,50 +180,50 @@ void GameManager::gameTick()
 
 
     if(randNum == 0)
-            {
-              powerup->update();
-              if(upNum == 1)
-              {
-                if(powerup->collidedWith(paddle))
-                {
-                  powerup->doubleBalls();
-                  ball2->detach();
-                  powerup->remove();
-                }
-                ball2->update();
-                ball2->outOfBounds();
-              }
+    {
+        powerup->update();
+        if(upNum == 1)
+        {
+			if(powerup->collidedWith(paddle))
+			{
+			  powerup->doubleBalls();
+			  ball2->detach();
+			  powerup->remove();
+			}
+			ball2->update();
+			ball2->outOfBounds();
+        }
 
-              else if(upNum == 0)
-              {
-                if(powerup->collidedWith(paddle))
-                {
-        				  powerup->largePaddle();
-                  powerup->remove();
-                }
-              }
-            }
+		else if(upNum == 0)
+		{
+			if(powerup->collidedWith(paddle))
+			{
+				powerup->largePaddle();
+				powerup->remove();
+			}
+		}
+    }
 
-            if(randNum == 1)
-            {
-              powerdown->update();
-    			    if(downNum == 0)
-              {
-                if(powerdown->collidedWith(paddle))
-                {
-                  powerdown->slowerPaddle();
-                  powerdown->remove();
-                }
-              }
-    			    else if(downNum == 1)
-              {
-                if(powerdown->collidedWith(paddle))
-                {
-                  powerdown->smallPaddle();
-                  powerdown->remove();
-                }
-              }
-            }
+	if(randNum == 1)
+	{
+		powerdown->update();
+		if(downNum == 0)
+		{
+			if(powerdown->collidedWith(paddle))
+			{
+				powerdown->slowerPaddle();
+				powerdown->remove();
+			}
+		}
+		else if(downNum == 1)
+		{
+			if(powerdown->collidedWith(paddle))
+			{
+				powerdown->smallPaddle();
+				powerdown->remove();
+			}
+		}
+	}
 
 
     ball->update();

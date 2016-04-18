@@ -7,7 +7,7 @@
 #define SCREEN_HEIGHT 520
 #define SCREEN_MAX_FPS 60
 
-int main(int argc, char ** argv)
+int main(int argc, char ** argv)  // start main
 {
     // TODO: remove hardcoded logfile
     if (!Log::init("Game.log", false))
@@ -16,13 +16,16 @@ int main(int argc, char ** argv)
         exit(1);
     }
 
+    // Initialize the game window
     Window window("Brick Breaker", SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_MAX_FPS);
 
     GameManager manager(&window);
-    
+
     // Actual game loop
     manager.runGame();
 
+    // Cleaning up the window
     window.cleanupAndExit();
+    
     return 0;
-}
+}                               // end main

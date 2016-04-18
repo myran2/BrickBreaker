@@ -33,6 +33,9 @@ void GameManager::runGame()
     else if(randNum == 1)
   	  powerdown = new Mods(window, "PowerDown.bmp", 305, 0 );//makes a new power down object
 
+    upNum = rand() % 2;
+	downNum = rand() % 2;
+	
     Timer fpsTimer;
     Timer capTimer;
 
@@ -177,26 +180,37 @@ void GameManager::gameTick()
 
     if(randNum == 0)
     {
-      powerup->update();
-      if(powerup->collidedWith(paddle))
-      {
-        powerup->doubleBalls();
-        ball2->detach();
-        powerup->remove();
-      }
-      ball2->update();
-      ball2->outOfBounds();
+		powerup->update();
+		if(powerup->collidedWith(e))
+		{
+			 if(upNum == 1)
+			{
+				powerup->doubleBalls();
+				ball2->detach();
+				powerup->remove();
+			}
+		ball2->update();
+		ball2->outOfBounds();
+		}
+			else if(upNum == 0)
+				powerup->largePaddle();
+			powerup->remove();
     }
+        
 
-    if(randNum == 1)
-    {
-      powerdown->update();
-      if(powerdown->collidedWith(paddle))
-      {
-        powerdown->slowerPaddle();
-        powerdown->remove();
-      }
-    }
+        if(randNum == 1)
+        {
+          powerdown->update();
+          if(powerdown->collidedWith(e))
+          {
+			if(downNum == 0)
+				powerdown->slowerPaddle();
+			else if(downNum == 1)
+				powerdown->smallPaddle();
+            powerdown->remove();
+          }
+        }
+
 
     ball->update();
 

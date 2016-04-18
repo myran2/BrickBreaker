@@ -30,6 +30,8 @@ class GameManager
         Mods* powerup;
         Mods* powerdown;
         int randNum;
+        int downNum;
+        int upNum;
 
         // runs ~60 times per second
         // this is where most of the game happens

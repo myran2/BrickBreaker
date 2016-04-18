@@ -10,9 +10,12 @@ class Mods : public Entity
     public:
         Mods(Window* window, const std::string& textureName, int xPos, int yPos);
 
+        
         virtual void update();
         void doubleBalls();
         void slowerPaddle();
+		void largePaddle();
+		void smallPaddle();
 
     private:
         int xVelocity;  //left and right velocity

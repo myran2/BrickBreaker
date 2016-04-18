@@ -35,7 +35,7 @@ void GameManager::runGame()
 
     upNum = rand() % 2;
 	downNum = rand() % 2;
-	
+
     Timer fpsTimer;
     Timer capTimer;
 
@@ -181,7 +181,7 @@ void GameManager::gameTick()
     if(randNum == 0)
     {
 		powerup->update();
-		if(powerup->collidedWith(e))
+		if(powerup->collidedWith(paddle))
 		{
 			 if(upNum == 1)
 			{
@@ -196,12 +196,12 @@ void GameManager::gameTick()
 				powerup->largePaddle();
 			powerup->remove();
     }
-        
+
 
         if(randNum == 1)
         {
           powerdown->update();
-          if(powerdown->collidedWith(e))
+          if(powerdown->collidedWith(paddle))
           {
 			if(downNum == 0)
 				powerdown->slowerPaddle();

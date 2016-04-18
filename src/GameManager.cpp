@@ -24,7 +24,7 @@ void GameManager::runGame()
     ball->setOnPaddle(true);
 
     powerup = new Mods(window, "PowerUp.bmp", 305, 0 );	// makes a new power up object
-	powerdown = new Mods(window, "PowerDown.bmp", 305, 0 );//makes a new power down object
+	  powerdown = new Mods(window, "PowerDown.bmp", 305, 0 );//makes a new power down object
 
     Timer fpsTimer;
     Timer capTimer;
@@ -117,9 +117,9 @@ void GameManager::gameTick()
     window->renderText("Test", 0, 0, { 0, 0, 0 });
 
     /*int x = rand()%2;
-    if(x==1)
-      powerup->update();
-    else if(x==0)
+    //   powerup->update();
+    // else if(x==0)
+    //   powerdown->update();
       powerdown->update();*/
 
 }

@@ -24,7 +24,7 @@ void GameManager::runGame()
     ball->setOnPaddle(true);
 
     powerup = new Mods(window, "PowerUp.bmp", 305, 0 );	// makes a new power up object
-	  powerdown = new Mods(window, "PowerDown.bmp", 305, 0 );//makes a new power down object
+	powerdown = new Mods(window, "PowerDown.bmp", 305, 0 );//makes a new power down object
 
     Timer fpsTimer;
     Timer capTimer;

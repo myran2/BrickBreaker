@@ -23,16 +23,18 @@ void GameManager::runGame()
     ball = new Ball(window, "ball.bmp", window->getWidth() / 2, window->getHeight() / 2, paddle);
     ball->setOnPaddle(true);
 
-    powerup = new Mods(window, "PowerUp.bmp", 305, 0 );	// makes a new power up object
-	powerdown = new Mods(window, "PowerDown.bmp", 305, 0 );//makes a new power down object
+    srand(time(NULL));
+    randNum = rand() % 2;
+    if(randNum == 0)
+      powerup = new Mods(window, "PowerUp.bmp", 305, 0 );	// makes a new power up object
+    else if(randNum == 1)
+  	  powerdown = new Mods(window, "PowerDown.bmp", 305, 0 );//makes a new power down object
 
     Timer fpsTimer;
     Timer capTimer;
 
     uint32_t frameCount = 0;
     fpsTimer.start();
-
-    srand((unsigned)time(NULL));
 
     while (!_quit)
     {
@@ -116,10 +118,9 @@ void GameManager::gameTick()
 
     window->renderText("Test", 0, 0, { 0, 0, 0 });
 
-    /*int x = rand()%2;
-    //   powerup->update();
-    // else if(x==0)
-    //   powerdown->update();
-      powerdown->update();*/
+    if(randNum == 0)
+      powerup->update();
+    else if(randNum == 1)
+      powerdown->update();
 
 }

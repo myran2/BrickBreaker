@@ -10,13 +10,13 @@
 GameManager::GameManager(Window* window):
     window(window)
 {
-    currentState = STATE_MENU;
+    currentState = STATE_PLAYING;
     _quit = false;
 }
 
 void GameManager::runGame()
 {
-    Entity* paddle = new Entity(window, "paddle.bmp", 305, 400);
+    Entity* paddle = new Entity(window, "paddle.bmp", 305, 490);
     paddle->setMoveRate(5);
     entities.push_back(paddle);
 
@@ -182,6 +182,7 @@ void GameManager::gameTick()
             if(powerdown->collidedWith(paddle))
             {
                 powerdown->slowerPaddle();
+                paddle->setMoveRate(3);
                 powerdown->remove();
             }
         }

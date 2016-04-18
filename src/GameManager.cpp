@@ -136,6 +136,18 @@ void GameManager::gameTick()
         break;
     }
 
+    for (Entity* e : entities)
+    {
+        // don't think this is that cpu intensive but I guess it could be
+        if (ball->collidedWith(e))
+            ball->handleCollision(e);
+
+        if(ball2->collidedWith(e))
+            ball2->handleCollision(e);
+
+        e->update();
+    }
+
 /************** Code segment used for powerup implementation ***************/
     if(randNum == 0)
     {
@@ -185,6 +197,4 @@ void GameManager::gameTick()
 /***************************************************************************/
 
     ball->update();
-
-
 }

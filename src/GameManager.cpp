@@ -169,6 +169,9 @@ void GameManager::gameTick()
         if (ball->collidedWith(e))
             ball->handleCollision(e);
 
+        if(ball2->collidedWith(e))
+            ball2->handleCollision(e);
+
         e->update();
     }
 

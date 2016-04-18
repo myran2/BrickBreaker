@@ -15,11 +15,13 @@ void Mods::update()
 	window->renderTexture(texture, xPos, yPos);
 }
 
+// function to spawn the other ball
 void Mods::doubleBalls()
 {
   Log::info("Spawn another ball!");
 }
 
+// function to make the paddle slower
 void Mods::slowerPaddle()
 {
   Log::info("Make the paddle slower!");

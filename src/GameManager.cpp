@@ -178,7 +178,7 @@ void GameManager::gameTick()
         e->update();
     }
 
-
+/************** Code segment used for powerup implementation ***************/
     if(randNum == 0)
     {
         powerup->update();
@@ -224,7 +224,7 @@ void GameManager::gameTick()
 			}
 		}
 	}
-
+/***************************************************************************/
 
     ball->update();
 

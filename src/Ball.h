@@ -25,6 +25,7 @@ public:
     void detach();
 
     void setLives(int count);
+    int getLives() { return lives; }
 
 private:
     int xVelocity;  //left and right velocity

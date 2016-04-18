@@ -104,12 +104,12 @@ void GameManager::menuTick()
         }
         break;
     case SDL_MOUSEMOTION:
-        int mouseX = event.motion.x;
-        int mouseY = event.motion.y;
+        //int mouseX = event.motion.x;
+        //int mouseY = event.motion.y;
         break;
     }
 
-    std::array<std::string, 3> menuOptions = { "Play", "Settings", "Exit" };
+    std::array<std::string, 3> menuOptions = {{ "Play", "Settings", "Exit" }};
     int xPos = 200;
     int yPos = 100;
     for (std::string option : menuOptions)
@@ -141,7 +141,8 @@ void GameManager::gameTick()
             paddle->startMoving(MOVE_RIGHT);
             break;
         case SDLK_SPACE:
-            ball->detach();
+            if (ball->isOnPaddle())
+                ball->detach();
             break;
         }
         break;

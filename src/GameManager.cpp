@@ -23,9 +23,8 @@ void GameManager::runGame()
     ball = new Ball(window, "ball.bmp", window->getWidth() / 2, window->getHeight() / 2, paddle);
     ball->setOnPaddle(true);
 
-    powerup = new Mods(window, "PowerUP.bmp", 305, 0 );	// makes a new power up object
-	  powerdown = new Mods(window, "PowerUP.bmp", 305, 0 );//makes a new power down object
-
+    powerup = new Mods(window, "PowerUp.bmp", 305, 0 );	// makes a new power up object
+	powerdown = new Mods(window, "PowerDown.bmp", 305, 0 );//makes a new power down object
 
     Timer fpsTimer;
     Timer capTimer;
@@ -33,9 +32,10 @@ void GameManager::runGame()
     uint32_t frameCount = 0;
     fpsTimer.start();
 
+    srand((unsigned)time(NULL));
+
     while (!_quit)
     {
-
         capTimer.start();
 
         switch (currentState)
@@ -61,9 +61,6 @@ void GameManager::runGame()
 
 void GameManager::gameTick()
 {
-
-
-
     SDL_PollEvent(&event);
 
     // paddle is always added to the entities vector first, so this is fine
@@ -114,14 +111,15 @@ void GameManager::gameTick()
 
         e->update();
     }
+
     ball->update();
 
-    srand(time(NULL));
-    int x = rand()%2;
+    window->renderText("Test", 0, 0, { 0, 0, 0 });
+
+    /*int x = rand()%2;
     if(x==1)
       powerup->update();
     else if(x==0)
-      powerdown->update();
-
+      powerdown->update();*/
 
 }

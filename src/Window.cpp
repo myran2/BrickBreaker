@@ -10,6 +10,7 @@ Window::Window(const std::string& title, int width, int height, int fps)
 {
     // init SDL
     SDL_Init(SDL_INIT_VIDEO);
+    TTF_Init();
     window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, 0);
     this->width = width;
     this->height = height;
@@ -34,14 +35,6 @@ static std::string buildSDLError(const std::string& err)
 
 SDL_Texture* Window::loadTexture(const std::string& fileName)
 {
-// path seperators are different in windows and not-windows
-#ifdef _WIN32
-    const char PATH_SEP = '\\';
-#else
-    const char PATH_SEP = '/';
-#endif
-
-    //std::string filePath = SDL_GetBasePath();
     std::string resPath = "res";
     std::string filePath = "";
     filePath = resPath + PATH_SEP + fileName;
@@ -79,4 +72,31 @@ void Window::renderTexture(SDL_Texture* texture, int xPos, int yPos)
 
     // actually renders the texture to the screen
     SDL_RenderCopy(renderer, texture, NULL, &destination);
+}
+
+void Window::renderText(const std::string& msg, int xPos, int yPos, SDL_Color color)
+{
+    std::string resPath = "res";
+    std::string filePath = "";
+    filePath = resPath + PATH_SEP + "UbuntuMono.ttf";
+    
+    TTF_Font* font = TTF_OpenFont(filePath.c_str(), 24);
+    if (!font)
+    {
+        Log::error(buildSDLError("Window::renderText error: "));
+        return;
+    }
+    
+    SDL_Surface* msgSurface = TTF_RenderText_Solid(font, msg.c_str(), color);
+    SDL_Texture* msgTexture = SDL_CreateTextureFromSurface(renderer, msgSurface);
+
+    SDL_FreeSurface(msgSurface);
+
+    SDL_Rect destination;
+    destination.x = xPos;
+    destination.y = yPos;
+    destination.h = 100;
+    destination.w = 100;
+
+    SDL_RenderCopy(renderer, msgTexture, NULL, &destination);
 }

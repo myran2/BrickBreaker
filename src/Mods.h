@@ -6,16 +6,14 @@
 
 class Mods : public Entity
 {
-public:
-    Mods(Window* window, const std::string& textureName, int xPos, int yPos);
+    public:
+        Mods(Window* window, const std::string& textureName, int xPos, int yPos);
 
-    virtual void update();
+        virtual void update();
 
-
-private:
-    int xVelocity;  //left and right velocity
-    int yVelocity;  //up and down velocity
-
-   
+    private:
+        int xVelocity;  //left and right velocity
+        int yVelocity;  //up and down velocity
 };
+
 #endif

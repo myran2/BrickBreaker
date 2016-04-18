@@ -49,6 +49,13 @@ void GameManager::runGame()
             break;
         }
 
+        // divide the amount of frames displayed by the runtime in seconds to get the average fps
+        float avgFps = frameCount / (fpsTimer.getTicks() / 1000.f);
+        if (avgFps > 2000000)
+            avgFps = 0;
+
+        window->renderText(std::to_string((int)avgFps), 0, 0, { 0, 0, 0 }, 25);
+
         window->render();
 
         frameCount++;
@@ -113,8 +120,6 @@ void GameManager::gameTick()
     }
 
     ball->update();
-
-    window->renderText("Test", 0, 0, { 0, 0, 0 });
 
     /*int x = rand()%2;
     //   powerup->update();

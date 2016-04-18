@@ -19,7 +19,7 @@ class Window
         void cleanupAndExit();
         SDL_Texture* loadTexture(const std::string &file);
         void renderTexture(SDL_Texture* texture, int xPos, int yPos);
-        void renderText(const std::string& msg, int xPos, int yPos, SDL_Color color);
+        void renderText(const std::string& msg, int xPos, int yPos, SDL_Color color, int size);
 
         void clear() { SDL_RenderClear(renderer); }
         void render() { SDL_RenderPresent(renderer); }

@@ -4,22 +4,18 @@
 #include <vector>
 #include "GameManager.h"
 
-struct MenuEntry
-{
-    std::string text;
-    bool active;
-};
-
 class Menu
 {
     public:
         Menu(GameManager* mgr);
-        void tick(SDL_Event event);
+        void tick();
         void addEntry(const std::string& text);
 
     private:
-        std::vector<MenuEntry> menuEntries;
+        std::vector<std::string> menuEntries;
         GameManager* manager;
+
+        int activeIndex;
 };
 
 #endif

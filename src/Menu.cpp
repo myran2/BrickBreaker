@@ -3,30 +3,40 @@
 Menu::Menu(GameManager* mgr) :
 manager(mgr)
 {
-
+    activeIndex = 0;
 }
 
-void Menu::tick(SDL_Event event)
-{
-    switch (event.type)
+void Menu::tick()
+{    
+    SDL_Event currEvent;
+    bool repeatKey = SDL_PollEvent(&currEvent) == 1;
+    
+    switch (currEvent.type)
     {
     // if user clicks the red X
     case SDL_QUIT:
         manager->quit();
         return;
     case SDL_KEYDOWN:
-        switch (event.key.keysym.sym)
+        if (repeatKey)
         {
-        case SDLK_SPACE:
-        case SDLK_KP_ENTER:
-            // Play, go to settings, or close the game
-            break;
-        case SDLK_UP:
-            // switch to the above menu option
-            break;
-        case SDLK_DOWN:
-            // switch to the below menu option
-            break;
+            switch (currEvent.key.keysym.sym)
+            {
+            case SDLK_SPACE:
+            case SDLK_KP_ENTER:
+                // Play, go to settings, or close the game
+                break;
+            case SDLK_UP:
+                activeIndex--;
+                if (activeIndex < 0)
+                    activeIndex = menuEntries.size() - 1;
+                break;
+            case SDLK_DOWN:
+                activeIndex++;
+                if (activeIndex > menuEntries.size() - 1)
+                    activeIndex = 0;
+                break;
+            }
         }
         break;
     case SDL_MOUSEMOTION:
@@ -37,21 +47,17 @@ void Menu::tick(SDL_Event event)
 
     int xPos = 200;
     int yPos = 100;
-    for (MenuEntry entry : menuEntries)
+    for (int i = 0; i < menuEntries.size(); i++)
     {
-        if (entry.active)
-            manager->getWindow()->renderText(entry.text, xPos, yPos, { 0, 0, 0 }, 50, FONT_RENDER_SHADED, {0, 48, 255});
+        if (i == activeIndex)
+            manager->getWindow()->renderText(menuEntries[i], xPos, yPos, { 0, 0, 0 }, 50, FONT_RENDER_SHADED, {0, 48, 255});
         else
-            manager->getWindow()->renderText(entry.text, xPos, yPos, { 0, 0, 0 }, 50, FONT_RENDER_BLENDED, {0, 0, 0});
+            manager->getWindow()->renderText(menuEntries[i], xPos, yPos, { 0, 0, 0 }, 50, FONT_RENDER_BLENDED, {0, 0, 0});
         yPos += 100;
     }
 }
 
 void Menu::addEntry(const std::string& text)
 {
-    MenuEntry entry;
-    entry.text = text;
-    entry.active = menuEntries.size() == 0;
-
-    menuEntries.push_back(entry);
+    menuEntries.push_back(text);
 }

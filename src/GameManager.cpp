@@ -53,8 +53,6 @@ void GameManager::runGame()
 
     while (!_quit)
     {
-        SDL_PollEvent(&event);
-
         window->clear();
 
         capTimer.start();
@@ -62,7 +60,7 @@ void GameManager::runGame()
         switch (currentState)
         {
         case STATE_MENU:
-            mainMenu.tick(event);
+            mainMenu.tick();
             break;
         case STATE_SETTINGS:
             break;
@@ -97,6 +95,8 @@ void GameManager::runGame()
 
 void GameManager::gameTick()
 {
+    SDL_PollEvent(&event);
+    
     // paddle is always added to the entities vector first, so this is fine
     Entity* paddle = entities[0];
 

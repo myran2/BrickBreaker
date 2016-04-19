@@ -94,6 +94,16 @@ void Entity::remove()
     SDL_DestroyTexture(texture);
 }
 
+void Entity::setTexture(const std::string& textureName)
+{
+    const std::string old = this->textureName;
+    this->texture = window->loadTexture(textureName);
+
+    // store the texture's width and height
+    SDL_QueryTexture(texture, NULL, NULL, &width, &height);
+    Log::info("Changed texture of entity from " + old + " to " + textureName);
+}
+
 void Entity::startMoving(int direction)
 {
     moveState |= direction;

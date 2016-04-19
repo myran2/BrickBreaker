@@ -12,7 +12,7 @@ class Mods : public Entity
 
         
         virtual void update();
-        void doubleBalls();
+        void fastPaddle();
         void slowerPaddle();
 		void largePaddle();
 		void smallPaddle();

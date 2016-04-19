@@ -16,9 +16,9 @@ void Mods::update()
 }
 
 // function to spawn the other ball
-void Mods::doubleBalls()
+void Mods::fastPaddle()
 {
-  Log::info("Spawn another ball!");
+  Log::info("Make the paddle faster!");
 }
 void Mods::largePaddle()
 {

@@ -89,7 +89,6 @@ void GameManager::runGame()
         if (avgFps > 2000000)
             avgFps = 0;
 
-        window->renderText("Lives: " + std::to_string(ball->getLives()), 0, 0, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
         window->renderText(std::to_string((int)avgFps), window->getWidth()-30, 0, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
 
         window->render();
@@ -199,7 +198,7 @@ void GameManager::gameTick()
     }
 
 /************** Code segment used for powerup implementation ***************/
-if(randNum == 0 && isPressed == true)    //anthony is gay
+if(randNum == 0 && isPressed == true)
 {
     mod->update();
         if(mod->collidedWith(paddle))
@@ -244,6 +243,7 @@ if(randNum == 2 && isPressed == true)
 /***************************************************************************/
 
     ball->update();
+    window->renderText("Lives: " + std::to_string(ball->getLives()), 0, 0, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
 }
 
 void GameManager::addEntity(Entity* e)

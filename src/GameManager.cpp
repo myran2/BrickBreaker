@@ -145,8 +145,8 @@ void GameManager::gameTick()
 
     if(ball->getLives() < 1)
     {
-        window->renderText("GAME OVER", window->getWidth()/3, window->getHeight()/4, {0,0,0}, 50, FONT_RENDER_BLENDED, {255,255,255});
-        window->renderText("Score: ", window->getWidth()/3, window->getHeight()/2, {0,0,0}, 50, FONT_RENDER_BLENDED, {255,255,255});
+        window->renderCenteredText("GAME OVER", window->getHeight()/4, {0,0,0}, 50, FONT_RENDER_BLENDED, {255,255,255});
+        window->renderCenteredText("Score: ", window->getHeight()/2, {0,0,0}, 50, FONT_RENDER_BLENDED, {255,255,255});
         switch (event.type)
         {
         // if user clicks the red X

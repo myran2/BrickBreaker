@@ -56,14 +56,13 @@ void Menu::tick()
         break;
     }
 
-    int xPos = 200;
     int yPos = 100;
     for (int i = 0; i < menuEntries.size(); i++)
     {
         if (i == activeIndex)
-            manager->getWindow()->renderText(menuEntries[i], xPos, yPos, { 0, 0, 0 }, 50, FONT_RENDER_SHADED, {0, 48, 255});
+            manager->getWindow()->renderCenteredText(menuEntries[i], yPos, { 0, 0, 0 }, 50, FONT_RENDER_SHADED, {0, 48, 255});
         else
-            manager->getWindow()->renderText(menuEntries[i], xPos, yPos, { 0, 0, 0 }, 50, FONT_RENDER_BLENDED, {0, 0, 0});
+            manager->getWindow()->renderCenteredText(menuEntries[i], yPos, { 0, 0, 0 }, 50, FONT_RENDER_BLENDED, {0, 0, 0});
         yPos += 100;
     }
 }

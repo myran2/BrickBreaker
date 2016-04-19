@@ -176,7 +176,6 @@ void GameManager::gameTick()
 
 
 	LevelLoader* loader = new LevelLoader(this);
-	Log::info(std::to_string(currentLevel));
 	if (currentLevel == 0)
 	{
 		loader->openMap("lvl2.txt");

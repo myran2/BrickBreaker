@@ -13,16 +13,16 @@ LevelLoader::LevelLoader(GameManager* gm)
 
 void LevelLoader::openMap(const std::string& mapName)
 {
-	Log::info("asdf");
+
 	string line;
 	ifstream myfile(mapName);
 
 	if (myfile.is_open())
 	{
-		int ypos = 15;
+		int ypos = 30;
 		while (getline(myfile, line))
 		{
-			int xpos = 15;
+			int xpos = 25;
 			while (line.size() > 0)
 			{
 				char hp = line.at(0);
@@ -30,15 +30,15 @@ void LevelLoader::openMap(const std::string& mapName)
 
 				if (health > 0)
 				{
-					gameManager->addEntity(new Brick(gameManager->getWindow(), "paddle.bmp", xpos, ypos, health));
+					gameManager->addEntity(new Brick(gameManager->getWindow(), "redBrick.bmp", xpos, ypos, health));
 					Log::info("added a brick");
 
 				}
 
 				line.erase(0, 1);
-				xpos += 30;
+				xpos += 100;
 			}
-			ypos += 15;
+			ypos += 30;
 		}
 		myfile.close();
 	}

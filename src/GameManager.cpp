@@ -218,12 +218,13 @@ void GameManager::gameTick()
         }
         break;
     }
-
+	bool collidedThisTick = false;
     for (Entity* e : entities)
     {
         // don't think this is that cpu intensive but I guess it could be
-        if ((ball->collidedWith(e)) && (e->isActive()))
+        if ((ball->collidedWith(e)) && (e->isActive())&&collidedThisTick==false)
         {
+			collidedThisTick = true;
             ball->handleCollision(e);
             if (e->getTypeId() == TYPEID_BRICK)
             {

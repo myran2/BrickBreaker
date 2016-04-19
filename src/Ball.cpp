@@ -112,7 +112,7 @@ void Ball::handleCollision(Entity* entity)
 
 		if (checkHorizontal > checkVertical)
 			yVelocity = -yVelocity;
-		else if (checkHorizontal - checkVertical < 2)
+		else if (checkHorizontal == checkVertical)
 		{
 			yVelocity = -yVelocity;
 			xVelocity = -xVelocity;
@@ -122,7 +122,7 @@ void Ball::handleCollision(Entity* entity)
 
 		Log::info("Vdiff: " + std::to_string(checkVertical));
 		Log::info("Hdiff: " + std::to_string(checkHorizontal));
-		//SDL_Delay(50);
+	//	SDL_Delay(50);
 	}
 
 	else

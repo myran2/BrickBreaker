@@ -5,7 +5,7 @@
 #include "Log.h"
 #include "Menu.h"
 #include "Timer.h"
-
+#include "levelLoader.h"
 
 GameManager::GameManager(Window* window):
     window(window)
@@ -25,6 +25,7 @@ void GameManager::runGame()
 
     ball2 = new Ball(window, "ball.bmp", window->getWidth() / 2, window->getHeight() / 2, paddle);
     ball2->setOnPaddle(true);
+	levelLoader* loader = new levelLoader(window, entities);
 
     //used for random powerup spwaning
     srand(time(NULL));

@@ -10,12 +10,14 @@ class levelLoader{
 	Window* window;
 	vector<Entity*> entities;
 
-	levelLoader(Window* win, vector<Entity*> ent) {
+	levelLoader(Window* win, vector<Entity*>& ent) 
+	{
 		window = win;
 		entities = ent;
 	}
 	
-	void openMap(std::string mapName) {
+	void openMap(std::string mapName) 
+	{
 		string line;
 		ifstream myfile(mapName);
 
@@ -30,9 +32,7 @@ class levelLoader{
 					char hp = line.at(0);
 					int health = hp - '0';
 					if (health > 0);
-						entities.push_back(new Brick(window, "paddle.bmp", xpos, ypos, health)));
-
-
+						entities.push_back(new Brick(window, "paddle.bmp", xpos, ypos, health));
 						line.erase(0, 1);
 						xpos += 30;
 				}
@@ -40,7 +40,5 @@ class levelLoader{
 			}
 			myfile.close();
 		}
-
-
 	}
 };

@@ -11,7 +11,8 @@ enum GameState
 {
     STATE_MENU = 0,
     STATE_PLAYING,
-    STATE_SETTINGS
+    STATE_HOWTOPLAY,
+    STATE_CREDITS
 };
 
 class GameManager
@@ -36,6 +37,7 @@ class GameManager
         int randNum;
         int downNum;
         int upNum;
+        bool isPressed = false;
 		int currentLevel;
 
         // runs ~60 times per second

@@ -55,11 +55,10 @@ void GameManager::runGame()
 
     Menu mainMenu(this);
     mainMenu.addEntry("Play");
-    mainMenu.addEntry("Settings");
+    mainMenu.addEntry("How to Play");
+    mainMenu.addEntry("Credits");
     mainMenu.addEntry("Exit");
 
-    Menu settingsMenu(this);
-    settingsMenu.addEntry("Back");
 	currentLevel = 0;
     while (!_quit)
     {
@@ -76,7 +75,9 @@ void GameManager::runGame()
             mainMenu.tick();
             break;
         }
-        case STATE_SETTINGS:
+        case STATE_HOWTOPLAY:
+            break;
+        case STATE_CREDITS:
             break;
         case STATE_PLAYING:
             gameTick();
@@ -111,8 +112,8 @@ void GameManager::gameTick()
     SDL_PollEvent(&event);
     if(ball->getLives() < 1)
     {
-        window->renderText("GAME OVER!", (window->getWidth()/2)-50, window->getHeight()/2, {0,0,0}, 50, FONT_RENDER_BLENDED, {255,255,255});
-        window->renderText("ANTHONY IS GAY!", window->getWidth()/2, window->getHeight()/2, {0,0,0}, 50, FONT_RENDER_BLENDED, {255,255,255});
+        window->renderText("GAME OVER", window->getWidth()/3, window->getHeight()/4, {0,0,0}, 50, FONT_RENDER_BLENDED, {255,255,255});
+        window->renderText("Score: ", window->getWidth()/3, window->getHeight()/2, {0,0,0}, 50, FONT_RENDER_BLENDED, {255,255,255});
         switch (event.type)
         {
         // if user clicks the red X
@@ -153,7 +154,10 @@ void GameManager::gameTick()
             break;
         case SDLK_SPACE:
             if (ball->isOnPaddle())
-                ball->detach();
+            {
+              ball->detach();
+            }
+            isPressed = true;
             break;
         }
         break;
@@ -191,7 +195,7 @@ void GameManager::gameTick()
     }
 
 /************** Code segment used for powerup implementation ***************/
-if(randNum == 0)    //anthony is gay
+if(randNum == 0 && isPressed == true)    //anthony is gay
 {
     mod->update();
         if(mod->collidedWith(paddle))
@@ -202,7 +206,7 @@ if(randNum == 0)    //anthony is gay
         }
 }
 
-if(randNum == 1)
+if(randNum == 1 && isPressed == true)
 {
   mod->update();
   if(mod->collidedWith(paddle))
@@ -213,7 +217,7 @@ if(randNum == 1)
   }
 }
 
-if(randNum == 2)
+if(randNum == 2 && isPressed == true)
 {
     mod->update();
         if(mod->collidedWith(paddle))
@@ -223,7 +227,7 @@ if(randNum == 2)
             mod->remove();
         }
     }
-  if(randNum == 3)
+  if(randNum == 3 && isPressed == true)
   {
       mod->update();
         if(mod->collidedWith(paddle))

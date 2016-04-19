@@ -4,6 +4,7 @@
 Ball::Ball(Window* window, const std::string& textureName, int xPos, int yPos, Entity* linkedPaddle) :
     Entity(window, textureName, xPos, yPos)
 {
+	this->id = "ball";
     this->linkedPaddle = linkedPaddle;
     lives = 3;
     yVelocity = 0;
@@ -69,21 +70,70 @@ void Ball::handleCollision(Entity* entity)
 {
     Log::info("Ball hit something!");
 
-
+	double totalSpeed = sqrt(xVelocity*xVelocity + yVelocity*yVelocity);
     double ballCenter = xPos + (width / 2);
     double entityCenter = entity->getX() + (entity->getWidth() / 2);
 	double ballY = yPos + (width / 2);
-	double entityY = entity->getX() + (entity->getWidth() / 2);
+	double entityY = entity->getY() + (entity->getWidth() / 2);
 	double verticalDifference = std::abs(ballY - entityY);
-	if(verticalDifference>20.0)
-		yVelocity = -yVelocity;
+	if (entity->getid().compare("brick")==0)
+	{
+		double checkRight = std::abs(entity->getX() - (xPos + width));
+		double checkLeft = std::abs((entity->getX() + entity->getWidth()) - xPos );
+		double checkHorizontal;
+		if (checkLeft < checkRight)
+		{
+			checkHorizontal = checkLeft;
+		}
+		else
+		{
+			checkHorizontal = checkRight;
+		}
 
+		double checkUp = std::abs((entity->getY() + entity->getHeight()) - yPos);
+		double checkDown = std::abs(entity->getY() - (yPos + height));
+		double checkVertical;
+		if (checkUp < checkDown)
+		{
+			checkVertical = checkUp;
+		}
+		else
+		{
+			checkVertical = checkDown;
+		}
+
+		if (checkHorizontal > checkVertical)
+			yVelocity = -yVelocity;
+		else if (checkHorizontal - checkVertical < 2)
+			{
+				yVelocity = -yVelocity;
+				xVelocity = -xVelocity;
+			}
+		else 
+			xVelocity = -xVelocity;
+
+		Log::info("Vdiff: "+std::to_string(checkVertical));
+		Log::info("Hdiff: " + std::to_string(checkHorizontal));
+		SDL_Delay(50);
+	}
+	else
+	{
+		double horizontalDifference = ballCenter - entityCenter;
+		totalSpeed += 1;
+
+		double w = entity->getWidth()/2.0;
+		double angle = horizontalDifference / w;
+		xVelocity = angle*totalSpeed*.9;
+		yVelocity = 0 - sqrt(totalSpeed*totalSpeed - xVelocity*xVelocity);
+		if (std::abs(yVelocity) < .8)
+			yVelocity = -1;
+	}
     // if the ball is on the right side of the paddle, make it bounce right
-    if (ballCenter > entityCenter)
+ /*   if (ballCenter > entityCenter)
         xVelocity = std::abs(xVelocity);
     // if the ball is on the left side of the paddle, make it bounce left
     else
-        xVelocity = -std::abs(xVelocity);
+        xVelocity = -std::abs(xVelocity);*/
 }
 
 void Ball::setOnPaddle(bool apply)

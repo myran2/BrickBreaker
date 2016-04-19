@@ -26,6 +26,7 @@ class Entity
         int getMoveRate() { return moveRate; }
         int getHeight() { return height; }
         int getWidth() { return width; }
+		std::string getid() { return id; }
 
         // updates the texture of the entity
         void setTexture(const std::string& textureName);
@@ -68,6 +69,9 @@ class Entity
         // width and height of the entity's texture
         int width;
         int height;
+
+		//an identifying string
+		std::string id;
 
         unsigned int moveState = MOVE_NONE;
         int moveRate = 0;

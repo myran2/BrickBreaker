@@ -3,7 +3,9 @@
 Brick::Brick(Window* window, const std::string& textureName, int xPos, int yPos, int maxHealth) :
 Entity(window, textureName, xPos, yPos)
 {
-    this->maxHealth = maxHealth;
+	this->id = "brick";
+
+	this->maxHealth = maxHealth;
     health = maxHealth;
 }
 

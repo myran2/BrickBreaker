@@ -12,4 +12,4 @@ powerUps, powerDowns, and levels of increasing difficulty.
 
 
 ### Contributors
-Henry Gordon, Aaron Hanuschak, Anthony Brugal, Erik Higginbotham, Iden Sessani, Kurt Weber
+Henry Gordon, Aaron Hanuschak, Anthony Brugal, Erik Higginbotham, Iden Sessani and Kurt Weber

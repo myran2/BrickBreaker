@@ -14,6 +14,14 @@ enum EntityMoveState
     MOVE_ALL =   0x10
 };
 
+enum TypeIDs
+{
+    TYPEID_ENTITY = 0,
+    TYPEID_BALL   = 1,
+    TYPEID_BRICK  = 2,
+    TYPEID_MOD    = 3
+};
+
 class Entity
 {
     public:
@@ -26,7 +34,7 @@ class Entity
         int getMoveRate() { return moveRate; }
         int getHeight() { return height; }
         int getWidth() { return width; }
-		std::string getid() { return id; }
+        int getTypeId() { return typeId; }
 
         // updates the texture of the entity
         void setTexture(const std::string& textureName);
@@ -76,8 +84,8 @@ class Entity
         int width;
         int height;
 
-		//an identifying string
-		std::string id;
+		// Used to identify the sublcass of the entity. See TypeIDs enum for options
+        int typeId;
 
         unsigned int moveState = MOVE_NONE;
         int moveRate = 0;

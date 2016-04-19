@@ -1,6 +1,7 @@
 #include <iostream>
 #include <time.h>
 #include <array>
+#include "Brick.h"
 #include "GameManager.h"
 #include "Log.h"
 #include "Menu.h"
@@ -187,17 +188,15 @@ void GameManager::gameTick()
             break;
         case SDLK_SPACE:
             if (ball->isOnPaddle())
-            {
-              ball->detach();
-            }
+                ball->detach();
             isPressed = true;
             break;
         case SDLK_ESCAPE:
-        if (repeatKey)
-        {
-            setState(STATE_MENU);
-            return;
-        }
+            if (repeatKey)
+            {
+                setState(STATE_MENU);
+                return;
+            }
         }
         break;
 
@@ -218,47 +217,52 @@ void GameManager::gameTick()
     {
         // don't think this is that cpu intensive but I guess it could be
         if (ball->collidedWith(e))
+        {
             ball->handleCollision(e);
+            if (e->getTypeId() == TYPEID_BRICK)
+                ((Brick*)e)->dealDamage(1);
+        }
 
         e->update();
     }
 
-/************** Code segment used for powerup implementation ***************/
-if(randNum == 0 && isPressed == true)
-{
-    mod->update();
+    /************** Code segment used for powerup implementation ***************/
+    if(randNum == 0 && isPressed == true)
+    {
+        mod->update();
         if(mod->collidedWith(paddle))
         {
-         mod->fastPaddle();
-         paddle->setMoveRate(7);
-         mod->remove();
-        }
-}
-
-if(randNum == 1 && isPressed == true)
-{
-  mod->update();
-  if(mod->collidedWith(paddle))
-  {
-    paddle->setTexture("paddle_big.bmp");
-    mod->largePaddle();
-    mod->remove();
-  }
-}
-
-if(randNum == 2 && isPressed == true)
-{
-    mod->update();
-        if(mod->collidedWith(paddle))
-        {
-            mod->slowerPaddle();
-            paddle->setMoveRate(3);
+            mod->fastPaddle();
+            paddle->setMoveRate(7);
             mod->remove();
         }
     }
-  if(randNum == 3 && isPressed == true)
-  {
-      mod->update();
+
+    if(randNum == 1 && isPressed == true)
+    {
+        mod->update();
+        if(mod->collidedWith(paddle))
+        {
+            paddle->setTexture("paddle_big.bmp");
+            mod->largePaddle();
+            mod->remove();
+        }
+    }
+
+    if(randNum == 2 && isPressed == true)
+    {
+        mod->update();
+            if(mod->collidedWith(paddle))
+            {
+                mod->slowerPaddle();
+                paddle->setMoveRate(3);
+                mod->remove();
+            }
+    }
+
+    if(randNum == 3 && isPressed == true)
+    {
+        mod->update();
         if(mod->collidedWith(paddle))
         {
             paddle->setTexture("paddle_small.bmp");
@@ -266,7 +270,7 @@ if(randNum == 2 && isPressed == true)
             mod->remove();
         }
     }
-/***************************************************************************/
+    /***************************************************************************/
 
     ball->update();
     window->renderText("Lives: " + std::to_string(ball->getLives()), 0, 0, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });

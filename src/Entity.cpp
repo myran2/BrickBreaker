@@ -11,7 +11,7 @@ Entity::Entity(Window* window, const std::string& textureName, int xPos, int yPo
     this->xPos = xPos;
     this->yPos = yPos;
 
-	this->id = "entity";
+    this->typeId = TYPEID_ENTITY;
     
     this->texture = window->loadTexture(textureName);
 

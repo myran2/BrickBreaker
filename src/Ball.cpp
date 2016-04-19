@@ -7,7 +7,7 @@
 Ball::Ball(Window* window, const std::string& textureName, int xPos, int yPos, Entity* linkedPaddle) :
     Entity(window, textureName, xPos, yPos)
 {
-	this->id = "ball";
+    this->typeId = TYPEID_BALL;
     this->linkedPaddle = linkedPaddle;
     lives = 3;
     yVelocity = 0;
@@ -84,7 +84,7 @@ void Ball::handleCollision(Entity* entity)
 	//double entityY = entity->getY() + (entity->getWidth() / 2);
 	//double verticalDifference = std::abs(ballY - entityY);
 
-	if (entity->getid().compare("brick")==0)
+	if (entity->getTypeId() == TYPEID_BRICK)
 	{
 		double checkRight = std::abs(entity->getX() - (xPos + width));
 		double checkLeft = std::abs((entity->getX() + entity->getWidth()) - xPos );
@@ -123,9 +123,8 @@ void Ball::handleCollision(Entity* entity)
 		Log::info("Vdiff: "+std::to_string(checkVertical));
 		Log::info("Hdiff: " + std::to_string(checkHorizontal));
 		SDL_Delay(50);
-
-        ((Brick*)entity)->dealDamage(1);
 	}
+
 	else
 	{
 		double horizontalDifference = ballCenter - entityCenter;
@@ -138,12 +137,6 @@ void Ball::handleCollision(Entity* entity)
 		if (std::abs(yVelocity) < .8)
 			yVelocity = -1;
 	}
-    // if the ball is on the right side of the paddle, make it bounce right
- /*   if (ballCenter > entityCenter)
-        xVelocity = std::abs(xVelocity);
-    // if the ball is on the left side of the paddle, make it bounce left
-    else
-        xVelocity = -std::abs(xVelocity);*/
 }
 
 void Ball::setOnPaddle(bool apply)

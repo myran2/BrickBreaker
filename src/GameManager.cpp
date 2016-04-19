@@ -58,6 +58,9 @@ void GameManager::initGame()
     upNum = rand() % 2;
     downNum = rand() % 2;
 
+    entities = std::vector<Entity*>();
+    entities.push_back(paddle);
+
     LevelLoader* loader = new LevelLoader(this);
     switch (currentLevel)
     {

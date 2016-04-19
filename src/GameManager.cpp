@@ -38,7 +38,9 @@ void GameManager::initGame()
     paddle->setMoveRate(8);
     paddle->setTexture("paddle.bmp");
     paddle->setX(305);
-    paddle->setY(490);   
+    paddle->setY(490);
+    paddle->stopMoving(MOVE_LEFT);
+    paddle->stopMoving(MOVE_RIGHT);
 
 
     ball = new Ball(window, "ball.png", window->getWidth() / 2, window->getHeight() / 2, paddle);

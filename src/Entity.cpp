@@ -35,6 +35,9 @@ Entity::~Entity()
 
 void Entity::update()
 {
+    if (!isActive())
+        return;
+    
     if (isMoving(MOVE_UP))
         yPos -= moveRate;
 

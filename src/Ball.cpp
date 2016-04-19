@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "Ball.h"
 #include "Log.h"
 

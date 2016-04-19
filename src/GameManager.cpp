@@ -37,8 +37,6 @@ void GameManager::runGame()
     ball = new Ball(window, "ball.bmp", window->getWidth() / 2, window->getHeight() / 2, paddle);
     ball->setOnPaddle(true);
 
-	LevelLoader* loader = new LevelLoader(this);
-
     //used for random powerup spwaning
     srand(time(NULL));
     randNum = rand() % 4;

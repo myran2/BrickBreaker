@@ -32,7 +32,6 @@ class GameManager
         SDL_Event event;
 
         Ball* ball;
-        Ball* ball2;
         Mods* mod;
         int randNum;
         int downNum;

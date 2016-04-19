@@ -174,12 +174,10 @@ if(randNum == 0)    //anthony is gay
     mod->update();
         if(mod->collidedWith(paddle))
         {
-          mod->doubleBalls();
-          ball2->detach();
-          mod->remove();
+         mod->fastPaddle();
+         paddle->setMoveRate(7);
+         mod->remove();
         }
-        ball2->update();
-        ball2->outOfBounds();
 }
 
 if(randNum == 1)

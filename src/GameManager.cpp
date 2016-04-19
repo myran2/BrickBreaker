@@ -1,6 +1,7 @@
 #include <iostream>
 #include <time.h>
 #include <array>
+#include <SDL_mixer.h>
 #include "GameManager.h"
 #include "Log.h"
 #include "Menu.h"
@@ -16,6 +17,20 @@ GameManager::GameManager(Window* window):
 
 void GameManager::runGame()
 {
+    Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096);
+    Mix_Music *music = NULL;
+    std::string resPath = "res";
+    std::string filePath = "";
+    filePath = resPath + PATH_SEP + "backgroundmusic.wav";
+
+    music = Mix_LoadMUS(filePath.c_str());
+    
+    if(!music)
+        // TODO: Adapt this to 
+        printf("Mix_LoadMUS(\"backgroundmusic.wav\"): %s\n", Mix_GetError());
+
+    Mix_PlayMusic(music, -1);
+
     Entity* paddle = new Entity(window, "paddle.bmp", 305, 490);
     paddle->setMoveRate(5);
     entities.push_back(paddle);
@@ -23,17 +38,14 @@ void GameManager::runGame()
     ball = new Ball(window, "ball.bmp", window->getWidth() / 2, window->getHeight() / 2, paddle);
     ball->setOnPaddle(true);
 
-    ball2 = new Ball(window, "ball.bmp", window->getWidth() / 2, window->getHeight() / 2, paddle);
+    ball2 = new Ball(window, "ball2.bmp", window->getWidth() / 2, window->getHeight() / 2, paddle);
     ball2->setOnPaddle(true);
 	levelLoader* loader = new levelLoader(window, entities);
 
     //used for random powerup spwaning
     srand(time(NULL));
-    randNum = rand() % 2;
-    if(randNum == 0)
-      powerup = new Mods(window, "PowerUP.bmp", 305, 0 );	// makes a new power up object
-    else if(randNum == 1)
-  	  powerdown = new Mods(window, "PowerDown.bmp", 305, 0 );//makes a new power down object
+    randNum = rand() % 4;
+    mod = new Mods(window, "PowerUP.bmp", 305, 0 );//makes a new power down object
 
     upNum = rand() % 2;
 	downNum = rand() % 2;
@@ -61,8 +73,12 @@ void GameManager::runGame()
         switch (currentState)
         {
         case STATE_MENU:
+        {
+            SDL_Texture* bgTexture = window->loadTexture("bg.bmp");
+            window->renderTexture(bgTexture, 0, 0);
             mainMenu.tick();
             break;
+        }
         case STATE_SETTINGS:
             break;
         case STATE_PLAYING:
@@ -97,7 +113,7 @@ void GameManager::runGame()
 void GameManager::gameTick()
 {
     SDL_PollEvent(&event);
-    
+
     // paddle is always added to the entities vector first, so this is fine
     Entity* paddle = entities[0];
 
@@ -141,7 +157,10 @@ void GameManager::gameTick()
     {
         // don't think this is that cpu intensive but I guess it could be
         if (ball->collidedWith(e))
+        {
             ball->handleCollision(e);
+
+        }
 
         if(ball2->collidedWith(e))
             ball2->handleCollision(e);
@@ -150,50 +169,46 @@ void GameManager::gameTick()
     }
 
 /************** Code segment used for powerup implementation ***************/
-    if(randNum == 0)
-    {
-        powerup->update();
-        if(upNum == 1)
+if(randNum == 0)    //anthony is gay
+{
+    mod->update();
+        if(mod->collidedWith(paddle))
         {
-            if(powerup->collidedWith(paddle))
-            {
-              powerup->doubleBalls();
-              ball2->detach();
-              powerup->remove();
-            }
-            ball2->update();
-            ball2->outOfBounds();
+          mod->doubleBalls();
+          ball2->detach();
+          mod->remove();
         }
+        ball2->update();
+        ball2->outOfBounds();
+}
 
-        else if(upNum == 0)
+if(randNum == 1)
+{
+  mod->update();
+  if(mod->collidedWith(paddle))
+  {
+    mod->largePaddle();
+    mod->remove();
+  }
+}
+
+if(randNum == 2)
+{
+    mod->update();
+        if(mod->collidedWith(paddle))
         {
-            if(powerup->collidedWith(paddle))
-            {
-                powerup->largePaddle();
-                powerup->remove();
-            }
+            mod->slowerPaddle();
+            paddle->setMoveRate(3);
+            mod->remove();
         }
     }
-
-    if(randNum == 1)
-    {
-        powerdown->update();
-        if(downNum == 0)
+  if(randNum == 3)
+  {
+      mod->update();
+        if(mod->collidedWith(paddle))
         {
-            if(powerdown->collidedWith(paddle))
-            {
-                powerdown->slowerPaddle();
-                paddle->setMoveRate(3);
-                powerdown->remove();
-            }
-        }
-        else if(downNum == 1)
-        {
-            if(powerdown->collidedWith(paddle))
-            {
-                powerdown->smallPaddle();
-                powerdown->remove();
-            }
+            mod->smallPaddle();
+            mod->remove();
         }
     }
 /***************************************************************************/

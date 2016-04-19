@@ -31,8 +31,7 @@ class GameManager
 
         Ball* ball;
         Ball* ball2;
-        Mods* powerup;
-        Mods* powerdown;
+        Mods* mod;
         int randNum;
         int downNum;
         int upNum;

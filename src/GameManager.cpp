@@ -23,7 +23,7 @@ void GameManager::runGame()
     filePath = resPath + PATH_SEP + "backgroundmusic.wav";
 
     music = Mix_LoadMUS(filePath.c_str());
-    
+
     if(!music)
         // TODO: Adapt this to Log::Error
         printf("Mix_LoadMUS(\"backgroundmusic.wav\"): %s\n", Mix_GetError());
@@ -215,6 +215,7 @@ if(randNum == 1)
   mod->update();
   if(mod->collidedWith(paddle))
   {
+    paddle->setTexture("paddle_big.bmp");
     mod->largePaddle();
     mod->remove();
   }
@@ -235,6 +236,7 @@ if(randNum == 2)
       mod->update();
         if(mod->collidedWith(paddle))
         {
+            paddle->setTexture("paddle_small.bmp");
             mod->smallPaddle();
             mod->remove();
         }

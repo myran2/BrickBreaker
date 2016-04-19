@@ -103,7 +103,13 @@ void GameManager::runGame()
             break;
         }
         case STATE_CREDITS:
+        {
+            SDL_Texture* bgTexture = window->loadTexture("bg.bmp");
+            window->renderTexture(bgTexture, 0, 0);
+            printCredits();
+            listenForQuit();
             break;
+        }
         case STATE_PLAYING:
             gameTick();
             break;
@@ -273,6 +279,16 @@ void GameManager::setState(int state)
 {
     Log::info("Set state to " + std::to_string(state));
     currentState = state;
+}
+
+void GameManager::printCredits()
+{
+    window->renderCenteredText("Henry Gordon", 20, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
+    window->renderCenteredText("Anthony Brugal,", 50, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
+    window->renderCenteredText("Iden Sessani", 80, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
+    window->renderCenteredText("Erik Higginbotham", 110, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
+    window->renderCenteredText("Aaron Hanuschak", 140, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
+    window->renderCenteredText("Kurt Weber", 170, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
 }
 
 void GameManager::listenForQuit()

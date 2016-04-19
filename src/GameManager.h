@@ -42,6 +42,10 @@ class GameManager
         // if the user presses enter, space, or escape, go back to the main menu
         void listenForQuit();
 
+        // really only used once. should this be a function?
+        // renders this project's credits to the screen
+        void printCredits();
+
     private:
         Window* window;
         SDL_Event event;

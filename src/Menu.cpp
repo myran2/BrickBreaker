@@ -30,11 +30,11 @@ void Menu::tick()
                     manager->setState(STATE_PLAYING);
                     manager->initGame();
                     return;
-                case 1: // TODO: NYI
+                case 1:
                     manager->setState(STATE_HOWTOPLAY);
                     break;
                 case 2:
-                    //manager->setState(STATE_SETTINGS);
+                    manager->setState(STATE_CREDITS);
                     break;
                 case 3:
                     manager->quit();

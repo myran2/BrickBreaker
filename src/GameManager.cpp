@@ -112,8 +112,8 @@ void GameManager::gameTick()
     SDL_PollEvent(&event);
     if(ball->getLives() < 1)
     {
-        window->renderText("GAME OVER!", (window->getWidth()/2)-50, window->getHeight()/2, {0,0,0}, 50, FONT_RENDER_BLENDED, {255,255,255});
-        window->renderText("ANTHONY IS GAY!", window->getWidth()/2, window->getHeight()/2, {0,0,0}, 50, FONT_RENDER_BLENDED, {255,255,255});
+        window->renderText("GAME OVER", window->getWidth()/3, window->getHeight()/4, {0,0,0}, 50, FONT_RENDER_BLENDED, {255,255,255});
+        window->renderText("Score: ", window->getWidth()/3, window->getHeight()/2, {0,0,0}, 50, FONT_RENDER_BLENDED, {255,255,255});
         switch (event.type)
         {
         // if user clicks the red X

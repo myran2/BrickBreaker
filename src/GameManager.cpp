@@ -37,9 +37,6 @@ void GameManager::runGame()
     ball = new Ball(window, "ball.bmp", window->getWidth() / 2, window->getHeight() / 2, paddle);
     ball->setOnPaddle(true);
 
-    ball2 = new Ball(window, "ball2.bmp", window->getWidth() / 2, window->getHeight() / 2, paddle);
-    ball2->setOnPaddle(true);
-
 	LevelLoader* loader = new LevelLoader(this);
 
     //used for random powerup spwaning
@@ -174,9 +171,7 @@ void GameManager::gameTick()
         break;
     }
 
-
 	LevelLoader* loader = new LevelLoader(this);
-	Log::info(std::to_string(currentLevel));
 	if (currentLevel == 0)
 	{
 		loader->openMap("lvl2.txt");
@@ -191,9 +186,6 @@ void GameManager::gameTick()
             ball->handleCollision(e);
 
         }
-
-        if(ball2->collidedWith(e))
-            ball2->handleCollision(e);
 
         e->update();
     }

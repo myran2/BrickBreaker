@@ -28,13 +28,15 @@ void Menu::tick()
                 {
                 case 0:
                     manager->setState(STATE_PLAYING);
-                    break;
+                    manager->initGame();
+                    return;
                 case 1: // TODO: NYI
+                case 2:
                     //manager->setState(STATE_SETTINGS);
                     break;
-                case 2:
+                case 3:
                     manager->quit();
-                    break;
+                    return;
                 }
                 break;
             case SDLK_UP:
@@ -49,10 +51,6 @@ void Menu::tick()
                 break;
             }
         }
-        break;
-    case SDL_MOUSEMOTION:
-        //int mouseX = event.motion.x;
-        //int mouseY = event.motion.y;
         break;
     }
 

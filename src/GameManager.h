@@ -2,6 +2,8 @@
 #define _GAMEMANAGER_H
 
 #include <vector>
+#include <SDL_mixer.h>
+
 #include "Window.h"
 #include "Entity.h"
 #include "Ball.h"
@@ -10,9 +12,9 @@
 enum GameState
 {
     STATE_MENU = 0,
-    STATE_PLAYING,
-    STATE_HOWTOPLAY,
-    STATE_CREDITS
+    STATE_PLAYING = 1,
+    STATE_HOWTOPLAY = 2,
+    STATE_CREDITS = 3
 };
 
 class GameManager
@@ -22,7 +24,8 @@ class GameManager
 
         void runGame();
         void quit() { _quit = true; }
-        void setState(int state) { currentState = state; }
+        void setState(int state);
+        void initGame();
 
         Window* getWindow() { return window; }
 		void addEntity(Entity* e);
@@ -32,10 +35,14 @@ class GameManager
         SDL_Event event;
 
         Ball* ball;
+        Entity* paddle;
         Mods* mod;
+        Mix_Music* music;
+
         int randNum;
         int downNum;
         int upNum;
+
         bool isPressed = false;
 		int currentLevel;
 

@@ -24,8 +24,6 @@ public:
     // detaches the ball from the paddle and gives the ball some initial velocity
     void detach();
 
-    void outOfBounds();
-
     void setLives(int count);
     int getLives() { return lives; }
 

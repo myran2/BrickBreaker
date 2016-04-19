@@ -24,7 +24,6 @@ void GameManager::runGame()
     ball->setOnPaddle(true);
 
     ball2 = new Ball(window, "ball.bmp", window->getWidth() / 2, window->getHeight() / 2, paddle);
-    ball2->setOnPaddle(true);
 
     //used for random powerup spwaning
     srand(time(NULL));
@@ -140,7 +139,10 @@ void GameManager::gameTick()
     {
         // don't think this is that cpu intensive but I guess it could be
         if (ball->collidedWith(e))
+        {
             ball->handleCollision(e);
+            
+        }
 
         if(ball2->collidedWith(e))
             ball2->handleCollision(e);

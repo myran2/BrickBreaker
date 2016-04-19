@@ -5,9 +5,15 @@
 #include "Mods.h"
 #include "Log.h"
 #include <iostream>
+#include <vector>
 
-class levelLoader
+class LevelLoader
 {
-public:
-	levelLoader(Window* window);
+    public:
+    	LevelLoader(Window* win, const std::vector<Entity*>& ent);
+        void openMap(const std::string& mapName);
+
+    private:
+        Window* window;
+        std::vector<Entity*> entities;
 };

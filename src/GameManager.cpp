@@ -95,7 +95,7 @@ void GameManager::runGame()
 void GameManager::gameTick()
 {
     SDL_PollEvent(&event);
-    
+
     // paddle is always added to the entities vector first, so this is fine
     Entity* paddle = entities[0];
 
@@ -151,7 +151,7 @@ void GameManager::gameTick()
     }
 
 /************** Code segment used for powerup implementation ***************/
-    if(randNum == 0)
+    if(randNum == 0)    //anthony is gay
     {
         powerup->update();
         if(upNum == 1)

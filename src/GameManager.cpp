@@ -26,7 +26,7 @@ void GameManager::runGame()
     music = Mix_LoadMUS(filePath.c_str());
     
     if(!music)
-        // TODO: Adapt this to 
+        // TODO: Adapt this to Log::Error
         printf("Mix_LoadMUS(\"backgroundmusic.wav\"): %s\n", Mix_GetError());
 
     Mix_PlayMusic(music, -1);
@@ -40,7 +40,7 @@ void GameManager::runGame()
 
     ball2 = new Ball(window, "ball2.bmp", window->getWidth() / 2, window->getHeight() / 2, paddle);
     ball2->setOnPaddle(true);
-	levelLoader* loader = new levelLoader(window, entities);
+	LevelLoader* loader = new LevelLoader(window, entities);
 
     //used for random powerup spwaning
     srand(time(NULL));

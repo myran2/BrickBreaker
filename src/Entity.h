@@ -27,6 +27,9 @@ class Entity
         int getHeight() { return height; }
         int getWidth() { return width; }
 
+        // updates the texture of the entity
+        void setTexture(const std::string& textureName);
+
         // true if moving in the given direction, false otherwise
         bool isMoving(int direction);
 

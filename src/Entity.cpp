@@ -12,7 +12,7 @@ Entity::Entity(Window* window, const std::string& textureName, int xPos, int yPo
     this->yPos = yPos;
 
     this->typeId = TYPEID_ENTITY;
-    
+
     this->texture = window->loadTexture(textureName);
 
     // store the texture's width and height
@@ -33,11 +33,12 @@ Entity::~Entity()
     SDL_DestroyTexture(texture);
 }
 
+// function that updates the given entity
 void Entity::update()
 {
     if (!isActive())
         return;
-    
+
     if (isMoving(MOVE_UP))
         yPos -= moveRate;
 
@@ -61,7 +62,7 @@ void Entity::update()
 
     if (yPos > window->getHeight() - height)
         yPos = window->getHeight() - height;
-    
+
     window->renderTexture(texture, xPos, yPos);
 }
 
@@ -90,6 +91,7 @@ bool Entity::collidedWith(Entity* entity)
     return SDL_HasIntersection(&rect, &rectCol) /* Prevent warning C4800 */!= 0;
 }
 
+//function for removing the specified texture
 void Entity::remove()
 {
     if (!texture)

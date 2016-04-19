@@ -13,8 +13,9 @@ enum GameState
 {
     STATE_MENU = 0,
     STATE_PLAYING = 1,
-    STATE_HOWTOPLAY = 2,
-    STATE_CREDITS = 3
+    STATE_WINNER = 2,
+    STATE_HOWTOPLAY = 3,
+    STATE_CREDITS = 4
 };
 
 class GameManager
@@ -64,6 +65,13 @@ class GameManager
 
         bool isPressed = false;
 		int currentLevel;
+
+        int maxBricks;
+        int bricksLeft;
+        bool levelOver;
+
+        // calculates the player's score
+        int calcScore();
 
         // runs ~60 times per second
         // this is where most of the game happens

@@ -13,8 +13,8 @@ const char PATH_SEP = '\\';
 const char PATH_SEP = '/';
 #endif
 
-#define FONT_NAME "UbuntuMono.ttf"
-#define FONT_STROKE_SIZE 2 
+#define FONT_NAME "Xenotron.ttf"
+#define FONT_STROKE_SIZE 2
 
 enum FontRenderTypes
 {

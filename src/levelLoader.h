@@ -16,7 +16,7 @@ class LevelLoader
     public:
 
 		LevelLoader(GameManager* gm);
-        void openMap(const std::string& mapName);
+        void openMap(const std::string& mapName, int& maxBlocks);
 
     private:
 		GameManager* gameManager;

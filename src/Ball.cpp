@@ -23,7 +23,7 @@ void Ball::update()
     // if the ball is still on the paddle, make it move in sync with the paddle
     if (onPaddle)
     {
-        xPos = linkedPaddle->getX() + (linkedPaddle->getWidth() / 4);
+        xPos = linkedPaddle->getX() + (linkedPaddle->getWidth()/2) - getWidth()/2;
         yPos = linkedPaddle->getY() - getHeight();
         window->renderTexture(texture, xPos, yPos);
         return;
@@ -113,16 +113,16 @@ void Ball::handleCollision(Entity* entity)
 		if (checkHorizontal > checkVertical)
 			yVelocity = -yVelocity;
 		else if (checkHorizontal - checkVertical < 2)
-			{
-				yVelocity = -yVelocity;
-				xVelocity = -xVelocity;
-			}
-		else 
+		{
+			yVelocity = -yVelocity;
+			xVelocity = -xVelocity;
+		}
+		else
 			xVelocity = -xVelocity;
 
-		Log::info("Vdiff: "+std::to_string(checkVertical));
+		Log::info("Vdiff: " + std::to_string(checkVertical));
 		Log::info("Hdiff: " + std::to_string(checkHorizontal));
-		SDL_Delay(50);
+		//SDL_Delay(50);
 	}
 
 	else
@@ -161,7 +161,7 @@ void Ball::detach()
     Log::info("Detached ball from paddle.");
     onPaddle = false;
 
-    // TODO: physics this part
+    // constant velocity for the ball
     xVelocity = -5;
     yVelocity = -5;
 }

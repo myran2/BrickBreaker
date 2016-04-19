@@ -9,15 +9,20 @@ Entity(window, textureName, xPos, yPos)
     health = maxHealth;
 }
 
-void Brick::dealDamage(int dmg)
+bool Brick::dealDamage(int dmg)
 {
     health -= dmg;
-    
+
 	if (health == 2)
 		setTexture("yellowBrick.bmp");
 	if (health == 1)
 		setTexture("greenBrick.bmp");
 
     if (health <= 0)
+    {
         remove();
+        return false;
+    }
+
+    return true;
 }

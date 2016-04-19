@@ -11,7 +11,10 @@ class Brick : public Entity
         int getHealth() { return health; }
         int getMaxHealth() { return maxHealth; }
 
-        void dealDamage(int dmg);
+        // deal 'dmg' damage to the brick.
+        // if the brick survives the damage (health > 0), return true
+        // otherwise, false
+        bool dealDamage(int dmg);
 
     private:
         int health;

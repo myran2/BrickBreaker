@@ -74,6 +74,7 @@ void GameManager::initGame()
 
     Log::info("Loaded level " + std::to_string(currentLevel) + " with " + std::to_string(maxBricks) + " blocks.");
 
+    bricksLeft = maxBricks;
     levelOver = false;
 }
 
@@ -218,7 +219,6 @@ void GameManager::gameTick()
         break;
     }
 
-    bricksLeft = 0;
     for (Entity* e : entities)
     {
         // don't think this is that cpu intensive but I guess it could be
@@ -227,14 +227,11 @@ void GameManager::gameTick()
             ball->handleCollision(e);
             if (e->getTypeId() == TYPEID_BRICK)
             {
-                ((Brick*)e)->dealDamage(1);
+                if (!((Brick*)e)->dealDamage(1))
+                    bricksLeft--;
                 Log::info(std::to_string(bricksLeft) + " / " + std::to_string(maxBricks) + " bricks remaining");
             }
         }
-
-        if ((e->getTypeId() == TYPEID_BRICK) && (e->isActive()))
-            bricksLeft++;
-
         e->update();
     }
 

@@ -9,8 +9,7 @@ Entity(window, textureName, xPos, yPos)
     health = maxHealth;
 }
 
-// function for detecting if the brick is damaged
-void Brick::dealDamage(int dmg)
+bool Brick::dealDamage(int dmg)
 {
     health -= dmg;
 
@@ -20,5 +19,10 @@ void Brick::dealDamage(int dmg)
 		setTexture("greenBrick.bmp");
 
     if (health <= 0)
+    {
         remove();
+        return false;
+    }
+
+    return true;
 }

@@ -22,7 +22,9 @@ GameManager::GameManager(Window* window):
     paddle = new Entity(window, "paddle.bmp", 305, 490);
     entities.push_back(paddle);
 
-    currentLevel = 2;
+    currentLevel = 1;
+    bricksLeft = 0;
+    maxBricks = 0;
 }
 
 void GameManager::initGame()
@@ -46,7 +48,6 @@ void GameManager::initGame()
     paddle->stopMoving(MOVE_LEFT);
     paddle->stopMoving(MOVE_RIGHT);
 
-
     ball = new Ball(window, "ball.png", window->getWidth() / 2, window->getHeight() / 2, paddle);
     ball->setOnPaddle(true);
 
@@ -61,17 +62,19 @@ void GameManager::initGame()
     switch (currentLevel)
     {
         case 1:
-            loader->openMap("lvl1.txt", maxBlocks);
+            loader->openMap("lvl1.txt", maxBricks);
             break;
         case 2:
-            loader->openMap("lvl2.txt", maxBlocks);
+            loader->openMap("lvl2.txt", maxBricks);
             break;
         default:
-            Log::error("Tried to open unknown level: " + std::to_string(currentLevel));
+            currentState = STATE_WINNER;
             break;
     }
 
-    Log::info("Loaded level " + std::to_string(currentLevel) + " with " + std::to_string(maxBlocks) + " blocks.");
+    Log::info("Loaded level " + std::to_string(currentLevel) + " with " + std::to_string(maxBricks) + " blocks.");
+
+    levelOver = false;
 }
 
 void GameManager::runGame()
@@ -118,6 +121,14 @@ void GameManager::runGame()
         case STATE_PLAYING:
             gameTick();
             break;
+        case STATE_WINNER:
+        {
+            window->renderTexture(bgTexture, 0, 0);
+            window->renderCenteredText("YOU WON!", 100, { 0, 0, 0 }, 75, FONT_RENDER_BLENDED, { 0, 0, 0 });
+            window->renderCenteredText("Final Score: " + std::to_string(calcScore()), 180, { 0, 0, 0 }, 75, FONT_RENDER_BLENDED, { 0, 0, 0 });
+            listenForQuit();
+            break;
+        }
 
         default:
             Log::warn("Recieved unhandled gamestate: " + std::to_string(currentState));
@@ -148,27 +159,19 @@ void GameManager::gameTick()
 {
     bool repeatKey = SDL_PollEvent(&event) == 1;
 
+    if (levelOver)
+    {
+        currentLevel++;
+        initGame();
+        levelOver = false;
+        return;
+    }
+
     if(ball->getLives() < 1)
     {
         window->renderCenteredText("GAME OVER", window->getHeight()/4, {0,0,0}, 50, FONT_RENDER_BLENDED, {255,255,255});
-        window->renderCenteredText("Score: ", window->getHeight()/2, {0,0,0}, 50, FONT_RENDER_BLENDED, {255,255,255});
-        switch (event.type)
-        {
-        // if user clicks the red X
-        case SDL_QUIT:
-            _quit = true;
-            break;
-
-        case SDL_KEYDOWN:
-            switch (event.key.keysym.sym)
-            {
-            case SDLK_ESCAPE:
-            case SDLK_SPACE:
-                setState(STATE_MENU);
-                break;
-            }
-            break;
-        }
+        window->renderCenteredText("Score: " + std::to_string(calcScore()), window->getHeight()/2, {0,0,0}, 50, FONT_RENDER_BLENDED, {255,255,255});
+        listenForQuit();
         return;
     }
 
@@ -215,15 +218,22 @@ void GameManager::gameTick()
         break;
     }
 
+    bricksLeft = 0;
     for (Entity* e : entities)
     {
         // don't think this is that cpu intensive but I guess it could be
-        if (ball->collidedWith(e) && e->isActive())
+        if ((ball->collidedWith(e)) && (e->isActive()))
         {
             ball->handleCollision(e);
             if (e->getTypeId() == TYPEID_BRICK)
+            {
                 ((Brick*)e)->dealDamage(1);
+                Log::info(std::to_string(bricksLeft) + " / " + std::to_string(maxBricks) + " bricks remaining");
+            }
         }
+
+        if ((e->getTypeId() == TYPEID_BRICK) && (e->isActive()))
+            bricksLeft++;
 
         e->update();
     }
@@ -276,6 +286,11 @@ void GameManager::gameTick()
 
     ball->update();
     window->renderText("Lives: " + std::to_string(ball->getLives()), 0, 0, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
+
+    if (bricksLeft == 0)
+    {
+        levelOver = true;
+    }
 }
 
 void GameManager::addEntity(Entity* e)
@@ -322,4 +337,9 @@ void GameManager::listenForQuit()
             }
         }
     }
+}
+
+int GameManager::calcScore()
+{
+    return (ball->getLives() + 1) * (maxBricks - bricksLeft);
 }

@@ -51,11 +51,13 @@ void LevelLoader::openMap(const std::string& mapName, int& maxBlocks)
 			line.erase(0, 1);
 			xpos += 100;
 
+            // move on to the next row if the current row is rendering off-screen
             if (xpos > gameManager->getWindow()->getWidth() - BLOCK_WIDTH)
                 break;
 		}
 		ypos += 30;
 
+        // stop rendering bricks if they've gone past the screen
         if (ypos > gameManager->getWindow()->getHeight())
             break;
 	}

@@ -23,7 +23,7 @@ void Ball::update()
     // if the ball is still on the paddle, make it move in sync with the paddle
     if (onPaddle)
     {
-        xPos = linkedPaddle->getX() + (linkedPaddle->getWidth() / 4);
+        xPos = linkedPaddle->getX() + (linkedPaddle->getWidth()/2) - getWidth()/2;
         yPos = linkedPaddle->getY() - getHeight();
         window->renderTexture(texture, xPos, yPos);
         return;

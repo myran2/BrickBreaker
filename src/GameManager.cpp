@@ -28,7 +28,7 @@ void GameManager::runGame()
 
     //used for random powerup spwaning
     srand(time(NULL));
-    randNum = rand() % 2;
+    randNum = rand() % 4;
     mod = new Mods(window, "PowerUP.bmp", 305, 0 );//makes a new power down object
 
     upNum = rand() % 2;

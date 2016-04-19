@@ -22,7 +22,7 @@ void Mods::doubleBalls()
 }
 void Mods::largePaddle()
 {
-	Log::info("Sqawn bigger paddle");
+	Log::info("Spawn bigger paddle");
 }
 // function to make the paddle slower
 void Mods::slowerPaddle()

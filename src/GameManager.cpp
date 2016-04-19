@@ -38,15 +38,13 @@ void GameManager::runGame()
     ball = new Ball(window, "ball.bmp", window->getWidth() / 2, window->getHeight() / 2, paddle);
     ball->setOnPaddle(true);
 
-    ball2 = new Ball(window, "ball.bmp", window->getWidth() / 2, window->getHeight() / 2, paddle);
+    ball2 = new Ball(window, "ball2.bmp", window->getWidth() / 2, window->getHeight() / 2, paddle);
+    ball2->setOnPaddle(true);
 
     //used for random powerup spwaning
     srand(time(NULL));
-    randNum = rand() % 2;
-    if(randNum == 0)
-      powerup = new Mods(window, "PowerUP.bmp", 305, 0 );	// makes a new power up object
-    else if(randNum == 1)
-  	  powerdown = new Mods(window, "PowerDown.bmp", 305, 0 );//makes a new power down object
+    randNum = rand() % 4;
+    mod = new Mods(window, "PowerUP.bmp", 305, 0 );//makes a new power down object
 
     upNum = rand() % 2;
 	downNum = rand() % 2;
@@ -160,7 +158,7 @@ void GameManager::gameTick()
         if (ball->collidedWith(e))
         {
             ball->handleCollision(e);
-            
+
         }
 
         if(ball2->collidedWith(e))
@@ -170,50 +168,46 @@ void GameManager::gameTick()
     }
 
 /************** Code segment used for powerup implementation ***************/
-    if(randNum == 0)    //anthony is gay
-    {
-        powerup->update();
-        if(upNum == 1)
+if(randNum == 0)    //anthony is gay
+{
+    mod->update();
+        if(mod->collidedWith(paddle))
         {
-            if(powerup->collidedWith(paddle))
-            {
-              powerup->doubleBalls();
-              ball2->detach();
-              powerup->remove();
-            }
-            ball2->update();
-            ball2->outOfBounds();
+          mod->doubleBalls();
+          ball2->detach();
+          mod->remove();
         }
+        ball2->update();
+        ball2->outOfBounds();
+}
 
-        else if(upNum == 0)
+if(randNum == 1)
+{
+  mod->update();
+  if(mod->collidedWith(paddle))
+  {
+    mod->largePaddle();
+    mod->remove();
+  }
+}
+
+if(randNum == 2)
+{
+    mod->update();
+        if(mod->collidedWith(paddle))
         {
-            if(powerup->collidedWith(paddle))
-            {
-                powerup->largePaddle();
-                powerup->remove();
-            }
+            mod->slowerPaddle();
+            paddle->setMoveRate(3);
+            mod->remove();
         }
     }
-
-    if(randNum == 1)
-    {
-        powerdown->update();
-        if(downNum == 0)
+  if(randNum == 3)
+  {
+      mod->update();
+        if(mod->collidedWith(paddle))
         {
-            if(powerdown->collidedWith(paddle))
-            {
-                powerdown->slowerPaddle();
-                paddle->setMoveRate(3);
-                powerdown->remove();
-            }
-        }
-        else if(downNum == 1)
-        {
-            if(powerdown->collidedWith(paddle))
-            {
-                powerdown->smallPaddle();
-                powerdown->remove();
-            }
+            mod->smallPaddle();
+            mod->remove();
         }
     }
 /***************************************************************************/

@@ -24,7 +24,7 @@ void GameManager::runGame()
     ball->setOnPaddle(true);
 
     ball2 = new Ball(window, "ball2.bmp", window->getWidth() / 2, window->getHeight() / 2, paddle);
-    setOnPaddle(true);
+    ball2->setOnPaddle(true);
 
     //used for random powerup spwaning
     srand(time(NULL));

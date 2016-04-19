@@ -4,16 +4,17 @@
 #include "Ball.h"
 #include "Mods.h"
 #include "Log.h"
+#include "GameManager.h"
 #include <iostream>
 #include <vector>
 
 class LevelLoader
 {
     public:
-    	LevelLoader(Window* win, const std::vector<Entity*>& ent);
+
+		LevelLoader(GameManager* gm);
         void openMap(const std::string& mapName);
 
     private:
-        Window* window;
-        std::vector<Entity*> entities;
+		GameManager* gameManager;
 };

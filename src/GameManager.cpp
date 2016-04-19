@@ -14,7 +14,6 @@ GameManager::GameManager(Window* window):
     currentState = STATE_MENU;
     _quit = false;
 }
-
 void GameManager::runGame()
 {
     Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096);
@@ -40,8 +39,6 @@ void GameManager::runGame()
 
     ball2 = new Ball(window, "ball2.bmp", window->getWidth() / 2, window->getHeight() / 2, paddle);
     ball2->setOnPaddle(true);
-	levelLoader* loader = new levelLoader(window, entities);
-
     //used for random powerup spwaning
     srand(time(NULL));
     randNum = rand() % 4;
@@ -63,7 +60,7 @@ void GameManager::runGame()
 
     Menu settingsMenu(this);
     settingsMenu.addEntry("Back");
-
+	currentLevel = 0;
     while (!_quit)
     {
         window->clear();
@@ -88,7 +85,6 @@ void GameManager::runGame()
             Log::warn("Recieved unhandled gamestate: " + std::to_string(currentState));
             break;
         }
-
         // divide the amount of frames displayed by the runtime in seconds to get the average fps
         float avgFps = frameCount / (fpsTimer.getTicks() / 1000.f);
         if (avgFps > 2000000)
@@ -153,6 +149,15 @@ void GameManager::gameTick()
         break;
     }
 
+
+	LevelLoader* loader = new LevelLoader(this);
+	Log::info(std::to_string(currentLevel));
+	if (currentLevel == 0)
+	{
+		loader->openMap("lvl2.txt");
+		currentLevel = 12;
+	}
+
     for (Entity* e : entities)
     {
         // don't think this is that cpu intensive but I guess it could be
@@ -214,4 +219,9 @@ if(randNum == 2)
 /***************************************************************************/
 
     ball->update();
+}
+
+void GameManager::addEntity(Entity* e)
+{
+	entities.push_back(e);
 }

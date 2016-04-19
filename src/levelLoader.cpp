@@ -6,14 +6,14 @@
 
 using namespace std;
 
-LevelLoader::LevelLoader(Window* win, const vector<Entity*>& ent)
+LevelLoader::LevelLoader(GameManager* gm)
 {
-	window = win;
-	entities = ent;
+	gameManager = gm;
 }
 
 void LevelLoader::openMap(const std::string& mapName)
 {
+	Log::info("asdf");
 	string line;
 	ifstream myfile(mapName);
 
@@ -29,7 +29,11 @@ void LevelLoader::openMap(const std::string& mapName)
 				int health = hp - '0';
 
 				if (health > 0)
-					entities.push_back(new Brick(window, "paddle.bmp", xpos, ypos, health));
+				{
+					gameManager->addEntity(new Brick(gameManager->getWindow(), "paddle.bmp", xpos, ypos, health));
+					Log::info("added a brick");
+
+				}
 
 				line.erase(0, 1);
 				xpos += 30;

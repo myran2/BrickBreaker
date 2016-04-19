@@ -24,6 +24,7 @@ class GameManager
         void setState(int state) { currentState = state; }
 
         Window* getWindow() { return window; }
+		void addEntity(Entity* e);
 
     private:
         Window* window;
@@ -35,6 +36,7 @@ class GameManager
         int randNum;
         int downNum;
         int upNum;
+		int currentLevel;
 
         // runs ~60 times per second
         // this is where most of the game happens

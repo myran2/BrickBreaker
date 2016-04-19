@@ -31,6 +31,9 @@ class Entity
         // updates the texture of the entity
         void setTexture(const std::string& textureName);
 
+        void setX(int x) { xPos = x; }
+        void setY(int y) { yPos = y; }
+
         // true if moving in the given direction, false otherwise
         bool isMoving(int direction);
 

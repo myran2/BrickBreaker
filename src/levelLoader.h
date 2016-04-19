@@ -1,3 +1,6 @@
+#ifndef _LEVEL_LOADER_H
+#define _LEVEL_LOADER_H
+
 #include <vector>
 #include "Window.h"
 #include "Entity.h"
@@ -18,3 +21,5 @@ class LevelLoader
     private:
 		GameManager* gameManager;
 };
+
+#endif

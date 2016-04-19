@@ -13,8 +13,6 @@ LevelLoader::LevelLoader(GameManager* gm)
 
 void LevelLoader::openMap(const std::string& mapName)
 {
-
-
 	string line;
 	ifstream myfile(mapName);
 
@@ -37,9 +35,6 @@ void LevelLoader::openMap(const std::string& mapName)
 						gameManager->addEntity(new Brick(gameManager->getWindow(), "yellowBrick.bmp", xpos, ypos, health));
 					if (health == 1)
 						gameManager->addEntity(new Brick(gameManager->getWindow(), "greenBrick.bmp", xpos, ypos, health));
-					Log::info("added a brick");
-
-					//gameManager->addEntity(new Brick(gameManager->getWindow(), "paddle.bmp", xpos, ypos, health));
 				}
 
 				line.erase(0, 1);
@@ -48,7 +43,10 @@ void LevelLoader::openMap(const std::string& mapName)
 			ypos += 30;
 		}
 		myfile.close();
+		return;
 	}
+	else
+		Log::error("Couldn't open " + mapName);
 
 
 }

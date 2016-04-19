@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "Ball.h"
 #include "Log.h"
 
@@ -70,7 +72,10 @@ void Ball::handleCollision(Entity* entity)
 {
     Log::info("Ball hit something!");
 
+<<<<<<< HEAD
 	double totalSpeed = sqrt(xVelocity*xVelocity + yVelocity*yVelocity);
+=======
+>>>>>>> c243c368940ac2bffd31818d3d6438a8e28c5284
     double ballCenter = xPos + (width / 2);
     double entityCenter = entity->getX() + (entity->getWidth() / 2);
 	double ballY = yPos + (width / 2);
@@ -144,15 +149,6 @@ void Ball::setOnPaddle(bool apply)
         Log::info("Freed ball from paddle.");
 
     onPaddle = apply;
-}
-
-void Ball::outOfBounds()
-{
-  if (yPos > window->getHeight() - height)
-  {
-    Log::info("Ball2 removed.");
-    remove();
-  }
 }
 
 void Ball::setLives(int count)

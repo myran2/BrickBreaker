@@ -1,7 +1,6 @@
 #include <iostream>
 #include <time.h>
 #include <array>
-#include <SDL_mixer.h>
 #include "GameManager.h"
 #include "Log.h"
 #include "Menu.h"
@@ -13,11 +12,18 @@ GameManager::GameManager(Window* window):
 {
     currentState = STATE_MENU;
     _quit = false;
+    srand(time(NULL));
+    music = NULL;
+
+    paddle = new Entity(window, "paddle.bmp", 305, 490);
+    entities.push_back(paddle);
+
+    currentLevel = 2;
 }
-void GameManager::runGame()
+
+void GameManager::initGame()
 {
     Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096);
-    Mix_Music *music = NULL;
     std::string resPath = "res";
     std::string filePath = "";
     filePath = resPath + PATH_SEP + "backgroundmusic.wav";
@@ -25,27 +31,48 @@ void GameManager::runGame()
     music = Mix_LoadMUS(filePath.c_str());
 
     if(!music)
-        // TODO: Adapt this to Log::Error
         printf("Mix_LoadMUS(\"backgroundmusic.wav\"): %s\n", Mix_GetError());
 
     Mix_PlayMusic(music, -1);
 
-    Entity* paddle = new Entity(window, "paddle.bmp", 305, 490);
-    paddle->setMoveRate(5);
-    entities.push_back(paddle);
+    paddle->setMoveRate(8);
+    paddle->setTexture("paddle.bmp");
+    paddle->setX(305);
+    paddle->setY(490);   
+
 
     ball = new Ball(window, "ball.bmp", window->getWidth() / 2, window->getHeight() / 2, paddle);
     ball->setOnPaddle(true);
 
-	LevelLoader* loader = new LevelLoader(this);
-
     //used for random powerup spwaning
-    srand(time(NULL));
     randNum = rand() % 4;
     mod = new Mods(window, "PowerUP.bmp", 305, 0 );//makes a new power down object
 
     upNum = rand() % 2;
-	downNum = rand() % 2;
+    downNum = rand() % 2;
+
+    LevelLoader* loader = new LevelLoader(this);
+    switch (currentLevel)
+    {
+        case 1:
+            loader->openMap("lvl1.txt");
+            break;
+        case 2:
+            loader->openMap("lvl2.txt");
+            break;
+        default:
+            Log::error("Tried to open unknown level: " + std::to_string(currentLevel));
+            break;
+    }
+}
+
+void GameManager::runGame()
+{
+    Menu mainMenu(this);
+    mainMenu.addEntry("Play");
+    mainMenu.addEntry("How to Play");
+    mainMenu.addEntry("Credits");
+    mainMenu.addEntry("Exit");
 
     Timer fpsTimer;
     Timer capTimer;
@@ -53,13 +80,6 @@ void GameManager::runGame()
     uint32_t frameCount = 0;
     fpsTimer.start();
 
-    Menu mainMenu(this);
-    mainMenu.addEntry("Play");
-    mainMenu.addEntry("How to Play");
-    mainMenu.addEntry("Credits");
-    mainMenu.addEntry("Exit");
-
-	currentLevel = 0;
     while (!_quit)
     {
         window->clear();
@@ -76,16 +96,29 @@ void GameManager::runGame()
             break;
         }
         case STATE_HOWTOPLAY:
+        {
+            SDL_Texture* htpTexture = window->loadTexture("HowToPlay.bmp");
+            window->renderTexture(htpTexture, 0, 0);
+            listenForQuit();
             break;
+        }
         case STATE_CREDITS:
+        {
+            SDL_Texture* bgTexture = window->loadTexture("bg.bmp");
+            window->renderTexture(bgTexture, 0, 0);
+            printCredits();
+            listenForQuit();
             break;
+        }
         case STATE_PLAYING:
             gameTick();
             break;
+
         default:
             Log::warn("Recieved unhandled gamestate: " + std::to_string(currentState));
             break;
         }
+
         // divide the amount of frames displayed by the runtime in seconds to get the average fps
         float avgFps = frameCount / (fpsTimer.getTicks() / 1000.f);
         if (avgFps > 2000000)
@@ -101,7 +134,6 @@ void GameManager::runGame()
         if (capTimer.getTicks() < (1000 / window->getMaxFps()))
         {
             int waitTime = (1000 / window->getMaxFps()) - capTimer.getTicks();
-            //Log::info("Waiting " + std::to_string(waitTime) + " MS");
             SDL_Delay(waitTime);
         }
     }
@@ -109,11 +141,12 @@ void GameManager::runGame()
 
 void GameManager::gameTick()
 {
-    SDL_PollEvent(&event);
+    bool repeatKey = SDL_PollEvent(&event) == 1;
+
     if(ball->getLives() < 1)
     {
-        window->renderText("GAME OVER", window->getWidth()/3, window->getHeight()/4, {0,0,0}, 50, FONT_RENDER_BLENDED, {255,255,255});
-        window->renderText("Score: ", window->getWidth()/3, window->getHeight()/2, {0,0,0}, 50, FONT_RENDER_BLENDED, {255,255,255});
+        window->renderCenteredText("GAME OVER", window->getHeight()/4, {0,0,0}, 50, FONT_RENDER_BLENDED, {255,255,255});
+        window->renderCenteredText("Score: ", window->getHeight()/2, {0,0,0}, 50, FONT_RENDER_BLENDED, {255,255,255});
         switch (event.type)
         {
         // if user clicks the red X
@@ -124,17 +157,15 @@ void GameManager::gameTick()
         case SDL_KEYDOWN:
             switch (event.key.keysym.sym)
             {
-            case SDLK_RETURN:
+            case SDLK_ESCAPE:
             case SDLK_SPACE:
-                currentState = STATE_MENU;
+                setState(STATE_MENU);
                 break;
             }
             break;
         }
         return;
     }
-    // paddle is always added to the entities vector first, so this is fine
-    Entity* paddle = entities[0];
 
     switch (event.type)
     {
@@ -159,6 +190,12 @@ void GameManager::gameTick()
             }
             isPressed = true;
             break;
+        case SDLK_ESCAPE:
+        if (repeatKey)
+        {
+            setState(STATE_MENU);
+            return;
+        }
         }
         break;
 
@@ -175,27 +212,17 @@ void GameManager::gameTick()
         break;
     }
 
-	LevelLoader* loader = new LevelLoader(this);
-	if (currentLevel == 0)
-	{
-		loader->openMap("lvl2.txt");
-		currentLevel = 12;
-	}
-
     for (Entity* e : entities)
     {
         // don't think this is that cpu intensive but I guess it could be
         if (ball->collidedWith(e))
-        {
             ball->handleCollision(e);
-
-        }
 
         e->update();
     }
 
 /************** Code segment used for powerup implementation ***************/
-if(randNum == 0 && isPressed == true)    //anthony is gay
+if(randNum == 0 && isPressed == true)
 {
     mod->update();
         if(mod->collidedWith(paddle))
@@ -240,9 +267,51 @@ if(randNum == 2 && isPressed == true)
 /***************************************************************************/
 
     ball->update();
+    window->renderText("Lives: " + std::to_string(ball->getLives()), 0, 0, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
 }
 
 void GameManager::addEntity(Entity* e)
 {
 	entities.push_back(e);
+}
+
+void GameManager::setState(int state)
+{
+    Log::info("Set state to " + std::to_string(state));
+    currentState = state;
+}
+
+void GameManager::printCredits()
+{
+    window->renderCenteredText("Henry Gordon", 20, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
+    window->renderCenteredText("Anthony Brugal,", 50, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
+    window->renderCenteredText("Iden Sessani", 80, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
+    window->renderCenteredText("Erik Higginbotham", 110, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
+    window->renderCenteredText("Aaron Hanuschak", 140, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
+    window->renderCenteredText("Kurt Weber", 170, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
+}
+
+void GameManager::listenForQuit()
+{
+    SDL_Event currEvent;
+    bool repeatKey = SDL_PollEvent(&currEvent) == 1;
+    
+    switch (currEvent.type)
+    {
+    // if user clicks the red X
+    case SDL_QUIT:
+        _quit = true;
+        return;
+    case SDL_KEYDOWN:
+        if (repeatKey)
+        {
+            switch (currEvent.key.keysym.sym)
+            {
+            case SDLK_SPACE:
+            case SDLK_RETURN:
+            case SDLK_ESCAPE:
+                setState(STATE_MENU);
+            }
+        }
+    }
 }

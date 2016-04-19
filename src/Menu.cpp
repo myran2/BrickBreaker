@@ -28,13 +28,17 @@ void Menu::tick()
                 {
                 case 0:
                     manager->setState(STATE_PLAYING);
-                    break;
-                case 1: // TODO: NYI
-                    //manager->setState(STATE_SETTINGS);
+                    manager->initGame();
+                    return;
+                case 1:
+                    manager->setState(STATE_HOWTOPLAY);
                     break;
                 case 2:
-                    manager->quit();
+                    manager->setState(STATE_CREDITS);
                     break;
+                case 3:
+                    manager->quit();
+                    return;
                 }
                 break;
             case SDLK_UP:
@@ -50,20 +54,15 @@ void Menu::tick()
             }
         }
         break;
-    case SDL_MOUSEMOTION:
-        //int mouseX = event.motion.x;
-        //int mouseY = event.motion.y;
-        break;
     }
 
-    int xPos = 200;
     int yPos = 100;
     for (int i = 0; i < menuEntries.size(); i++)
     {
         if (i == activeIndex)
-            manager->getWindow()->renderText(menuEntries[i], xPos, yPos, { 0, 0, 0 }, 50, FONT_RENDER_SHADED, {0, 48, 255});
+            manager->getWindow()->renderCenteredText(menuEntries[i], yPos, { 0, 0, 0 }, 50, FONT_RENDER_SHADED, {0, 48, 255});
         else
-            manager->getWindow()->renderText(menuEntries[i], xPos, yPos, { 0, 0, 0 }, 50, FONT_RENDER_BLENDED, {0, 0, 0});
+            manager->getWindow()->renderCenteredText(menuEntries[i], yPos, { 0, 0, 0 }, 50, FONT_RENDER_BLENDED, {0, 0, 0});
         yPos += 100;
     }
 }

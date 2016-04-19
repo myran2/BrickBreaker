@@ -96,6 +96,12 @@ void GameManager::runGame()
             break;
         }
         case STATE_HOWTOPLAY:
+        {
+            SDL_Texture* htpTexture = window->loadTexture("HowToPlay.bmp");
+            window->renderTexture(htpTexture, 0, 0);
+            listenForQuit();
+            break;
+        }
         case STATE_CREDITS:
             break;
         case STATE_PLAYING:
@@ -267,4 +273,29 @@ void GameManager::setState(int state)
 {
     Log::info("Set state to " + std::to_string(state));
     currentState = state;
+}
+
+void GameManager::listenForQuit()
+{
+    SDL_Event currEvent;
+    bool repeatKey = SDL_PollEvent(&currEvent) == 1;
+    
+    switch (currEvent.type)
+    {
+    // if user clicks the red X
+    case SDL_QUIT:
+        _quit = true;
+        return;
+    case SDL_KEYDOWN:
+        if (repeatKey)
+        {
+            switch (currEvent.key.keysym.sym)
+            {
+            case SDLK_SPACE:
+            case SDLK_RETURN:
+            case SDLK_ESCAPE:
+                setState(STATE_MENU);
+            }
+        }
+    }
 }

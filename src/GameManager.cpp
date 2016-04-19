@@ -124,7 +124,9 @@ void GameManager::gameTick()
         case SDL_KEYDOWN:
             switch (event.key.keysym.sym)
             {
-            case SDLK_RETURN:
+            case SDLK_ESCAPE:
+                _quit = true;
+                break;
             case SDLK_SPACE:
                 currentState = STATE_MENU;
                 break;

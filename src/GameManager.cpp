@@ -55,11 +55,10 @@ void GameManager::runGame()
 
     Menu mainMenu(this);
     mainMenu.addEntry("Play");
-    mainMenu.addEntry("Settings");
+    mainMenu.addEntry("How to Play");
+    mainMenu.addEntry("Credits")
     mainMenu.addEntry("Exit");
 
-    Menu settingsMenu(this);
-    settingsMenu.addEntry("Back");
 	currentLevel = 0;
     while (!_quit)
     {
@@ -76,7 +75,9 @@ void GameManager::runGame()
             mainMenu.tick();
             break;
         }
-        case STATE_SETTINGS:
+        case STATE_HOWTOPLAY:
+            break;
+        case STATE_CREDITS:
             break;
         case STATE_PLAYING:
             gameTick();

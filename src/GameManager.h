@@ -11,7 +11,8 @@ enum GameState
 {
     STATE_MENU = 0,
     STATE_PLAYING,
-    STATE_SETTINGS
+    STATE_HOWTOPLAY,
+    STATE_CREDITS
 };
 
 class GameManager

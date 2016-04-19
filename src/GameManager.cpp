@@ -61,15 +61,17 @@ void GameManager::initGame()
     switch (currentLevel)
     {
         case 1:
-            loader->openMap("lvl1.txt");
+            loader->openMap("lvl1.txt", maxBlocks);
             break;
         case 2:
-            loader->openMap("lvl2.txt");
+            loader->openMap("lvl2.txt", maxBlocks);
             break;
         default:
             Log::error("Tried to open unknown level: " + std::to_string(currentLevel));
             break;
     }
+
+    Log::info("Loaded level " + std::to_string(currentLevel) + " with " + std::to_string(maxBlocks) + " blocks.");
 }
 
 void GameManager::runGame()
@@ -216,7 +218,7 @@ void GameManager::gameTick()
     for (Entity* e : entities)
     {
         // don't think this is that cpu intensive but I guess it could be
-        if (ball->collidedWith(e))
+        if (ball->collidedWith(e) && e->isActive())
         {
             ball->handleCollision(e);
             if (e->getTypeId() == TYPEID_BRICK)

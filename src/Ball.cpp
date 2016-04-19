@@ -122,7 +122,7 @@ void Ball::handleCollision(Entity* entity)
 
 		Log::info("Vdiff: "+std::to_string(checkVertical));
 		Log::info("Hdiff: " + std::to_string(checkHorizontal));
-		SDL_Delay(50);
+		//SDL_Delay(50);
 	}
 
 	else

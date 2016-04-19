@@ -65,6 +65,9 @@ class GameManager
         bool isPressed = false;
 		int currentLevel;
 
+        int maxBlocks;
+        int blocksLeft;
+
         // runs ~60 times per second
         // this is where most of the game happens
         void gameTick();

@@ -113,7 +113,29 @@ void GameManager::runGame()
 void GameManager::gameTick()
 {
     SDL_PollEvent(&event);
+    if(ball->getLives() < 1)
+    {
+        window->renderText("GAME OVER!", (window->getWidth()/2)-50, window->getHeight()/2, {0,0,0}, 50, FONT_RENDER_BLENDED, {255,255,255});
+        window->renderText("ANTHONY IS GAY!", window->getWidth()/2, window->getHeight()/2, {0,0,0}, 50, FONT_RENDER_BLENDED, {255,255,255});
+        switch (event.type)
+        {
+        // if user clicks the red X
+        case SDL_QUIT:
+            _quit = true;
+            break;
 
+        case SDL_KEYDOWN:
+            switch (event.key.keysym.sym)
+            {
+            case SDLK_RETURN:
+            case SDLK_SPACE:
+                currentState = STATE_MENU;
+                break;
+            }
+            break;
+        }
+        return;
+    }
     // paddle is always added to the entities vector first, so this is fine
     Entity* paddle = entities[0];
 

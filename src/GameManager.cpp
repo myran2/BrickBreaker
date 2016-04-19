@@ -1,6 +1,7 @@
 #include <iostream>
 #include <time.h>
 #include <array>
+#include <SDL_mixer.h>
 #include "GameManager.h"
 #include "Log.h"
 #include "Menu.h"
@@ -16,6 +17,20 @@ GameManager::GameManager(Window* window):
 
 void GameManager::runGame()
 {
+    Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096);
+    Mix_Music *music = NULL;
+    std::string resPath = "res";
+    std::string filePath = "";
+    filePath = resPath + PATH_SEP + "backgroundmusic.wav";
+
+    music = Mix_LoadMUS(filePath.c_str());
+    
+    if(!music)
+        // TODO: Adapt this to 
+        printf("Mix_LoadMUS(\"backgroundmusic.wav\"): %s\n", Mix_GetError());
+
+    Mix_PlayMusic(music, -1);
+
     Entity* paddle = new Entity(window, "paddle.bmp", 305, 490);
     paddle->setMoveRate(5);
     entities.push_back(paddle);
@@ -59,8 +74,12 @@ void GameManager::runGame()
         switch (currentState)
         {
         case STATE_MENU:
+        {
+            SDL_Texture* bgTexture = window->loadTexture("bg.bmp");
+            window->renderTexture(bgTexture, 0, 0);
             mainMenu.tick();
             break;
+        }
         case STATE_SETTINGS:
             break;
         case STATE_PLAYING:

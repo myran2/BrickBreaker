@@ -31,10 +31,15 @@ void LevelLoader::openMap(const std::string& mapName)
 
 				if (health > 0)
 				{
-					gameManager->addEntity(new Brick(gameManager->getWindow(), "redBrick.bmp", xpos, ypos, health));
+					if (health == 3)
+						gameManager->addEntity(new Brick(gameManager->getWindow(), "redBrick.bmp", xpos, ypos, health));
+					if (health == 2)
+						gameManager->addEntity(new Brick(gameManager->getWindow(), "yellowBrick.bmp", xpos, ypos, health));
+					if (health == 1)
+						gameManager->addEntity(new Brick(gameManager->getWindow(), "greenBrick.bmp", xpos, ypos, health));
 					Log::info("added a brick");
 
-					gameManager->addEntity(new Brick(gameManager->getWindow(), "paddle.bmp", xpos, ypos, health));
+					//gameManager->addEntity(new Brick(gameManager->getWindow(), "paddle.bmp", xpos, ypos, health));
 				}
 
 				line.erase(0, 1);

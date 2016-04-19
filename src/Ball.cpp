@@ -69,10 +69,14 @@ void Ball::handleCollision(Entity* entity)
 {
     Log::info("Ball hit something!");
 
-    yVelocity = -yVelocity;
 
     double ballCenter = xPos + (width / 2);
     double entityCenter = entity->getX() + (entity->getWidth() / 2);
+	double ballY = yPos + (width / 2);
+	double entityY = entity->getX() + (entity->getWidth() / 2);
+	double verticalDifference = std::abs(ballY - entityY);
+	if(verticalDifference>20.0)
+		yVelocity = -yVelocity;
 
     // if the ball is on the right side of the paddle, make it bounce right
     if (ballCenter > entityCenter)

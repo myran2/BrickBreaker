@@ -56,7 +56,7 @@ void GameManager::runGame()
     Menu mainMenu(this);
     mainMenu.addEntry("Play");
     mainMenu.addEntry("How to Play");
-    mainMenu.addEntry("Credits")
+    mainMenu.addEntry("Credits");
     mainMenu.addEntry("Exit");
 
 	currentLevel = 0;
@@ -154,7 +154,10 @@ void GameManager::gameTick()
             break;
         case SDLK_SPACE:
             if (ball->isOnPaddle())
-                ball->detach();
+            {
+              ball->detach();
+            }
+            isPressed = true;
             break;
         }
         break;
@@ -192,7 +195,7 @@ void GameManager::gameTick()
     }
 
 /************** Code segment used for powerup implementation ***************/
-if(randNum == 0)    //anthony is gay
+if(randNum == 0 && isPressed == true)    //anthony is gay
 {
     mod->update();
         if(mod->collidedWith(paddle))
@@ -203,7 +206,7 @@ if(randNum == 0)    //anthony is gay
         }
 }
 
-if(randNum == 1)
+if(randNum == 1 && isPressed == true)
 {
   mod->update();
   if(mod->collidedWith(paddle))
@@ -214,7 +217,7 @@ if(randNum == 1)
   }
 }
 
-if(randNum == 2)
+if(randNum == 2 && isPressed == true)
 {
     mod->update();
         if(mod->collidedWith(paddle))
@@ -224,7 +227,7 @@ if(randNum == 2)
             mod->remove();
         }
     }
-  if(randNum == 3)
+  if(randNum == 3 && isPressed == true)
   {
       mod->update();
         if(mod->collidedWith(paddle))

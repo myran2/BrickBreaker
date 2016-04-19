@@ -37,6 +37,7 @@ class GameManager
         int randNum;
         int downNum;
         int upNum;
+        bool isPressed = false;
 		int currentLevel;
 
         // runs ~60 times per second

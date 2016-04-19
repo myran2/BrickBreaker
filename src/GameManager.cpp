@@ -31,7 +31,7 @@ void GameManager::runGame()
     Mix_PlayMusic(music, -1);
 
     Entity* paddle = new Entity(window, "paddle.bmp", 305, 490);
-    paddle->setMoveRate(5);
+    paddle->setMoveRate(8);
     entities.push_back(paddle);
 
     ball = new Ball(window, "ball.bmp", window->getWidth() / 2, window->getHeight() / 2, paddle);
@@ -89,6 +89,7 @@ void GameManager::runGame()
         if (avgFps > 2000000)
             avgFps = 0;
 
+        window->renderText("Lives: " + std::to_string(ball->getLives()), 0, 0, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
         window->renderText(std::to_string((int)avgFps), window->getWidth()-30, 0, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
 
         window->render();
@@ -158,6 +159,9 @@ void GameManager::gameTick()
               ball->detach();
             }
             isPressed = true;
+            break;
+        case SDLK_ESCAPE:
+            currentState = STATE_MENU;
             break;
         }
         break;

@@ -55,6 +55,9 @@ class GameManager
         Mods* mod;
         Mix_Music* music;
 
+        SDL_Texture* bgTexture;
+        SDL_Texture* htpTexture;
+
         int randNum;
         int downNum;
         int upNum;

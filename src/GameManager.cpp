@@ -16,6 +16,9 @@ GameManager::GameManager(Window* window):
     srand(time(NULL));
     music = NULL;
 
+    bgTexture = window->loadTexture("bg.bmp");
+    htpTexture = window->loadTexture("HowToPlay.bmp");
+
     paddle = new Entity(window, "paddle.bmp", 305, 490);
     entities.push_back(paddle);
 
@@ -93,21 +96,18 @@ void GameManager::runGame()
         {
         case STATE_MENU:
         {
-            SDL_Texture* bgTexture = window->loadTexture("bg.bmp");
             window->renderTexture(bgTexture, 0, 0);
             mainMenu.tick();
             break;
         }
         case STATE_HOWTOPLAY:
         {
-            SDL_Texture* htpTexture = window->loadTexture("HowToPlay.bmp");
             window->renderTexture(htpTexture, 0, 0);
             listenForQuit();
             break;
         }
         case STATE_CREDITS:
         {
-            SDL_Texture* bgTexture = window->loadTexture("bg.bmp");
             window->renderTexture(bgTexture, 0, 0);
             printCredits();
             listenForQuit();

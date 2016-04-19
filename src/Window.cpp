@@ -119,6 +119,8 @@ void Window::renderText(const std::string& msg, int xPos, int yPos, SDL_Color co
     SDL_QueryTexture(msgTexture, NULL, NULL, &rect.w, &rect.h);
 
     SDL_RenderCopy(renderer, msgTexture, NULL, &rect);
+
+    SDL_DestroyTexture(msgTexture);
     TTF_CloseFont(font);
 }
 
@@ -164,5 +166,7 @@ void Window::renderCenteredText(const std::string& msg, int yPos, SDL_Color colo
     rect.x = (getWidth() - rect.w) / 2;
 
     SDL_RenderCopy(renderer, msgTexture, NULL, &rect);
+
+    SDL_DestroyTexture(msgTexture);
     TTF_CloseFont(font);
 }

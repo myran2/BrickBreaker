@@ -37,6 +37,9 @@ class Entity
         // true if moving in the given direction, false otherwise
         bool isMoving(int direction);
 
+        // returns true if the entity is visible on the screen
+        bool isActive() { return active; }
+
         void setMoveRate(int rate) { moveRate = rate; }
 
         // moves the entity in 'direction'
@@ -78,6 +81,9 @@ class Entity
 
         unsigned int moveState = MOVE_NONE;
         int moveRate = 0;
+
+        // true if the entity is visible on the screen
+        bool active;
 };
 
 #endif

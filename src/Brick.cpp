@@ -12,6 +12,7 @@ Entity(window, textureName, xPos, yPos)
 void Brick::dealDamage(int dmg)
 {
     health -= dmg;
+    
 	if (health == 2)
 		setTexture("yellowBrick.bmp");
 	if (health == 1)

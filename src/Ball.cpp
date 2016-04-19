@@ -1,6 +1,7 @@
 #include <cmath>
 
 #include "Ball.h"
+#include "Brick.h"
 #include "Log.h"
 
 Ball::Ball(Window* window, const std::string& textureName, int xPos, int yPos, Entity* linkedPaddle) :
@@ -70,6 +71,9 @@ void Ball::update()
 
 void Ball::handleCollision(Entity* entity)
 {
+    if (!entity->isActive())
+        return;
+
     Log::info("Ball hit something!");
 
 	double totalSpeed = sqrt(xVelocity*xVelocity + yVelocity*yVelocity);
@@ -119,6 +123,8 @@ void Ball::handleCollision(Entity* entity)
 		Log::info("Vdiff: "+std::to_string(checkVertical));
 		Log::info("Hdiff: " + std::to_string(checkHorizontal));
 		SDL_Delay(50);
+
+        ((Brick*)entity)->dealDamage(1);
 	}
 	else
 	{

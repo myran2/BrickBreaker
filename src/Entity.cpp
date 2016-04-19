@@ -21,6 +21,8 @@ Entity::Entity(Window* window, const std::string& textureName, int xPos, int yPo
     moveState = MOVE_NONE;
     moveRate = 1;
 
+    active = true;
+
     const std::string msg = "Created new entity with texture " + textureName + " at (" + std::to_string(xPos) + ", " + std::to_string(xPos) + ")";
     Log::info(msg);
 }
@@ -94,6 +96,7 @@ void Entity::remove()
     }
 
     SDL_DestroyTexture(texture);
+    active = false;
 }
 
 void Entity::setTexture(const std::string& textureName)

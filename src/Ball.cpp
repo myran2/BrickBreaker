@@ -117,7 +117,7 @@ void Ball::handleCollision(Entity* entity)
 				yVelocity = -yVelocity;
 				xVelocity = -xVelocity;
 			}
-		else 
+		else
 			xVelocity = -xVelocity;
 
 		Log::info("Vdiff: "+std::to_string(checkVertical));
@@ -160,7 +160,7 @@ void Ball::detach()
     Log::info("Detached ball from paddle.");
     onPaddle = false;
 
-    // TODO: physics this part
+    // constant velocity for the ball
     xVelocity = -5;
     yVelocity = -5;
 }

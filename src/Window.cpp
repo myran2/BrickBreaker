@@ -43,7 +43,8 @@ SDL_Texture* Window::loadTexture(const std::string& fileName)
     filePath = resPath + PATH_SEP + fileName;
     
     SDL_Texture* texture = NULL;
-    SDL_Surface* img = SDL_LoadBMP(filePath.c_str());
+    //SDL_Surface* img = SDL_LoadBMP(filePath.c_str());
+    SDL_Surface* img = IMG_Load(filePath.c_str());
 
     // if the texture fails to load
     if (!img)

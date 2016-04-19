@@ -72,15 +72,14 @@ void Ball::handleCollision(Entity* entity)
 {
     Log::info("Ball hit something!");
 
-<<<<<<< HEAD
 	double totalSpeed = sqrt(xVelocity*xVelocity + yVelocity*yVelocity);
-=======
->>>>>>> c243c368940ac2bffd31818d3d6438a8e28c5284
+
     double ballCenter = xPos + (width / 2);
     double entityCenter = entity->getX() + (entity->getWidth() / 2);
-	double ballY = yPos + (width / 2);
-	double entityY = entity->getY() + (entity->getWidth() / 2);
-	double verticalDifference = std::abs(ballY - entityY);
+	//double ballY = yPos + (width / 2);
+	//double entityY = entity->getY() + (entity->getWidth() / 2);
+	//double verticalDifference = std::abs(ballY - entityY);
+
 	if (entity->getid().compare("brick")==0)
 	{
 		double checkRight = std::abs(entity->getX() - (xPos + width));

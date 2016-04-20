@@ -78,10 +78,13 @@ void GameManager::initGame(bool fresh)
             break;
     }
 
-    Log::info("Loaded level " + std::to_string(currentLevel) + " with " + std::to_string(maxBricks) + " blocks.");
+    if (currentState == STATE_PLAYING)
+    {
+        Log::info("Loaded level " + std::to_string(currentLevel) + " with " + std::to_string(maxBricks) + " blocks.");
 
-    bricksLeft = maxBricks;
-    levelOver = false;
+        bricksLeft = maxBricks;
+        levelOver = false;
+    }
 }
 
 void GameManager::runGame()
@@ -287,12 +290,12 @@ void GameManager::gameTick()
     if(randNum == 2 && isPressed == true)
     {
         mod->update();
-            if(mod->collidedWith(paddle))
-            {
-                mod->slowerPaddle();
-                paddle->setMoveRate(3);
-                mod->remove();
-            }
+        if(mod->collidedWith(paddle))
+        {
+            paddle->setTexture("paddle_big.bmp");
+            mod->largePaddle();
+            mod->remove();
+        }
     }
 
     if(randNum == 3 && isPressed == true)
@@ -329,12 +332,12 @@ void GameManager::setState(int state)
 
 void GameManager::printCredits()
 {
-    window->renderCenteredText("Henry Gordon", 20, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
-    window->renderCenteredText("Anthony Brugal", 50, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
-    window->renderCenteredText("Iden Sessani", 80, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
-    window->renderCenteredText("Erik Higginbotham", 110, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
-    window->renderCenteredText("Aaron Hanuschak", 140, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
-    window->renderCenteredText("Kurt Weber", 170, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
+    window->renderCenteredText("Henry Gordon", 100, { 0, 0, 0 }, 45, FONT_RENDER_BLENDED, { 0, 0, 0 });
+    window->renderCenteredText("Anthony Brugal", 150, { 0, 0, 0 }, 45, FONT_RENDER_BLENDED, { 0, 0, 0 });
+    window->renderCenteredText("Iden Sessani", 200, { 0, 0, 0 }, 45, FONT_RENDER_BLENDED, { 0, 0, 0 });
+    window->renderCenteredText("Erik Higginbotham", 250, { 0, 0, 0 }, 45, FONT_RENDER_BLENDED, { 0, 0, 0 });
+    window->renderCenteredText("Aaron Hanuschak", 300, { 0, 0, 0 }, 45, FONT_RENDER_BLENDED, { 0, 0, 0 });
+    window->renderCenteredText("Kurt Weber", 350, { 0, 0, 0 }, 45, FONT_RENDER_BLENDED, { 0, 0, 0 });
 }
 
 void GameManager::listenForQuit()

@@ -16,11 +16,12 @@ GameManager::GameManager(Window* window):
     srand(time(NULL));
 
     bgTexture = window->loadTexture("bg.bmp");
+    gameBgTexture = window->loadTexture("bgNoTitle.bmp");
     htpTexture = window->loadTexture("HowToPlay.bmp");
 
     paddle = new Entity(window, "paddle.bmp", 305, 490);
 
-    currentLevel = 2;
+    currentLevel = 1;
     bricksLeft = 0;
     maxBricks = 0;
 
@@ -54,7 +55,7 @@ void GameManager::initGame(bool fresh)
 
     //used for random powerup spwaning
     randNum = rand() % 4;
-    mod = new Mods(window, "PowerUP.bmp", 305, 0 );//makes a new power down object
+    mod = new Mods(window, "PowerUP.bmp", window->getWidth() / 2, 0 );//makes a new power down object
 
     upNum = rand() % 2;
     downNum = rand() % 2;
@@ -132,6 +133,7 @@ void GameManager::runGame()
             break;
         }
         case STATE_PLAYING:
+            window->renderTexture(gameBgTexture, 0, 0);
             gameTick();
             break;
         case STATE_WINNER:
@@ -321,12 +323,12 @@ void GameManager::gameTick()
         levelOver = true;
     }
 
-    if (showMessage)
+    /*if (showMessage)
     {
         window->renderCenteredText(message, 200, { 0, 0, 0 }, 60, FONT_RENDER_BLENDED, { 0, 0, 0 });
         if (timePassed > 5 * 1000)
             showMessage = false;
-    }
+    }*/
 }
 
 void GameManager::addEntity(Entity* e)

@@ -58,6 +58,7 @@ class GameManager
 
         SDL_Texture* bgTexture;
         SDL_Texture* htpTexture;
+        SDL_Texture* gameBgTexture;
 
         Mix_Chunk* ballHitSound = NULL;
         Mix_Chunk* brickBreakSound = NULL;

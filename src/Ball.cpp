@@ -130,8 +130,8 @@ void Ball::handleCollision(Entity* entity)
 	{
 		double horizontalDifference = ballCenter - entityCenter;
 		totalSpeed += 1;
-		if (totalSpeed > 15)
-			totalSpeed = 15;
+		if (totalSpeed > 10)
+			totalSpeed = 10;
 		double w = entity->getWidth()/2.0;
 		double angle = horizontalDifference / w;
 		xVelocity = angle*totalSpeed*.8;

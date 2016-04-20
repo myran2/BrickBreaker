@@ -76,6 +76,9 @@ bool Entity::collidedWith(Entity* entity)
     if (this == entity)
         return false;
 
+    if (!entity->isActive())
+        return false;
+
     SDL_Rect rect;
     rect.x = xPos;
     rect.y = yPos;

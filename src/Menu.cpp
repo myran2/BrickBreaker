@@ -28,7 +28,7 @@ void Menu::tick()
                 {
                 case 0:
                     manager->setState(STATE_PLAYING);
-                    manager->initGame();
+                    manager->initGame(true);
                     return;
                 case 1:
                     manager->setState(STATE_HOWTOPLAY);

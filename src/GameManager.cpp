@@ -24,11 +24,16 @@ GameManager::GameManager(Window* window):
     currentLevel = 1;
     bricksLeft = 0;
     maxBricks = 0;
+
+    std::string resPath = "res";
+    std::string filePath = "";
+    filePath = resPath + PATH_SEP + "ballHit.wav";
+    ballHitSound = Mix_LoadWAV(filePath.c_str());
 }
 
-void GameManager::initGame()
+void GameManager::initGame(bool fresh)
 {
-    Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096);
+    Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 8192);
     std::string resPath = "res";
     std::string filePath = "";
     filePath = resPath + PATH_SEP + "backgroundmusic.wav";
@@ -58,6 +63,12 @@ void GameManager::initGame()
     downNum = rand() % 2;
 
     entities = std::vector<Entity*>();
+
+    if (fresh)
+    {
+        currentLevel = 1;
+        //score = 0;
+    }
 
     LevelLoader* loader = new LevelLoader(this);
     switch (currentLevel)
@@ -166,7 +177,7 @@ void GameManager::gameTick()
     if (levelOver)
     {
         currentLevel++;
-        initGame();
+        initGame(false);
         levelOver = false;
         return;
     }

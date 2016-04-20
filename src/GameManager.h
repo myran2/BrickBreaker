@@ -31,7 +31,8 @@ class GameManager
 
         // initializes the game
         // puts the paddle in the default state, re-attaches the ball, set up bricks, etc.
-        void initGame();
+        // if 'fresh' is true, levels and score will be reset
+        void initGame(bool fresh);
 
         Window* getWindow() { return window; }
 
@@ -58,6 +59,8 @@ class GameManager
 
         SDL_Texture* bgTexture;
         SDL_Texture* htpTexture;
+
+        Mix_Chunk* ballHitSound = NULL;
 
         int randNum;
         int downNum;

@@ -20,7 +20,7 @@ GameManager::GameManager(Window* window):
     htpTexture = window->loadTexture("HowToPlay.bmp");
 
     paddle = new Entity(window, "paddle.bmp", 305, 490);
-    entities.push_back(paddle);
+    //entities.push_back(paddle);
 
     currentLevel = 1;
     bricksLeft = 0;
@@ -59,7 +59,6 @@ void GameManager::initGame()
     downNum = rand() % 2;
 
     entities = std::vector<Entity*>();
-    entities.push_back(paddle);
 
     LevelLoader* loader = new LevelLoader(this);
     switch (currentLevel)
@@ -225,7 +224,7 @@ void GameManager::gameTick()
     for (Entity* e : entities)
     {
         // don't think this is that cpu intensive but I guess it could be
-        if ((ball->collidedWith(e)) && (e->isActive())&&collidedThisTick==false)
+        if ((ball->collidedWith(e)) && (e->isActive()) && !collidedThisTick)
         {
 			collidedThisTick = true;
             ball->handleCollision(e);
@@ -238,6 +237,10 @@ void GameManager::gameTick()
         }
         e->update();
     }
+
+    if (ball->collidedWith(paddle))
+        ball->handleCollision(paddle);
+    paddle->update();
 
     /************** Code segment used for powerup implementation ***************/
     if(randNum == 0 && isPressed == true)

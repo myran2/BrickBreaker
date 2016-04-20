@@ -40,7 +40,6 @@ GameManager::GameManager(Window* window):
 
     showMessage = false;
     message = "";
-    uint32_t messageDisplayStart;
 }
 
 void GameManager::initGame(bool fresh)
@@ -78,6 +77,15 @@ void GameManager::initGame(bool fresh)
             break;
         case 2:
             loader->openMap("lvl2.txt", maxBricks);
+            break;
+        case 3:
+            loader->openMap("lvl3.txt", maxBricks);
+            break;
+        case 4:
+            loader->openMap("lvl4.txt", maxBricks);
+            break;
+        case 5:
+            loader->openMap("lvl5.txt", maxBricks);
             break;
         default:
             currentState = STATE_WINNER;

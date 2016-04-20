@@ -20,7 +20,6 @@ GameManager::GameManager(Window* window):
     htpTexture = window->loadTexture("HowToPlay.bmp");
 
     paddle = new Entity(window, "paddle.bmp", 305, 490);
-    //entities.push_back(paddle);
 
     currentLevel = 1;
     bricksLeft = 0;
@@ -156,6 +155,8 @@ void GameManager::runGame()
             SDL_Delay(waitTime);
         }
     }
+
+    Mix_FreeMusic(music);
 }
 
 void GameManager::gameTick()

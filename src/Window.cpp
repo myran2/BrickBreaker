@@ -8,7 +8,7 @@
 Window::Window(const std::string& title, int width, int height, int fps)
 {
     // init SDL
-    SDL_Init(SDL_INIT_VIDEO);
+    SDL_Init(SDL_INIT_EVERYTHING);
     if (TTF_Init() == -1)
     {
         Log::error("Couldn't initialize sdl2-ttf!");
@@ -26,6 +26,8 @@ void Window::cleanupAndExit()
 {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+    Mix_CloseAudio();
+    TTF_Quit();
     SDL_Quit();
 }
 

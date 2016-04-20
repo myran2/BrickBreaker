@@ -120,11 +120,10 @@ void Ball::handleCollision(Entity* entity)
 		else
 			xVelocity = -xVelocity;
 
-		Log::info("Vdiff: " + std::to_string(checkVertical));
+		/*Log::info("Vdiff: " + std::to_string(checkVertical));
 		Log::info("Hdiff: " + std::to_string(checkHorizontal));
 		Log::info("difference: " + std::to_string(checkHorizontal - checkVertical));
-		Log::info("");
-		SDL_Delay(50);
+		Log::info("");*/
 	}
 
 	else

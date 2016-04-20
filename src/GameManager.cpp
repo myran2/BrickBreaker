@@ -58,6 +58,8 @@ void GameManager::initGame(bool fresh)
     randNum = rand() % 4;
     mod = new Mods(window, "PowerUP.bmp", window->getWidth() / 2, 0 );//makes a new power down object
 
+    isPressed = false;
+
     upNum = rand() % 2;
     downNum = rand() % 2;
 
@@ -67,7 +69,7 @@ void GameManager::initGame(bool fresh)
     {
         currentLevel = 1;
         totalBricksDestroyed = 0;
-    }
+    } 
 
     LevelLoader* loader = new LevelLoader(this);
     switch (currentLevel)
@@ -161,11 +163,11 @@ void GameManager::runGame()
         }
 
         // divide the amount of frames displayed by the runtime in seconds to get the average fps
-        float avgFps = frameCount / (fpsTimer.getTicks() / 1000.f);
+        /*float avgFps = frameCount / (fpsTimer.getTicks() / 1000.f);
         if (avgFps > 2000000)
             avgFps = 0;
 
-        window->renderText(std::to_string((int)avgFps), window->getWidth()-30, 0, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
+        window->renderText(std::to_string((int)avgFps), window->getWidth()-30, 0, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });*/
 
         window->render();
 
@@ -186,7 +188,7 @@ void GameManager::gameTick()
 
     if (levelOver)
     {
-        totalBricksDestroyed += maxBricks;
+        //totalBricksDestroyed += maxBricks;
         currentLevel++;
         initGame(false);
         levelOver = false;
@@ -195,7 +197,7 @@ void GameManager::gameTick()
 
     if(ball->getLives() < 1)
     {
-        totalBricksDestroyed += maxBricks - bricksLeft;
+        //totalBricksDestroyed += maxBricks - bricksLeft;
         
         window->renderCenteredText("GAME OVER", window->getHeight()/4, {0,0,0}, 50, FONT_RENDER_BLENDED, {255,255,255});
         window->renderCenteredText("Score: " + std::to_string(calcScore()), window->getHeight()/2, {0,0,0}, 50, FONT_RENDER_BLENDED, {255,255,255});
@@ -262,6 +264,7 @@ void GameManager::gameTick()
                     if (!((Brick*)e)->dealDamage(1))
                     {
                         bricksLeft--;
+                        totalBricksDestroyed++;
                         Mix_PlayChannel(-1, brickBreakSound, 0);
                         playedSound = true;
                     }
@@ -274,13 +277,6 @@ void GameManager::gameTick()
             e->update();
         }
     }
-
-    if (ball->collidedWith(paddle))
-    {
-        Mix_PlayChannel(-1, ballHitSound, 0);
-        ball->handleCollision(paddle);
-    }
-    paddle->update();
 
     /************** Code segment used for powerup implementation ***************/
     if(randNum == 0 && isPressed == true)
@@ -328,13 +324,21 @@ void GameManager::gameTick()
     }
     /***************************************************************************/
 
+    if (ball->collidedWith(paddle))
+    {
+        Mix_PlayChannel(-1, ballHitSound, 0);
+        ball->handleCollision(paddle);
+    }
+    paddle->update();
+
     ball->update();
-    window->renderText("Lives: " + std::to_string(ball->getLives()), 0, 0, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
+    window->renderText("Lives: " + std::to_string(ball->getLives()), 5, 0, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
+    window->renderText("Score: " + std::to_string(calcScore()), window->getWidth() - 100, 0, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
 
     if (bricksLeft == 0)
     {
         levelOver = true;
-        totalBricksDestroyed += maxBricks;
+        //totalBricksDestroyed += maxBricks;
     }
 
     /*if (showMessage)

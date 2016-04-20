@@ -73,8 +73,16 @@ class GameManager
         bool showMessage;
         std::string message;
 
+        // total bricks in the current level
         int maxBricks;
+
+        // remaining bricks on the current level
         int bricksLeft;
+
+        // overall number of bricks destroyed
+        int totalBricksDestroyed;
+
+        // true when there are no bricks left on the current level
         bool levelOver;
 
         // calculates the player's score

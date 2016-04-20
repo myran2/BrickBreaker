@@ -24,6 +24,7 @@ GameManager::GameManager(Window* window):
     currentLevel = 1;
     bricksLeft = 0;
     maxBricks = 0;
+    totalBricksDestroyed = 0;
 
     std::string resPath = "res";
     std::string collidePath = "";
@@ -39,6 +40,7 @@ GameManager::GameManager(Window* window):
 
     showMessage = false;
     message = "";
+    uint32_t messageDisplayStart;
 }
 
 void GameManager::initGame(bool fresh)
@@ -65,7 +67,7 @@ void GameManager::initGame(bool fresh)
     if (fresh)
     {
         currentLevel = 1;
-        //score = 0;
+        totalBricksDestroyed = 0;
     }
 
     LevelLoader* loader = new LevelLoader(this);
@@ -176,6 +178,7 @@ void GameManager::gameTick()
 
     if (levelOver)
     {
+        totalBricksDestroyed += maxBricks;
         currentLevel++;
         initGame(false);
         levelOver = false;
@@ -184,6 +187,8 @@ void GameManager::gameTick()
 
     if(ball->getLives() < 1)
     {
+        totalBricksDestroyed += maxBricks - bricksLeft;
+        
         window->renderCenteredText("GAME OVER", window->getHeight()/4, {0,0,0}, 50, FONT_RENDER_BLENDED, {255,255,255});
         window->renderCenteredText("Score: " + std::to_string(calcScore()), window->getHeight()/2, {0,0,0}, 50, FONT_RENDER_BLENDED, {255,255,255});
         listenForQuit();
@@ -321,6 +326,7 @@ void GameManager::gameTick()
     if (bricksLeft == 0)
     {
         levelOver = true;
+        totalBricksDestroyed += maxBricks;
     }
 
     /*if (showMessage)
@@ -379,5 +385,5 @@ void GameManager::listenForQuit()
 
 int GameManager::calcScore()
 {
-    return (ball->getLives() + 1) * (maxBricks - bricksLeft);
+    return (ball->getLives() + 1) * (totalBricksDestroyed);
 }

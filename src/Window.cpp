@@ -20,6 +20,21 @@ Window::Window(const std::string& title, int width, int height, int fps)
     this->maxFps = fps;
     renderer = SDL_CreateRenderer(window, -1, 0);
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+
+    // init the sound system
+    Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024);
+
+    std::string resPath = "res";
+    std::string filePath = "";
+    filePath = resPath + PATH_SEP + "backgroundmusic.wav";
+
+    Mix_Music* music = Mix_LoadMUS(filePath.c_str());
+
+    if (!music)
+        printf("Mix_LoadMUS(\"backgroundmusic.wav\"): %s\n", Mix_GetError());
+
+    Mix_PlayMusic(music, -1);
+    Mix_FreeMusic(music);
 }
 
 void Window::cleanupAndExit()

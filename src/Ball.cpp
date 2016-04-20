@@ -163,7 +163,7 @@ void Ball::detach()
     Log::info("Detached ball from paddle.");
     onPaddle = false;
 
-    // constant velocity for the ball
-    xVelocity = -5;
+    // launch the ball in the direction the paddle is moving
+    xVelocity = linkedPaddle->isMoving(MOVE_LEFT) ? -5 : 5;
     yVelocity = -5;
 }

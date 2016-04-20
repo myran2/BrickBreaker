@@ -55,7 +55,6 @@ class GameManager
         Ball* ball;
         Entity* paddle;
         Mods* mod;
-        Mix_Music* music;
 
         SDL_Texture* bgTexture;
         SDL_Texture* htpTexture;

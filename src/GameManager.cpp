@@ -14,7 +14,6 @@ GameManager::GameManager(Window* window):
     currentState = STATE_MENU;
     _quit = false;
     srand(time(NULL));
-    music = NULL;
 
     bgTexture = window->loadTexture("bg.bmp");
     htpTexture = window->loadTexture("HowToPlay.bmp");
@@ -27,24 +26,14 @@ GameManager::GameManager(Window* window):
 
     std::string resPath = "res";
     std::string filePath = "";
-    filePath = resPath + PATH_SEP + "ballHit.wav";
+    filePath = resPath + PATH_SEP + "ballHitSound.wav";
     ballHitSound = Mix_LoadWAV(filePath.c_str());
+    if (!ballHitSound)
+        Log::error("Couldn't open ballHitSound.wav");
 }
 
 void GameManager::initGame(bool fresh)
 {
-    Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 8192);
-    std::string resPath = "res";
-    std::string filePath = "";
-    filePath = resPath + PATH_SEP + "backgroundmusic.wav";
-
-    music = Mix_LoadMUS(filePath.c_str());
-
-    if(!music)
-        printf("Mix_LoadMUS(\"backgroundmusic.wav\"): %s\n", Mix_GetError());
-
-    Mix_PlayMusic(music, -1);
-
     paddle->setMoveRate(8);
     paddle->setTexture("paddle.bmp");
     paddle->setX(305);
@@ -166,8 +155,6 @@ void GameManager::runGame()
             SDL_Delay(waitTime);
         }
     }
-
-    Mix_FreeMusic(music);
 }
 
 void GameManager::gameTick()
@@ -244,6 +231,7 @@ void GameManager::gameTick()
             {
                 if (!((Brick*)e)->dealDamage(1))
                     bricksLeft--;
+                Mix_PlayChannel(-1, ballHitSound, 0);
                 Log::info(std::to_string(bricksLeft) + " / " + std::to_string(maxBricks) + " bricks remaining");
             }
         }

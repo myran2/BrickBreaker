@@ -26,6 +26,8 @@ GameManager::GameManager(Window* window):
     maxBricks = 0;
     totalBricksDestroyed = 0;
 
+    powerupTimer = 9999; 
+
     std::string resPath = "res";
     std::string collidePath = "";
     collidePath = resPath + PATH_SEP + "collide.wav";
@@ -50,7 +52,6 @@ void GameManager::initGame(bool fresh)
     paddle->setY(490);
     paddle->stopMoving(MOVE_LEFT);
     paddle->stopMoving(MOVE_RIGHT);
-
     ball = new Ball(window, "ball.png", window->getWidth() / 2, window->getHeight() / 2, paddle);
     ball->setOnPaddle(true);
 
@@ -279,11 +280,14 @@ void GameManager::gameTick()
     }
 
     /************** Code segment used for powerup implementation ***************/
+    powerupTimer++;
+    
     if(randNum == 0 && isPressed == true)
     {
         mod->update();
         if(mod->collidedWith(paddle))
         {
+            powerupTimer = 0;
             mod->fastPaddle();
             paddle->setMoveRate(7);
             mod->remove();
@@ -295,6 +299,7 @@ void GameManager::gameTick()
         mod->update();
         if(mod->collidedWith(paddle))
         {
+            powerupTimer = 0;
             paddle->setTexture("paddle_big.bmp");
             mod->largePaddle();
             mod->remove();
@@ -306,6 +311,7 @@ void GameManager::gameTick()
         mod->update();
         if(mod->collidedWith(paddle))
         {
+            powerupTimer = 0;
             paddle->setTexture("paddle_big.bmp");
             mod->largePaddle();
             mod->remove();
@@ -317,11 +323,29 @@ void GameManager::gameTick()
         mod->update();
         if(mod->collidedWith(paddle))
         {
+            powerupTimer = 0;
             paddle->setTexture("paddle_small.bmp");
             mod->smallPaddle();
             mod->remove();
         }
     }
+    if (randNum == 0 && powerupTimer < 180)
+    {
+        window->renderCenteredText("PADDLE SPEED INCREASED!", 300, { 100,100,100 }, 30, FONT_RENDER_BLENDED, { 100,100,100 });
+    }
+    if (randNum == 1 && powerupTimer < 180)
+    {
+        window->renderCenteredText("PADDLE SIZE INCREASED!", 300, { 100,100,100 }, 30, FONT_RENDER_BLENDED, { 100,100,100 });
+    }
+    if (randNum == 2 && powerupTimer < 180)
+    {
+        window->renderCenteredText("PADDLE SIZE INCREASED!", 300, { 100,100,100 }, 30, FONT_RENDER_BLENDED, { 100,100,100 });
+    }
+    if (randNum == 3 && powerupTimer < 180)
+    {
+        window->renderCenteredText("PADDLE SPEED DECREASED!", 300, { 100,100,100 }, 30, FONT_RENDER_BLENDED, { 100,100,100 });
+    }
+
     /***************************************************************************/
 
     if (ball->collidedWith(paddle))

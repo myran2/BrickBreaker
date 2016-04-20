@@ -75,7 +75,8 @@ bool Entity::collidedWith(Entity* entity)
     // can't collide with self
     if (this == entity)
         return false;
-
+    
+    // can't collide with an inactive entity
     if (!entity->isActive())
         return false;
 

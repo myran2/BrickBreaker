@@ -63,6 +63,7 @@ class GameManager
         Mix_Chunk* ballHitSound = NULL;
         Mix_Chunk* brickBreakSound = NULL;
 
+        int powerupTimer;           //variable to determine helpful powerup information duration
         int randNum;
         int downNum;
         int upNum;

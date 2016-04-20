@@ -26,7 +26,8 @@ GameManager::GameManager(Window* window):
     maxBricks = 0;
     totalBricksDestroyed = 0;
 
-    powerupTimer = 9999; 
+    powerupTimer = 9999;
+    powerUpActive = false;
 
     std::string resPath = "res";
     std::string collidePath = "";
@@ -60,6 +61,8 @@ void GameManager::initGame(bool fresh)
     mod = new Mods(window, "PowerUP.bmp", window->getWidth() / 2, 0 );//makes a new power down object
 
     isPressed = false;
+
+    powerUpActive = false;
 
     upNum = rand() % 2;
     downNum = rand() % 2;
@@ -282,7 +285,7 @@ void GameManager::gameTick()
     /************** Code segment used for powerup implementation ***************/
     powerupTimer++;
     
-    if(randNum == 0 && isPressed == true)
+    if(randNum == 0 && isPressed == true && !powerUpActive)
     {
         mod->update();
         if(mod->collidedWith(paddle))
@@ -291,10 +294,11 @@ void GameManager::gameTick()
             mod->fastPaddle();
             paddle->setMoveRate(7);
             mod->remove();
+            powerUpActive = true;
         }
     }
 
-    if(randNum == 1 && isPressed == true)
+    if(randNum == 1 && isPressed == true && !powerUpActive)
     {
         mod->update();
         if(mod->collidedWith(paddle))
@@ -303,10 +307,11 @@ void GameManager::gameTick()
             paddle->setTexture("paddle_big.bmp");
             mod->largePaddle();
             mod->remove();
+            powerUpActive = true;
         }
     }
 
-    if(randNum == 2 && isPressed == true)
+    if(randNum == 2 && isPressed == true && !powerUpActive)
     {
         mod->update();
         if(mod->collidedWith(paddle))
@@ -315,10 +320,11 @@ void GameManager::gameTick()
             paddle->setTexture("paddle_big.bmp");
             mod->largePaddle();
             mod->remove();
+            powerUpActive = true;
         }
     }
 
-    if(randNum == 3 && isPressed == true)
+    if(randNum == 3 && isPressed == true && !powerUpActive)
     {
         mod->update();
         if(mod->collidedWith(paddle))
@@ -327,23 +333,25 @@ void GameManager::gameTick()
             paddle->setTexture("paddle_small.bmp");
             mod->smallPaddle();
             mod->remove();
+            powerUpActive = true;
         }
     }
-    if (randNum == 0 && powerupTimer < 180)
+    uint8_t c = powerupTimer;
+    if (randNum == 0 && powerupTimer < 254)
     {
-        window->renderCenteredText("PADDLE SPEED INCREASED!", 300, { 100,100,100 }, 30, FONT_RENDER_BLENDED, { 100,100,100 });
+        window->renderCenteredText("PADDLE SPEED INCREASED!", 300, { c,c,c }, 30, FONT_RENDER_BLENDED, { 100,100,100 });
     }
-    if (randNum == 1 && powerupTimer < 180)
+    if (randNum == 1 && powerupTimer < 254)
     {
-        window->renderCenteredText("PADDLE SIZE INCREASED!", 300, { 100,100,100 }, 30, FONT_RENDER_BLENDED, { 100,100,100 });
+        window->renderCenteredText("PADDLE SIZE INCREASED!", 300, { c,c,c }, 30, FONT_RENDER_BLENDED, { 100,100,100 });
     }
-    if (randNum == 2 && powerupTimer < 180)
+    if (randNum == 2 && powerupTimer < 254)
     {
-        window->renderCenteredText("PADDLE SIZE INCREASED!", 300, { 100,100,100 }, 30, FONT_RENDER_BLENDED, { 100,100,100 });
+        window->renderCenteredText("PADDLE SIZE INCREASED!", 300, { c,c,c }, 30, FONT_RENDER_BLENDED, { 100,100,100 });
     }
-    if (randNum == 3 && powerupTimer < 180)
+    if (randNum == 3 && powerupTimer < 254)
     {
-        window->renderCenteredText("PADDLE SPEED DECREASED!", 300, { 100,100,100 }, 30, FONT_RENDER_BLENDED, { 100,100,100 });
+        window->renderCenteredText("PADDLE SIZE DECREASED!", 300, { c,c,c }, 30, FONT_RENDER_BLENDED, { 100,100,100 });
     }
 
     /***************************************************************************/

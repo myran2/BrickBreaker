@@ -10,7 +10,10 @@ Mods::Mods(Window* window, const std::string& textureName, int xPos, int yPos) :
 // makes the Powerup drop and updates the Powerup to its current location
 void Mods::update()
 {
-	xPos += xVelocity;
+    if (!isActive())
+        return;
+    
+    xPos += xVelocity;
     yPos += yVelocity;
 	window->renderTexture(texture, xPos, yPos);
 }

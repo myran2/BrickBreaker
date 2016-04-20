@@ -25,11 +25,16 @@ GameManager::GameManager(Window* window):
     maxBricks = 0;
 
     std::string resPath = "res";
-    std::string filePath = "";
-    filePath = resPath + PATH_SEP + "ballHitSound.wav";
-    ballHitSound = Mix_LoadWAV(filePath.c_str());
+    std::string collidePath = "";
+    collidePath = resPath + PATH_SEP + "collide.wav";
+    ballHitSound = Mix_LoadWAV(collidePath.c_str());
     if (!ballHitSound)
-        Log::error("Couldn't open ballHitSound.wav");
+        Log::error("Couldn't open collide.wav");
+
+    std::string brickBreakSoundPath = resPath + PATH_SEP + "breakBrick.wav";
+    brickBreakSound = Mix_LoadWAV(brickBreakSoundPath.c_str());
+    if (!ballHitSound)
+        Log::error("Couldn't open brickBreak.wav");
 }
 
 void GameManager::initGame(bool fresh)
@@ -219,27 +224,41 @@ void GameManager::gameTick()
         }
         break;
     }
+
 	bool collidedThisTick = false;
     for (Entity* e : entities)
     {
-        // don't think this is that cpu intensive but I guess it could be
-        if ((ball->collidedWith(e)) && (e->isActive()) && !collidedThisTick)
+        bool playedSound = false;
+        if (e->isActive())
         {
-			collidedThisTick = true;
-            ball->handleCollision(e);
-            if (e->getTypeId() == TYPEID_BRICK)
+            // don't think this is that cpu intensive but I guess it could be
+            if ((ball->collidedWith(e)) && (e->isActive()) && !collidedThisTick)
             {
-                if (!((Brick*)e)->dealDamage(1))
-                    bricksLeft--;
-                Mix_PlayChannel(-1, ballHitSound, 0);
-                Log::info(std::to_string(bricksLeft) + " / " + std::to_string(maxBricks) + " bricks remaining");
+                collidedThisTick = true;
+                ball->handleCollision(e);
+                if (e->getTypeId() == TYPEID_BRICK)
+                {
+                    if (!((Brick*)e)->dealDamage(1))
+                    {
+                        bricksLeft--;
+                        Mix_PlayChannel(-1, brickBreakSound, 0);
+                        playedSound = true;
+                    }
+                    Log::info(std::to_string(bricksLeft) + " / " + std::to_string(maxBricks) + " bricks remaining");
+                }
+
+                if (!playedSound)
+                    Mix_PlayChannel(-1, ballHitSound, 0);
             }
+            e->update();
         }
-        e->update();
     }
 
     if (ball->collidedWith(paddle))
+    {
+        Mix_PlayChannel(-1, ballHitSound, 0);
         ball->handleCollision(paddle);
+    }
     paddle->update();
 
     /************** Code segment used for powerup implementation ***************/

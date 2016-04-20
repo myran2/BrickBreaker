@@ -20,7 +20,7 @@ GameManager::GameManager(Window* window):
 
     paddle = new Entity(window, "paddle.bmp", 305, 490);
 
-    currentLevel = 1;
+    currentLevel = 2;
     bricksLeft = 0;
     maxBricks = 0;
 
@@ -35,6 +35,9 @@ GameManager::GameManager(Window* window):
     brickBreakSound = Mix_LoadWAV(brickBreakSoundPath.c_str());
     if (!ballHitSound)
         Log::error("Couldn't open brickBreak.wav");
+
+    showMessage = false;
+    message = "";
 }
 
 void GameManager::initGame(bool fresh)
@@ -316,6 +319,13 @@ void GameManager::gameTick()
     if (bricksLeft == 0)
     {
         levelOver = true;
+    }
+
+    if (showMessage)
+    {
+        window->renderCenteredText(message, 200, { 0, 0, 0 }, 60, FONT_RENDER_BLENDED, { 0, 0, 0 });
+        if (timePassed > 5 * 1000)
+            showMessage = false;
     }
 }
 

@@ -69,6 +69,9 @@ class GameManager
         bool isPressed = false;
 		int currentLevel;
 
+        bool showMessage;
+        std::string message;
+
         int maxBricks;
         int bricksLeft;
         bool levelOver;

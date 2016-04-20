@@ -60,7 +60,7 @@ void Menu::tick()
     for (int i = 0; i < menuEntries.size(); i++)
     {
         if (i == activeIndex)
-            manager->getWindow()->renderCenteredText(menuEntries[i], yPos, { 0, 0, 0 }, 50, FONT_RENDER_SHADED, {0, 48, 255});
+            manager->getWindow()->renderCenteredText(menuEntries[i], yPos, { 0, 0, 0 }, 50, FONT_RENDER_SHADED, {136, 144, 255});
         else
             manager->getWindow()->renderCenteredText(menuEntries[i], yPos, { 0, 0, 0 }, 50, FONT_RENDER_BLENDED, {0, 0, 0});
         yPos += 100;
